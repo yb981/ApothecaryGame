@@ -30,7 +30,8 @@ public class DragAndDrop : MonoBehaviour
             Collider2D otherCollider = snapTarget.GetComponent<Collider2D>();
             if(otherCollider.bounds.Contains(GetMouseWorldPosition() + mousePositionOffset))
             {
-                transform.position = snapTarget.transform.position;
+                // Adding Ingredient to Container, if fails delete Object
+                if(!addToContainer()) Destroy(gameObject);
             }
             else
             {
@@ -41,10 +42,18 @@ public class DragAndDrop : MonoBehaviour
 
     void addValuesToContainer(int c, int b, int f) 
     {
-        //GameObject.FindObjectOfType<Container>().setValues(c,b,f);
-        //GameObject.FindObjectOfType<Container>().setValues(c,b,f);
         GameObject cont = GameObject.Find("Container");
         cont.GetComponent<ContainerCalculation>().setValues(c,b,f);
-        
+    }
+
+    bool addToContainer()
+    {
+        // Adding Ingredient to Container List, and check if it was successful
+        bool successfullyAddedIng = snapTarget.GetComponent<ContainerCalculation>().addIngredient(gameObject);
+        if(successfullyAddedIng){
+            transform.position = snapTarget.transform.position;
+            return true;
+        }
+        return false;
     }
 }

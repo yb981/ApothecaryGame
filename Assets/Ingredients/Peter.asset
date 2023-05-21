@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72196c43f2509f148a708629c34f1c02, type: 3}
   m_Name: Peter
   m_EditorClassIdentifier: 
-  introductionText: blabla
+  introductionText: I am feeling sick, help me please
   NPCname: Peter
   looks: {fileID: 0}
-  sickness: 
+  sickness: 050000000200000008000000

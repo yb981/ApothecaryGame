@@ -1,15 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
+    static GameManager  instance;
+    public static GameManager Instance { get { return instance;} }
     patientPhase gamePhase = patientPhase.Enter;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        if(instance != null && instance != this) 
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
     }
 
     // Update is called once per frame
@@ -18,22 +28,28 @@ public class GameManager : MonoBehaviour
         
     }
 
-    void setGamePhase(patientPhase phase)
+    void setGamePhaseNext()
     {
-        /*Patients patient = GameObject.Find("Patient1");
-        switch(phase)
+        
+        //Debug.Log("setting next gamephase, from "+ gamePhase);
+        switch(gamePhase)
         {
-            case patientPhase.Enter:    patient.setPhase();    break;
-            case patientPhase.Talk:     talk();     break;
-            case patientPhase.Wait:     wait();     break;
-            case patientPhase.Leave:    leave();    break;
+            case patientPhase.Enter:    gamePhase = patientPhase.Talk;    break;
+            case patientPhase.Talk:     gamePhase = patientPhase.Wait;     break;
+            case patientPhase.Wait:     gamePhase = patientPhase.Leave;     break;
+            case patientPhase.Leave:    
+                getNewClient();
+                gamePhase = patientPhase.Enter;    break;
             default:                                break;
-        }*/
+        }
+        Patient pat = GameObject.FindObjectOfType<Patient>();
+        pat.setPhase(gamePhase);
+        Debug.Log("now "+ gamePhase);
     }
 
     public void informPhaseCompleted()
     {
-        setGamePhase(gamePhase++);
+        setGamePhaseNext();
     }
 
     public patientPhase getGamePhase()
@@ -43,20 +59,11 @@ public class GameManager : MonoBehaviour
 
     void getNewClient()
     {
-
-    }
-
-    void displayClientText()
-    {
-
+        // Getting new client
+        Debug.Log("new client!");
     }
 
     void displayClientStats()
-    {
-
-    }
-
-    void getClientOut()
     {
 
     }

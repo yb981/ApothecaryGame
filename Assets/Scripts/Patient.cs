@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public enum patientPhase
 {
@@ -15,11 +16,37 @@ public class Patient : MonoBehaviour
 {
 
     patientPhase state = patientPhase.Enter;
+    PatientSO patientDetails;
     [SerializeField] List<PatientSO> patientList = new List<PatientSO>();
     [SerializeField] GameObject goalPosition;
     [SerializeField] float moveFactor = 0.01f;
-    [SerializeField] GameManager manager;
-    //[SerializeField] TextMashProUGUI clientRequest;
+    [SerializeField] TextMeshPro TMPrequestText;
+
+    [Header("SicknessUI")]
+    [SerializeField] Slider caughBar;
+    [SerializeField] Slider bleedBar;
+    [SerializeField] Slider feverBar;
+
+
+    string currentClientName;
+    string currentClientRequest;
+    int[] currentClientSicknessValues = new int[3];
+    Sprite currentClientSprite;
+    
+    void Start()
+    {
+        // Disable text first
+        TMPrequestText.enabled = false;
+        displayClientStats(false);
+        
+        // get first client
+        PatientSO currentClient = patientList[0];
+        currentClientName = currentClient.getNPCname();
+        currentClientRequest = currentClient.getRequestText();
+        currentClientSicknessValues = currentClient.getSicknessValues();
+
+        TMPrequestText.text = currentClientName + ": "+currentClientRequest;
+    }
 
     void Update()
     {
@@ -41,8 +68,7 @@ public class Patient : MonoBehaviour
         if(goal.position == transform.position)
         {
             Debug.Log("finished enter");
-            manager.informPhaseCompleted();
-            state = patientPhase.Leave;
+            GameManager.Instance.informPhaseCompleted();
         }
     }
 
@@ -50,21 +76,33 @@ public class Patient : MonoBehaviour
     void talk()
     {
         Debug.Log("blabla");
-        state = patientPhase.Wait;
+        TMPrequestText.enabled = true;
+        displayClientStats(true);
+        GameManager.Instance.informPhaseCompleted();
     }
 
     void wait()
     {
         // Wait for Player Input
+        Debug.Log(GameManager.Instance.getGamePhase());
     }
 
     void leave()
     {
+        // Stop talking
+        TMPrequestText.enabled = false;
+        displayClientStats(false);
+
         Transform goal = goalPosition.transform.GetChild(1);
-        moveTo(goal.position);
+        if(moveTo(goal.position))   
+        {
+            GameManager.Instance.informPhaseCompleted();
+            getNewClient();
+        }
+
     }
     
-    void moveTo(Vector3 goal) 
+    bool moveTo(Vector3 goal) 
     {
         Vector3 currentPosition = transform.position;
         Vector3 deltaPos = new Vector3(0,0,0);
@@ -76,10 +114,45 @@ public class Patient : MonoBehaviour
         }
 
         transform.position = currentPosition;
+
+        return goal == currentPosition;
     }
 
     public void setPhase(patientPhase newPhase)
     {
         state = newPhase;
+    }
+
+    void displayClientStats(bool state)
+    {
+        caughBar.enabled = state;
+        bleedBar.enabled = state;
+        feverBar.enabled = state;
+        setClientStatsToUI();
+    }
+
+    void setClientStatsToUI()
+    {
+        caughBar.value = currentClientSicknessValues[0];
+        bleedBar.value = currentClientSicknessValues[1];
+        feverBar.value = currentClientSicknessValues[2];
+    }
+
+    void getNewClient()
+    {
+        // get random ID
+        int randomId = Random.Range(0,patientList.Count);
+
+
+        PatientSO currentClient = patientList[randomId];
+        currentClientName = currentClient.getNPCname();
+        currentClientRequest = currentClient.getRequestText();
+        currentClientSicknessValues = currentClient.getSicknessValues();
+
+        TMPrequestText.text = currentClientName + ": "+currentClientRequest;
+
+        // Remove current client from list, so he only appears once
+        // can later add flag for clients to re-apear
+        if(patientList.Contains(currentClient)){ patientList.Remove(currentClient);}
     }
 }

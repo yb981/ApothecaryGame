@@ -21,6 +21,7 @@ public class CreateDublicateOnClick : MonoBehaviour
         antiBleeding    = values[1];
         antiFever       = values[2];
         ingredientName  = Ingredient.getName();
+        //GetComponent<DragAndDrop>().enabled = false;
     }
 
     private void OnMouseDown() 

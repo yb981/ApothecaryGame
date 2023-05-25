@@ -56,4 +56,11 @@ public class ContainerCalculation : MonoBehaviour
             Debug.Log("calulated ingredient: "+i);
         }
     }
+
+    public void mixInsertIngredients()
+    {
+        calculateIngredientValues();
+        // create one potion or something
+        filledIngredients.Clear();
+    }
 }

@@ -10,6 +10,7 @@ public class CreateDublicateOnClick : MonoBehaviour
     private int antiBleeding;
     private int antiFever;
     private string ingredientName = "noNameSet";
+    private bool canInteract = true;
 
     private void Start() 
     {
@@ -24,6 +25,8 @@ public class CreateDublicateOnClick : MonoBehaviour
 
     private void OnMouseDown() 
     {
+        // See if interaction is enabled
+        if(!canInteract) return;
         GameObject dragCopy = Instantiate(gameObject); 
         dragCopy.GetComponent<DragAndDrop>().enabled = true;
         //dragCopy.GetComponent<CreateDublicateOnClick>().enabled = false; // cant disable because setting the values in this script
@@ -32,5 +35,10 @@ public class CreateDublicateOnClick : MonoBehaviour
     public int[] getIngredientValues()
     {
         return new int[] {antiCaugh, antiBleeding, antiFever};
+    }
+
+    public void setInteraction(bool state) 
+    {
+        canInteract = state;
     }
 }

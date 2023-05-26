@@ -57,10 +57,31 @@ public class ContainerCalculation : MonoBehaviour
         }
     }
 
-    public void mixInsertIngredients()
+    public int[] mixInsertIngredients()
     {
         calculateIngredientValues();
+
         // create one potion or something
+
+        // Display
+
+        clearContainer();
+
+        return new int[] {totalCaugh, totalBlood, totalFever};
+    }
+
+    private void clearContainer()
+    {
+        // Clear List
+        foreach (var obj in filledIngredients)
+        {
+            GameObject tmp;
+            if(filledIngredients.Contains(obj))
+            { 
+                tmp = obj; 
+                Destroy(obj);
+            }   
+        }
         filledIngredients.Clear();
     }
 }

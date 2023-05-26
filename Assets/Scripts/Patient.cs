@@ -155,4 +155,10 @@ public class Patient : MonoBehaviour
         // can later add flag for clients to re-apear
         if(patientList.Contains(currentClient)){ patientList.Remove(currentClient);}
     }
+
+    // Getter
+    public int[] getPatientSicknessValues()
+    {
+        return currentClientSicknessValues;
+    }
 }

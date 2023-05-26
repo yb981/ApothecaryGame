@@ -125,9 +125,9 @@ public class Patient : MonoBehaviour
 
     void displayClientStats(bool state)
     {
-        caughBar.enabled = state;
-        bleedBar.enabled = state;
-        feverBar.enabled = state;
+        caughBar.gameObject.SetActive(state);
+        bleedBar.gameObject.SetActive(state);
+        feverBar.gameObject.SetActive(state);
         setClientStatsToUI();
     }
 

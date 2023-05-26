@@ -71,15 +71,6 @@ public class GameManager : MonoBehaviour
         return gamePhase;
     }
 
-    void displayResultSuccess(int result)
-    {
-        if(scoreBar == null) scoreBar = GameObject.Find("Score").GetComponent<Slider>();
-        float resultPercent = result/30f;
-        scoreBar.value = resultPercent;
-         Debug.Log("Score in numbers is: "+ result);
-        Debug.Log("Score in % is: "+ resultPercent);
-    }
-
     private void mixContainerIngredients()
     {
         // Get both ObjectReferences (bad practice, will need to learn a better way later on)
@@ -94,7 +85,7 @@ public class GameManager : MonoBehaviour
         valueSickness = pat.getPatientSicknessValues();
 
         // Calculate Result
-        int result = resultFormula(resultPotion, valueSickness);
+        int result = resultFormula(valueSickness, resultPotion);
 
         // Display Result
         displayResultSuccess(result);
@@ -105,11 +96,13 @@ public class GameManager : MonoBehaviour
 
     private int resultFormula(int[] sickness, int[] input)
     {
+
+        Debug.Log("calculating score value");
         int score = 0;
         int[] diff = new int[3];
 
         // get all differences
-        for (int i = 0; i < sickness.Length; i++)
+        for (int i = 0; i < diff.Length; i++)
         {
             // take the diff
             // eg. 8 - 4 = 4
@@ -129,12 +122,23 @@ public class GameManager : MonoBehaviour
 
             // make sure value is in range and not negative
             // CAN REMOVE THIS FOR DIFFICULTY INCREASE
-            Mathf.Clamp(diff[i],0,10);
+            diff[i] = Mathf.Clamp(diff[i],0,10);
+
+            Debug.Log("adding: "+diff[i]);
 
             // add up
-            score =+ diff[i];
+            score += diff[i];
         }
 
         return score;
+    }
+    
+    void displayResultSuccess(int result)
+    {
+        if(scoreBar == null) scoreBar = GameObject.Find("Score").GetComponent<Slider>();
+        float resultPercent = result/30f;
+        scoreBar.value = resultPercent;
+         Debug.Log("Score in numbers is: "+ result);
+        Debug.Log("Score in % is: "+ resultPercent);
     }
 }

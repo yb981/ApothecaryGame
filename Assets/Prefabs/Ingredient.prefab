@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3291308927078344522}
   - component: {fileID: 3291308927078344523}
   m_Layer: 0
-  m_Name: Moos
+  m_Name: Ingredient
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

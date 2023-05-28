@@ -67,7 +67,6 @@ public class Patient : MonoBehaviour
 
         if(goal.position == transform.position)
         {
-            Debug.Log("finished enter");
             GameManager.Instance.informPhaseCompleted();
         }
     }
@@ -75,7 +74,6 @@ public class Patient : MonoBehaviour
 
     void talk()
     {
-        Debug.Log("blabla");
         TMPrequestText.enabled = true;
         displayClientStats(true);
         GameManager.Instance.informPhaseCompleted();
@@ -84,7 +82,6 @@ public class Patient : MonoBehaviour
     void wait()
     {
         // Wait for Player Input
-        Debug.Log(GameManager.Instance.getGamePhase());
     }
 
     void leave()

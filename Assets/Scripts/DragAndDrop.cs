@@ -51,7 +51,7 @@ public class DragAndDrop : MonoBehaviour
             if(otherCollider.bounds.Contains(GetMouseWorldPosition() + mousePositionOffset))
             {
                 // Adding Ingredient to Container, if fails delete Object
-                if(!addToContainer()) Destroy(gameObject);
+                //if(!addToContainer()) Destroy(gameObject);
             }
             else
             {
@@ -66,7 +66,7 @@ public class DragAndDrop : MonoBehaviour
         cont.GetComponent<ContainerCalculation>().setValues(c,b,f);
     }
 
-    bool addToContainer()
+    /*   bool addToContainer()
     {
         // Adding Ingredient to Container List, and check if it was successful
         bool successfullyAddedIng = snapTarget.GetComponent<ContainerCalculation>().addIngredient(gameObject);
@@ -75,5 +75,5 @@ public class DragAndDrop : MonoBehaviour
             return true;
         }
         return false;
-    }
+    }*/
 }

@@ -141,4 +141,6 @@ public class GameManager : MonoBehaviour
          Debug.Log("Score in numbers is: "+ result);
         Debug.Log("Score in % is: "+ resultPercent);
     }
+
+
 }

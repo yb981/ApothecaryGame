@@ -5,10 +5,14 @@ using UnityEngine;
 public class IngredientPiece : MonoBehaviour
 {
 
-    [SerializeField] GameObject Container;
+    GameObject container;
     private IngredientSO ingredientSO;
     bool isOverContainer = false;
 
+    void Start()
+    {
+        container = GameObject.FindGameObjectWithTag("Container");
+    }
 
     // Update is called once per frame
     void Update()
@@ -25,7 +29,7 @@ public class IngredientPiece : MonoBehaviour
             {
                 // if over container add to container
                 Debug.Log("adding exactly 1 time, by calling addIng now");
-                Container.GetComponent<ContainerCalculation>().addIngredient(ingredientSO);
+                container.GetComponent<ContainerCalculation>().addIngredient(ingredientSO);
             }
 
             
@@ -33,7 +37,7 @@ public class IngredientPiece : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        Debug.Log(Container.GetComponent<ContainerCalculation>().getListSize());
+        Debug.Log(container.GetComponent<ContainerCalculation>().getListSize());
     }
 
     private void OnTriggerEnter2D(Collider2D other) 

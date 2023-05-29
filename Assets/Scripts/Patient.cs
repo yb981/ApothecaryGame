@@ -17,24 +17,43 @@ public class Patient : MonoBehaviour
 
     patientPhase state = patientPhase.Enter;
     PatientSO patientDetails;
+
+    public string[] sicknessValueNames = {"Caugh","Blood","Fever"};
+
+
+    [Header("ClientsUI")]
+    [SerializeField] Canvas clientCanvas;
     [SerializeField] List<PatientSO> patientList = new List<PatientSO>();
+    [SerializeField] TextMeshProUGUI TMPrequestText;
     [SerializeField] GameObject goalPosition;
     [SerializeField] float moveFactor = 0.01f;
-    [SerializeField] TextMeshPro TMPrequestText;
+
 
     [Header("SicknessUI")]
+
     [SerializeField] Slider caughBar;
     [SerializeField] Slider bleedBar;
     [SerializeField] Slider feverBar;
+    [SerializeField] TextMeshProUGUI TMPv1;
+    [SerializeField] TextMeshProUGUI TMPv2;
+    [SerializeField] TextMeshProUGUI TMPv3;
 
 
+    // Client Stats
     string currentClientName;
     string currentClientRequest;
     int[] currentClientSicknessValues = new int[3];
     Sprite currentClientSprite;
     
+    
     void Start()
     {
+        // Name Values
+        TMPv1.text = sicknessValueNames[0];
+        TMPv2.text = sicknessValueNames[1];
+        TMPv3.text = sicknessValueNames[2];
+
+
         // Disable text first
         TMPrequestText.enabled = false;
         displayClientStats(false);
@@ -46,6 +65,11 @@ public class Patient : MonoBehaviour
         currentClientSicknessValues = currentClient.getSicknessValues();
 
         TMPrequestText.text = currentClientName + ": "+currentClientRequest;
+
+        // disable interaction on sliders
+        caughBar.enabled = false;
+        bleedBar.enabled = false;
+        feverBar.enabled = false;
     }
 
     void Update()
@@ -122,6 +146,7 @@ public class Patient : MonoBehaviour
 
     void displayClientStats(bool state)
     {
+        clientCanvas.enabled = state;
         caughBar.gameObject.SetActive(state);
         bleedBar.gameObject.SetActive(state);
         feverBar.gameObject.SetActive(state);

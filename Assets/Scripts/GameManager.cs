@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class GameManager : MonoBehaviour
     patientPhase gamePhase = patientPhase.Enter;
     Patient pat;
     Slider scoreBar;
+    TextMeshProUGUI scoreText;
+    GameObject score;
     
 
     bool readyToCombine = false;
@@ -30,13 +33,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        scoreBar = GameObject.Find("Score").GetComponent<Slider>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        referenceScore();
+        scoreBar.enabled = false;
+        displayScoreBar(false);
     }
 
     void setGamePhaseNext()
@@ -45,7 +44,9 @@ public class GameManager : MonoBehaviour
         // Setting next Gamephase for Client
         switch(gamePhase)
         {
-            case patientPhase.Enter:    gamePhase = patientPhase.Talk;    break;
+            case patientPhase.Enter:
+            displayScoreBar(false);    
+            gamePhase = patientPhase.Talk;    break;
             case patientPhase.Talk:     gamePhase = patientPhase.Wait;     break;
             case patientPhase.Wait:     gamePhase = patientPhase.Leave;     break;
             case patientPhase.Leave:    gamePhase = patientPhase.Enter;    break;
@@ -133,14 +134,33 @@ public class GameManager : MonoBehaviour
         return score;
     }
     
+    void displayScoreBar(bool state)
+    {
+        if(scoreBar == null) referenceScore();
+        score.gameObject.SetActive(state);
+    }
+
     void displayResultSuccess(int result)
     {
-        if(scoreBar == null) scoreBar = GameObject.Find("Score").GetComponent<Slider>();
+        if(scoreBar == null) referenceScore();
+
+        // make sure scorebar is visible
+        if(!scoreBar.IsActive()) displayScoreBar(true);
+
+
         float resultPercent = result/30f;
         scoreBar.value = resultPercent;
-         Debug.Log("Score in numbers is: "+ result);
+        float wholeNumberPercent = resultPercent * 100;
+        scoreText.text = wholeNumberPercent.ToString("0.0")+"%";
+        Debug.Log("Score in numbers is: "+ result);
         Debug.Log("Score in % is: "+ resultPercent);
     }
 
+    private void referenceScore()
+    {
+        score = GameObject.Find("Score");
+        scoreBar = score.GetComponentInChildren<Slider>();
+        scoreText = score.GetComponentInChildren<TextMeshProUGUI>();
+    }
 
 }

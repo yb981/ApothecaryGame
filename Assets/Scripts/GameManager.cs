@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     Slider scoreBar;
     TextMeshProUGUI scoreText;
     GameObject score;
+    GameObject helper;
+    bool displayHelper = true;
     
 
     bool readyToCombine = false;
@@ -36,6 +38,12 @@ public class GameManager : MonoBehaviour
         referenceScore();
         scoreBar.enabled = false;
         displayScoreBar(false);
+        helper = GameObject.Find("Helper");
+    }
+
+    private void Update() 
+    {
+
     }
 
     void setGamePhaseNext()
@@ -45,10 +53,16 @@ public class GameManager : MonoBehaviour
         switch(gamePhase)
         {
             case patientPhase.Enter:
-            displayScoreBar(false);    
-            gamePhase = patientPhase.Talk;    break;
-            case patientPhase.Talk:     gamePhase = patientPhase.Wait;     break;
-            case patientPhase.Wait:     gamePhase = patientPhase.Leave;     break;
+                displayScoreBar(false);    
+                gamePhase = patientPhase.Talk;    break;
+
+            case patientPhase.Talk:     
+                gamePhase = patientPhase.Wait;     break;
+
+            case patientPhase.Wait:
+                if(displayHelper) disableHelper();
+                gamePhase = patientPhase.Leave;     break;
+
             case patientPhase.Leave:    gamePhase = patientPhase.Enter;    break;
             default:                                break;
         }
@@ -163,4 +177,9 @@ public class GameManager : MonoBehaviour
         scoreText = score.GetComponentInChildren<TextMeshProUGUI>();
     }
 
+    private void disableHelper()
+    {
+        displayHelper = false;
+        helper.GetComponent<Helper>().displayHelperText(false);   
+    }
 }

@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class IngredientContainer : MonoBehaviour
 {
 
     [SerializeField] GameObject ingredientPiece;
+    [SerializeField] IngredientSO ingredientSO;
 
     private GameObject ingredientInstace;
     Vector2 mouseOffset;
+    TextMeshPro textName;
 
     // ingredientSO Stats
-    [SerializeField] IngredientSO ingredientSO;
     private int antiCaugh;
     private int antiBleeding;
     private int antiFever;
@@ -19,6 +21,8 @@ public class IngredientContainer : MonoBehaviour
 
     private void Start() 
     {
+        textName = GetComponentInChildren<TextMeshPro>();
+
         // Set the heal values from the Scritable Object
         int[] values = new int[3];
         values          = ingredientSO.getValues();
@@ -26,6 +30,8 @@ public class IngredientContainer : MonoBehaviour
         antiBleeding    = values[1];
         antiFever       = values[2];
         ingredientName  = ingredientSO.getName();
+
+        textName.text = ingredientName;
     }
 
     private void OnMouseDown() 

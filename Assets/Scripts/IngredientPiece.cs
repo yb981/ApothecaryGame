@@ -8,10 +8,13 @@ public class IngredientPiece : MonoBehaviour
     GameObject container;
     private IngredientSO ingredientSO;
     bool isOverContainer = false;
+    Helper helper;
 
     void Start()
     {
         container = GameObject.FindGameObjectWithTag("Container");
+        helper = GameObject.Find("Helper").GetComponent<Helper>();
+        helper.inoformIsHolding(true);
     }
 
     // Update is called once per frame
@@ -34,6 +37,7 @@ public class IngredientPiece : MonoBehaviour
 
             
             // delete object
+            helper.inoformIsHolding(false);
             Destroy(this.gameObject);
         }
 

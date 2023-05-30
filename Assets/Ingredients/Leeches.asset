@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4682ff80ad6d4ca478c9faf852881f65, type: 3}
-  m_Name: new Ingredient
+  m_Name: Leeches
   m_EditorClassIdentifier: 
-  ingredientName: moonflower
-  antiCaugh: 2
-  antiBleeding: 0
-  antiFever: 1
+  ingredientName: Leeches
+  antiCaugh: 0
+  antiBleeding: 4
+  antiFever: 2

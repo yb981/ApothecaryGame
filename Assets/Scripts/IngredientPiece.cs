@@ -31,7 +31,6 @@ public class IngredientPiece : MonoBehaviour
             if(isOverContainer)
             {
                 // if over container add to container
-                Debug.Log("adding exactly 1 time, by calling addIng now");
                 container.GetComponent<ContainerCalculation>().addIngredient(ingredientSO);
             }
 
@@ -40,8 +39,6 @@ public class IngredientPiece : MonoBehaviour
             helper.inoformIsHolding(false);
             Destroy(this.gameObject);
         }
-
-        Debug.Log(container.GetComponent<ContainerCalculation>().getListSize());
     }
 
     private void OnTriggerEnter2D(Collider2D other) 

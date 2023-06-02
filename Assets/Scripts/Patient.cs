@@ -9,7 +9,8 @@ public enum patientPhase
     Enter,
     Talk,
     Wait,
-    Leave
+    Leave,
+    Score
 }
 
 public class Patient : MonoBehaviour
@@ -17,6 +18,7 @@ public class Patient : MonoBehaviour
 
     patientPhase state = patientPhase.Enter;
     PatientSO patientDetails;
+    bool gotNewClient = false;
 
     public string[] sicknessValueNames = {"Caugh","Blood","Fever"};
 
@@ -59,12 +61,12 @@ public class Patient : MonoBehaviour
         displayClientStats(false);
         
         // get first client
-        PatientSO currentClient = patientList[0];
-        currentClientName = currentClient.getNPCname();
-        currentClientRequest = currentClient.getRequestText();
-        currentClientSicknessValues = currentClient.getSicknessValues();
+        //PatientSO currentClient = patientList[0];
+        //currentClientName = currentClient.getNPCname();
+        //currentClientRequest = currentClient.getRequestText();
+        //currentClientSicknessValues = currentClient.getSicknessValues();
 
-        TMPrequestText.text = currentClientName + ": "+currentClientRequest;
+        //TMPrequestText.text = currentClientName + ": "+currentClientRequest;
 
         // disable interaction on sliders
         caughBar.enabled = false;
@@ -80,12 +82,14 @@ public class Patient : MonoBehaviour
             case patientPhase.Talk:     talk();     break;
             case patientPhase.Wait:     wait();     break;
             case patientPhase.Leave:    leave();    break;
+            case patientPhase.Score:    Score();    break;
             default:                                break;
         }
     }
 
     void enter()
     {
+        getNewClient();
         Transform goal = goalPosition.transform.GetChild(0);
         moveTo(goal.position);
 
@@ -118,9 +122,14 @@ public class Patient : MonoBehaviour
         if(moveTo(goal.position))   
         {
             GameManager.Instance.informPhaseCompleted();
-            getNewClient();
         }
 
+    }
+
+    void Score()
+    {
+        // Reset Flag for new Cycle
+        gotNewClient = false;
     }
     
     bool moveTo(Vector3 goal) 
@@ -162,6 +171,9 @@ public class Patient : MonoBehaviour
 
     void getNewClient()
     {
+        // Do this method only once per enter
+        if(gotNewClient) return;
+
         // get random ID
         int randomId = Random.Range(0,patientList.Count);
 
@@ -176,6 +188,10 @@ public class Patient : MonoBehaviour
         // Remove current client from list, so he only appears once
         // can later add flag for clients to re-apear
         if(patientList.Contains(currentClient)){ patientList.Remove(currentClient);}
+        // Maybe add this to a later state. But would need to introduce new state only for delete#
+
+        // Do not Enter again
+        gotNewClient = true;
     }
 
     // Getter

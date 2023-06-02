@@ -13,9 +13,12 @@ public class GameManager : MonoBehaviour
     Patient pat;
     Slider scoreBar;
     TextMeshProUGUI scoreText;
-    GameObject score;
+    ScoreBar score;
     GameObject helper;
     bool displayHelper = true;
+
+    int[] resultPotion = new int[3];
+    int[] valueSickness = new int[3];
     
 
     bool readyToCombine = false;
@@ -36,7 +39,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         referenceScore();
-        scoreBar.enabled = false;
         displayScoreBar(false);
         helper = GameObject.Find("Helper");
     }
@@ -54,20 +56,39 @@ public class GameManager : MonoBehaviour
         {
             case patientPhase.Enter:
                 displayScoreBar(false);    
-                gamePhase = patientPhase.Talk;    break;
+                gamePhase = patientPhase.Talk;    
+                break;
 
             case patientPhase.Talk:     
-                gamePhase = patientPhase.Wait;     break;
+                gamePhase = patientPhase.Wait;     
+                break;
 
             case patientPhase.Wait:
                 if(displayHelper) disableHelper();
-                gamePhase = patientPhase.Leave;     break;
+                gamePhase = patientPhase.Leave;     
+                break;
 
-            case patientPhase.Leave:    gamePhase = patientPhase.Enter;    break;
+            case patientPhase.Leave:    
+                gamePhase = patientPhase.Score;
+                TriggerFeedbackController();     
+                break;
+
+            case patientPhase.Score:    
+                gamePhase = patientPhase.Enter;
+                    
+                break;
+
             default:                                break;
         }
         pat = GameObject.FindObjectOfType<Patient>();
         pat.setPhase(gamePhase);
+    }
+
+    private void TriggerFeedbackController()
+    {
+        PlayerFeedback playerFeedbackController = FindAnyObjectByType<PlayerFeedback>();
+        playerFeedbackController.StartFeedback(resultPotion,valueSickness);
+        Debug.Log("gamemanager started feedbackloop");
     }
 
     public void informPhaseCompleted()
@@ -93,8 +114,8 @@ public class GameManager : MonoBehaviour
         ContainerCalculation containerScript = GameObject.FindObjectOfType<ContainerCalculation>();
 
         // Init both tmp Arrays to compare
-        int[] resultPotion = new int[3];
-        int[] valueSickness = new int[3];
+        resultPotion = new int[3];
+        valueSickness = new int[3];
         
         resultPotion = containerScript.mixInsertIngredients();
         valueSickness = pat.getPatientSicknessValues();
@@ -111,8 +132,6 @@ public class GameManager : MonoBehaviour
 
     private int resultFormula(int[] sickness, int[] input)
     {
-
-        Debug.Log("calculating score value");
         int score = 0;
         int[] diff = new int[3];
 
@@ -139,8 +158,6 @@ public class GameManager : MonoBehaviour
             // CAN REMOVE THIS FOR DIFFICULTY INCREASE
             diff[i] = Mathf.Clamp(diff[i],0,10);
 
-            Debug.Log("adding: "+diff[i]);
-
             // add up
             score += diff[i];
         }
@@ -150,31 +167,28 @@ public class GameManager : MonoBehaviour
     
     void displayScoreBar(bool state)
     {
-        if(scoreBar == null) referenceScore();
-        score.gameObject.SetActive(state);
+        if(score == null) referenceScore();
+        score.toggleScoreDisplay(state);
     }
 
     void displayResultSuccess(int result)
     {
-        if(scoreBar == null) referenceScore();
+        if(score == null) referenceScore();
 
         // make sure scorebar is visible
-        if(!scoreBar.IsActive()) displayScoreBar(true);
+        if(!score.isScoreBarDisplayed()) displayScoreBar(true);
 
 
         float resultPercent = result/30f;
-        scoreBar.value = resultPercent;
-        float wholeNumberPercent = resultPercent * 100;
-        scoreText.text = wholeNumberPercent.ToString("0.0")+"%";
-        Debug.Log("Score in numbers is: "+ result);
-        Debug.Log("Score in % is: "+ resultPercent);
+
+        score.setScore(resultPercent);
     }
 
     private void referenceScore()
     {
-        score = GameObject.Find("Score");
-        scoreBar = score.GetComponentInChildren<Slider>();
-        scoreText = score.GetComponentInChildren<TextMeshProUGUI>();
+        score = FindAnyObjectByType<ScoreBar>();
+        //scoreBar = score.GetComponentInChildren<Slider>();
+        //scoreText = score.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void disableHelper()

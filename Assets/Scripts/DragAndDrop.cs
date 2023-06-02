@@ -16,7 +16,6 @@ public class DragAndDrop : MonoBehaviour
         if(Input.GetMouseButton(0))
         {
             if(clickScript.isSPawner()) return;
-            Debug.Log("trying to do the instant mouseDown");
             OnMouseDown();
             OnMouseDrag();
         }

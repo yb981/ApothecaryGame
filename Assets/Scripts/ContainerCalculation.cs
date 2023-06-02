@@ -45,10 +45,6 @@ public class ContainerCalculation : MonoBehaviour
 
     public bool addIngredient(IngredientSO ingredient)
     {
-        for (int i = 0; i < filledIngredients.Count; i++)
-        {
-            Debug.Log(i+": "+filledIngredients[i]);
-        }
         if(filledIngredients.Count < 3)
         {
             filledIngredients.Add(createNewSOObject(ingredient));
@@ -76,7 +72,6 @@ public class ContainerCalculation : MonoBehaviour
             int[] tmp = new int[3];
             tmp = filledIngredients[i].getValues();
             addValues(tmp[0], tmp[1], tmp[2]);
-            Debug.Log("calulated ingredient: "+i);
         }
     }
 

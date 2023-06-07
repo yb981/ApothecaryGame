@@ -16,12 +16,11 @@ public class GameManager : MonoBehaviour
     ScoreBar score;
     GameObject helper;
     bool displayHelper = true;
+    HandleAdminSliders handleSliders;
 
     int[] resultPotion = new int[3];
     int[] valueSickness = new int[3];
-    
 
-    bool readyToCombine = false;
     // Start is called before the first frame update
     void Awake()
     {
@@ -41,6 +40,7 @@ public class GameManager : MonoBehaviour
         referenceScore();
         displayScoreBar(false);
         helper = GameObject.Find("Helper");
+        handleSliders = FindObjectOfType<HandleAdminSliders>();
     }
 
     private void Update() 
@@ -51,37 +51,45 @@ public class GameManager : MonoBehaviour
     void setGamePhaseNext()
     {
         
+        pat = GameObject.FindObjectOfType<Patient>();
+        
+
         // Setting next Gamephase for Client
         switch(gamePhase)
         {
             case patientPhase.Enter:
                 displayScoreBar(false);    
-                gamePhase = patientPhase.Talk;    
+                gamePhase = patientPhase.Talk;   
+                pat.setPhase(gamePhase); 
                 break;
 
             case patientPhase.Talk:     
-                gamePhase = patientPhase.Wait;     
+                gamePhase = patientPhase.Wait;  
+                pat.setPhase(gamePhase);   
                 break;
 
             case patientPhase.Wait:
                 if(displayHelper) disableHelper();
-                gamePhase = patientPhase.Leave;     
+                gamePhase = patientPhase.Leave;
+                pat.setPhase(gamePhase);     
                 break;
 
             case patientPhase.Leave:    
                 gamePhase = patientPhase.Score;
+                pat.setPhase(gamePhase);
                 TriggerFeedbackController();     
                 break;
 
             case patientPhase.Score:    
                 gamePhase = patientPhase.Enter;
+                pat.setPhase(gamePhase);
                     
                 break;
 
             default:                                break;
         }
-        pat = GameObject.FindObjectOfType<Patient>();
-        pat.setPhase(gamePhase);
+
+        Debug.Log("GAMEMANAGER: telling patient to "+gamePhase);
     }
 
     private void TriggerFeedbackController()
@@ -161,7 +169,7 @@ public class GameManager : MonoBehaviour
             // add up
             score += diff[i];
         }
-
+        Debug.Log("GAMEMANAGER: Scoore should be: "+score );
         return score;
     }
     

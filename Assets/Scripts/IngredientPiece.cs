@@ -9,6 +9,7 @@ public class IngredientPiece : MonoBehaviour
     private IngredientSO ingredientSO;
     bool isOverContainer = false;
     Helper helper;
+    int[] assumedValues;
 
     void Start()
     {
@@ -17,7 +18,6 @@ public class IngredientPiece : MonoBehaviour
         helper.inoformIsHolding(true);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(Input.GetMouseButton(0))
@@ -31,7 +31,7 @@ public class IngredientPiece : MonoBehaviour
             if(isOverContainer)
             {
                 // if over container add to container
-                container.GetComponent<ContainerCalculation>().addIngredient(ingredientSO);
+                container.GetComponent<ContainerCalculation>().addIngredient(ingredientSO, assumedValues);
             }
 
             
@@ -60,5 +60,12 @@ public class IngredientPiece : MonoBehaviour
     public void setIngredientSO(IngredientSO ing)
     {
         ingredientSO = ing;
+    }
+
+    public void setAssumedValues(int[] values)
+    {
+        
+        assumedValues = new int[values.Length];
+        assumedValues = values;
     }
 }

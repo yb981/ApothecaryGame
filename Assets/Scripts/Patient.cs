@@ -171,8 +171,11 @@ public class Patient : MonoBehaviour
 
     void getNewClient()
     {
+
         // Do this method only once per enter
         if(gotNewClient) return;
+
+        Debug.Log("PATIENT: getting new client");
 
         // get random ID
         int randomId = Random.Range(0,patientList.Count);

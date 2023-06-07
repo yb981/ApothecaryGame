@@ -13,7 +13,6 @@ public class ScoreBar : MonoBehaviour
     Animator myAnimator;
     float scoreValue = 0;
     bool displayScore = false;
-    bool justStarted = true;
     float currentValue = 0;
     bool animationComplete = false;
 

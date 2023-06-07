@@ -9,18 +9,22 @@ public class ContainerCalculation : MonoBehaviour
     int totalCaugh = 0;
     int totalBlood = 0;
     int totalFever = 0;
+    
     int maxIngredients = 3;
+    int[] assumedValuesinContainer;
     List<IngredientSO> filledIngredients = new List<IngredientSO>();
 
     // Visual Feedback
-    [SerializeField] ParticleSystem particleSystemAddIng;
-    TextMeshPro textFFilledIngredients;
-    string inputNumberText = " / ";
+    ContainerDisplay myPresentation;
+    HandleAdminSliders handleSliders;
+
 
     private void Start() 
     {
-        textFFilledIngredients = GetComponentInChildren<TextMeshPro>();
-        updateInputNumberText();
+        myPresentation = GetComponentInChildren<ContainerDisplay>(true);
+        handleSliders = GetComponentInChildren<HandleAdminSliders>();
+
+        assumedValuesinContainer = new int[maxIngredients];
     }
 
     // Set & Get
@@ -38,19 +42,47 @@ public class ContainerCalculation : MonoBehaviour
         totalFever = f;
     }
 
+    public void AddValuesAssumed(int[] values)
+    {
+        for (int i = 0; i < assumedValuesinContainer.Length; i++)
+        {
+            assumedValuesinContainer[i] += values[i];
+        }
+    }
+
+    public void SetValuesAssumed(int[] values)
+    {
+        for (int i = 0; i < assumedValuesinContainer.Length; i++)
+        {
+            assumedValuesinContainer[i] = values[i];
+        }        
+    }
+
     public int[] getValues()
     {
         return new int[] {totalCaugh, totalBlood, totalFever};
     }
 
-    public bool addIngredient(IngredientSO ingredient)
+    public bool addIngredient(IngredientSO ingredient, int[] assumedValues)
     {
+            if(assumedValues == null){
+                Debug.Log("CONTAINER: called add ingredient but int[] assumed Value is not set! return");
+                return false;
+            }  
+
         if(filledIngredients.Count < 3)
         {
-            filledIngredients.Add(createNewSOObject(ingredient));
-            calculateIngredientValues();
-            playParticleEffect();
-            updateInputNumberText();
+            // add the SO (copy) of the ingredient into the List
+            filledIngredients.Add(createCopyOfSOObject(ingredient));
+            CalculateIngredientInContainer();
+            AddValuesAssumed(assumedValues);
+            
+            // Visuals
+            myPresentation.InputTriggerVisuals();
+            handleSliders.SetSliderValues(assumedValuesinContainer);
+
+            // For Cheat, accurate values
+            //handleSliders.SetSliderValues(new int[] {totalCaugh, totalBlood, totalFever});
 
             return true;
         }else{
@@ -59,14 +91,17 @@ public class ContainerCalculation : MonoBehaviour
         }
     }
 
-    private IngredientSO createNewSOObject(IngredientSO old)
+    private IngredientSO createCopyOfSOObject(IngredientSO old)
     {
         IngredientSO ingredientSO = old;
         return ingredientSO;
     }
 
-    private void calculateIngredientValues()
+    private void CalculateIngredientInContainer()
     {
+        // Reset Values first
+        setValues(0,0,0);
+
         for(int i = 0; i < filledIngredients.Count; i++)
         {
             int[] tmp = new int[3];
@@ -77,7 +112,7 @@ public class ContainerCalculation : MonoBehaviour
 
     public int[] mixInsertIngredients()
     {
-        calculateIngredientValues();
+        CalculateIngredientInContainer();
 
         // create one potion or something
 
@@ -88,12 +123,6 @@ public class ContainerCalculation : MonoBehaviour
         return new int[] {totalCaugh, totalBlood, totalFever};
     }
 
-    private void clearContainer()
-    {
-        // Clear List
-        filledIngredients.Clear();
-        updateInputNumberText();
-    }
 
     public void inPutCombine()
     {
@@ -113,6 +142,15 @@ public class ContainerCalculation : MonoBehaviour
         }
     }
 
+    private void clearContainer()
+    {
+        // Clear List
+        filledIngredients.Clear();
+        myPresentation.updateInputNumberText();
+        SetValuesAssumed(new int[] {0,0,0});
+        handleSliders.SetSliderValues(assumedValuesinContainer);
+    }
+
     public void inPutClear()
     {
         clearContainer();
@@ -123,16 +161,8 @@ public class ContainerCalculation : MonoBehaviour
         return filledIngredients.Count;
     }
 
-    private void playParticleEffect()
+    public int GetMaxIngredients()
     {
-        particleSystemAddIng.Stop();
-        particleSystemAddIng.Play();
-    }
-
-    private void updateInputNumberText()
-    {
-        if(textFFilledIngredients == null) textFFilledIngredients = GetComponentInChildren<TextMeshPro>();
-        inputNumberText = filledIngredients.Count + " / " + maxIngredients;
-        textFFilledIngredients.text = inputNumberText;
+        return maxIngredients;
     }
 }

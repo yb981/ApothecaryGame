@@ -88,15 +88,12 @@ public class GameManager : MonoBehaviour
 
             default:                                break;
         }
-
-        Debug.Log("GAMEMANAGER: telling patient to "+gamePhase);
     }
 
     private void TriggerFeedbackController()
     {
         PlayerFeedback playerFeedbackController = FindAnyObjectByType<PlayerFeedback>();
         playerFeedbackController.StartFeedback(resultPotion,valueSickness);
-        Debug.Log("gamemanager started feedbackloop");
     }
 
     public void informPhaseCompleted()
@@ -169,7 +166,6 @@ public class GameManager : MonoBehaviour
             // add up
             score += diff[i];
         }
-        Debug.Log("GAMEMANAGER: Scoore should be: "+score );
         return score;
     }
     

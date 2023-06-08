@@ -13,6 +13,7 @@ public class ContainerCalculation : MonoBehaviour
     int maxIngredients = 3;
     int[] assumedValuesinContainer;
     List<IngredientSO> filledIngredients = new List<IngredientSO>();
+    List<IngredientSO> oldIngredients = new List<IngredientSO>();
 
     // Visual Feedback
     ContainerDisplay myPresentation;
@@ -144,6 +145,10 @@ public class ContainerCalculation : MonoBehaviour
 
     private void clearContainer()
     {
+        // Save into old ingredients
+        oldIngredients.Clear();
+        oldIngredients = new List<IngredientSO>(filledIngredients);
+
         // Clear List
         filledIngredients.Clear();
         myPresentation.updateInputNumberText();
@@ -164,5 +169,10 @@ public class ContainerCalculation : MonoBehaviour
     public int GetMaxIngredients()
     {
         return maxIngredients;
+    }
+
+    public List<IngredientSO> GetLastContainerIngredients()
+    {
+        return oldIngredients;
     }
 }

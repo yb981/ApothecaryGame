@@ -7,11 +7,14 @@ using System;
 
 public class PlayerFeedback : MonoBehaviour
 {
-    TextMeshProUGUI playerFeedbackTMP;
-    Image background;
-    GameManager manager;
-
-    FeedbackLogic myFeedbackLogic;
+    [SerializeField] private ContainerCalculation container;
+    private TextMeshProUGUI playerFeedbackTMP;
+    private GameManager manager;
+    private GameObject myBackground;
+    private FeedbackLogic myFeedbackLogic;
+    private HandleAdminSliders mySliders;
+    private GameObject[] ingredients;
+    private IngredientSliders[] ingredientSliders;
 
     enum PlayerFeedbackStates
     {
@@ -26,27 +29,62 @@ public class PlayerFeedback : MonoBehaviour
 
     void Start()
     {
-        playerFeedbackTMP = GetComponentInChildren<TextMeshProUGUI>();
-        background =  GetComponentInChildren<Image>();
-        manager = GameManager.Instance;
-        myFeedbackLogic = new FeedbackLogic();
+        // Get Components
+        playerFeedbackTMP   = GetComponentInChildren<TextMeshProUGUI>();
+        myBackground        = GameObject.Find("FeedbackBackground");
+        mySliders           = GetComponentInChildren<HandleAdminSliders>();
+        manager             = GameManager.Instance;
+        ingredients         = GameObject.FindGameObjectsWithTag("Ingredient");
+        ingredientSliders   = GetComponentsInChildren<IngredientSliders>();
+
+        // Create internal Components
+        myFeedbackLogic     = new FeedbackLogic();
+
+        // Start Functions
         DisplayFeedback(false);
     }
 
     public void StartFeedback(int[] playerInput, int[] clientValue)
     {
-        Debug.Log("Started feedback");
         DisplayFeedback(true);
-        playerFeedbackTMP.text = myFeedbackLogic.CalculateFeedback(playerInput,clientValue);
 
-        //taskCompleted();
+        string outputText = "";
+        string[] ingredientNames;
+
+        ingredientNames = GetIngredients();
+        outputText = "You added: ";
+        for (int i = 0; i < ingredientNames.Length; i++)
+        {
+            outputText += ingredientNames[i]+", ";
+        }
+
+
+        outputText += myFeedbackLogic.CalculateFeedback(playerInput,clientValue);
+
+
+        playerFeedbackTMP.text = outputText;
+        mySliders.SetSliderValues(clientValue);
+
+        // Handle Ingredient Sliders
+        for (int i = 0; i < ingredientSliders.Length; i++)
+        {
+            ingredientSliders[i].SetIngredientName(ingredientNames[i]);
+
+
+            for (int j = 0; j < ingredients.Length; j++)
+            {
+                if(ingredients[j].GetComponentInChildren<TextMeshPro>().text == ingredientNames[i])
+                {
+                    ingredientSliders[i].SetSliderValues(ingredients[j].GetComponent<IngredientContainer>().GetAssumedValues());
+                }
+            }
+            
+        }
     }
 
     public void DisplayFeedback(bool state)
     {
-        playerFeedbackTMP.gameObject.SetActive(state);
-        //background.gameObject.SetActive(state);
-        background.enabled = state;
+        myBackground.SetActive(state);
     }
 
     // have to inform when phase is over
@@ -61,5 +99,20 @@ public class PlayerFeedback : MonoBehaviour
     public void PlayerWantsToContinue()
     {
         taskCompleted();
+    }
+
+    private string[] GetIngredients()
+    {
+        string[] ingNames;
+
+        List<IngredientSO> ingList = container.GetLastContainerIngredients();
+        ingNames = new string[ingList.Count];
+
+        for (int i = 0; i < ingList.Count; i++)
+        {
+            ingNames[i] = ingList[i].getName();
+        }
+
+        return ingNames;
     }
 }

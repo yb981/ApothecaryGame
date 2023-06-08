@@ -56,7 +56,6 @@ public class HandleAdminSliders : MonoBehaviour
         TMPv1.text = newValues[0].ToString();
         TMPv2.text = newValues[1].ToString();
         TMPv3.text = newValues[2].ToString();
-        Debug.Log("SLIDERHANDLER: applying the assumed values [0]:" + v1);
     }
 
     public void SetSliderVisiblity(bool state)

@@ -8,13 +8,13 @@ public class IngredientContainer : MonoBehaviour
 {
     [Header("For Coding")]
     [SerializeField] GameObject ingredientPiece;
+    
     [Header("For Individual Instance")]
     [SerializeField] IngredientSO ingredientSO;
 
     private GameObject ingredientInstace;
     Vector2 mouseOffset;
     TextMeshPro textName;
-
 
     // ingredientSO Stats
     private int antiCaugh;

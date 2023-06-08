@@ -12,7 +12,7 @@ public class PlayerFeedback : MonoBehaviour
     private GameManager manager;
     private GameObject myBackground;
     private FeedbackLogic myFeedbackLogic;
-    private HandleAdminSliders mySliders;
+    private HandleAdminSliders clientSliders;
     private GameObject[] ingredients;
     private IngredientSliders[] ingredientSliders;
 
@@ -32,7 +32,7 @@ public class PlayerFeedback : MonoBehaviour
         // Get Components
         playerFeedbackTMP   = GetComponentInChildren<TextMeshProUGUI>();
         myBackground        = GameObject.Find("FeedbackBackground");
-        mySliders           = GetComponentInChildren<HandleAdminSliders>();
+        clientSliders       = GetComponentInChildren<HandleAdminSliders>();
         manager             = GameManager.Instance;
         ingredients         = GameObject.FindGameObjectsWithTag("Ingredient");
         ingredientSliders   = GetComponentsInChildren<IngredientSliders>();
@@ -44,26 +44,36 @@ public class PlayerFeedback : MonoBehaviour
         DisplayFeedback(false);
     }
 
+    // public Methods
     public void StartFeedback(int[] playerInput, int[] clientValue)
     {
         DisplayFeedback(true);
 
-        string outputText = "";
+        // Update Client Slider Values
+        clientSliders.SetSliderValues(clientValue);
+
+        // Create Output Text
+        GenerateOutputText(playerInput, clientValue);
+
+        // Set the correct starting Values
+        UpdateIngredientSliders();
+    }
+
+    public void DisplayFeedback(bool state)
+    {
+        myBackground.SetActive(state);
+    }
+
+    public void PlayerWantsToContinue()
+    {
+        taskCompleted();
+    }
+
+    // private Methods
+    private void UpdateIngredientSliders()
+    {
         string[] ingredientNames;
-
-        ingredientNames = GetIngredients();
-        outputText = "You added: ";
-        for (int i = 0; i < ingredientNames.Length; i++)
-        {
-            outputText += ingredientNames[i]+", ";
-        }
-
-
-        outputText += myFeedbackLogic.CalculateFeedback(playerInput,clientValue);
-
-
-        playerFeedbackTMP.text = outputText;
-        mySliders.SetSliderValues(clientValue);
+        ingredientNames = GetIngredientNamesFromSOList();
 
         // Handle Ingredient Sliders
         for (int i = 0; i < ingredientSliders.Length; i++)
@@ -78,13 +88,23 @@ public class PlayerFeedback : MonoBehaviour
                     ingredientSliders[i].SetSliderValues(ingredients[j].GetComponent<IngredientContainer>().GetAssumedValues());
                 }
             }
-            
         }
     }
 
-    public void DisplayFeedback(bool state)
+    private void GenerateOutputText(int[] playerInput, int[] clientValue)
     {
-        myBackground.SetActive(state);
+        string outputText = "";
+        string[] ingredientNames;
+
+        ingredientNames = GetIngredientNamesFromSOList();
+        outputText = "You added: ";
+        for (int i = 0; i < ingredientNames.Length; i++)
+        {
+            outputText += ingredientNames[i]+", ";
+        }
+
+        outputText += myFeedbackLogic.CalculateFeedback(playerInput,clientValue);
+        playerFeedbackTMP.text = outputText;
     }
 
     // have to inform when phase is over
@@ -96,12 +116,7 @@ public class PlayerFeedback : MonoBehaviour
         } 
     }
 
-    public void PlayerWantsToContinue()
-    {
-        taskCompleted();
-    }
-
-    private string[] GetIngredients()
+    private string[] GetIngredientNamesFromSOList()
     {
         string[] ingNames;
 

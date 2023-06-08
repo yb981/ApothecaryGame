@@ -5,6 +5,9 @@ using TMPro;
 
 public class ContainerCalculation : MonoBehaviour
 {
+    [Header("For Coding")]
+    [SerializeField] Helper helper;
+
     // Input Values
     int totalCaugh = 0;
     int totalBlood = 0;
@@ -79,11 +82,14 @@ public class ContainerCalculation : MonoBehaviour
             AddValuesAssumed(assumedValues);
             
             // Visuals
-            myPresentation.InputTriggerVisuals();
+            myPresentation.SuccessfullyAddedIngredient();
             handleSliders.SetSliderValues(assumedValuesinContainer);
 
             // For Cheat, accurate values
             //handleSliders.SetSliderValues(new int[] {totalCaugh, totalBlood, totalFever});
+
+            // Handle Helper
+            helper.InformIsFull(filledIngredients.Count == maxIngredients);
 
             return true;
         }else{

@@ -20,7 +20,7 @@ public class ContainerDisplay : MonoBehaviour
         updateInputNumberText();
     }
 
-    public void InputTriggerVisuals()
+    private void InputTriggerVisuals()
     {
 
     }
@@ -38,5 +38,11 @@ public class ContainerDisplay : MonoBehaviour
             inputNumberText = myContainer.getListSize() + " / " + myContainer.GetMaxIngredients();
             textFFilledIngredients.text = inputNumberText;
         }
+    }
+
+    public void SuccessfullyAddedIngredient()
+    {
+        playParticleEffect();
+        updateInputNumberText();
     }
 }

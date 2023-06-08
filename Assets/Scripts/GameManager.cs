@@ -43,11 +43,6 @@ public class GameManager : MonoBehaviour
         handleSliders = FindObjectOfType<HandleAdminSliders>();
     }
 
-    private void Update() 
-    {
-
-    }
-
     void setGamePhaseNext()
     {
         
@@ -77,12 +72,14 @@ public class GameManager : MonoBehaviour
             case patientPhase.Leave:    
                 gamePhase = patientPhase.Score;
                 pat.setPhase(gamePhase);
-                TriggerFeedbackController();     
+                TriggerFeedbackController();
+                helper.GetComponent<Helper>().InformIsFeedbackScreen();     
                 break;
 
             case patientPhase.Score:    
                 gamePhase = patientPhase.Enter;
                 pat.setPhase(gamePhase);
+                helper.GetComponent<Helper>().HelperActivated(false);
                     
                 break;
 

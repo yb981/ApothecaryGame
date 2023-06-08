@@ -15,7 +15,7 @@ public class IngredientPiece : MonoBehaviour
     {
         container = GameObject.FindGameObjectWithTag("Container");
         helper = GameObject.Find("Helper").GetComponent<Helper>();
-        helper.inoformIsHolding(true);
+        helper.InformIsHolding(true);
     }
 
     void Update()
@@ -36,7 +36,7 @@ public class IngredientPiece : MonoBehaviour
 
             
             // delete object
-            helper.inoformIsHolding(false);
+            helper.InformIsHolding(false);
             Destroy(this.gameObject);
         }
     }

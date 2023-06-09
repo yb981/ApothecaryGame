@@ -72,11 +72,17 @@ public class PlayerFeedback : MonoBehaviour
         string[] ingredientNames;
         ingredientNames = GetIngredientNamesFromSOList();
 
+        // Check for Duplicates
+        if(FindDuplicates(ingredientNames)){
+            // Order Duplicates
+            ingredientNames = OrderDuplicates(ingredientNames);
+        }
+        
+
         // Handle Ingredient Sliders
         for (int i = 0; i < ingredientSliders.Length; i++)
         {
             ingredientSliders[i].SetIngredientName(ingredientNames[i]);
-
 
             for (int j = 0; j < ingredients.Length; j++)
             {
@@ -86,6 +92,46 @@ public class PlayerFeedback : MonoBehaviour
                 }
             }
         }
+    }
+
+    private bool FindDuplicates(string[] duplicates)
+    {
+        for (int i = 0; i < duplicates.Length; i++)
+        {
+            for (int j = 0; j < duplicates.Length; j++)
+            {
+                if(j==i) continue;
+                if(duplicates[j] == duplicates[i]) return true;
+            }
+        }
+        return false;
+    }
+
+    private string[] OrderDuplicates(string[] duplicates)
+    {
+        string[] newOrder = new string[duplicates.Length];
+        int swapPos = 0;
+        for (int i = 0; i < duplicates.Length; i++)
+        {
+            swapPos++;
+            if(swapPos >= duplicates.Length) break;
+            for (int j = i; j < duplicates.Length; j++)
+            {
+                if(i == j) continue;
+                if(duplicates[i] == duplicates[j])
+                {
+                    // swap values
+                    string tmp = "";
+                    tmp = duplicates[swapPos];
+                    duplicates[swapPos] = duplicates[j];
+                    duplicates[j] = tmp;
+                    swapPos++;
+                    j++;
+                }
+            }
+        }
+
+        return duplicates;
     }
 
     private void GenerateOutputText(int[] playerInput, int[] clientValue)

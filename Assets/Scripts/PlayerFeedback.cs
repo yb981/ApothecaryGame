@@ -7,22 +7,18 @@ using System;
 
 public class PlayerFeedback : MonoBehaviour
 {
+    [Header("Coding")]
     [SerializeField] private ContainerCalculation container;
     private TextMeshProUGUI playerFeedbackTMP;
     private GameManager manager;
     private GameObject myBackground;
     private FeedbackLogic myFeedbackLogic;
+    private FeedbackTextGenerator myTextGenerator;
     private HandleAdminSliders clientSliders;
     private GameObject[] ingredients;
     private IngredientSliders[] ingredientSliders;
 
-    enum PlayerFeedbackStates
-    {
-        hit,
-        totalmiss,
-        miss,
-        close
-    }
+    
 
     //[SerializeField] int totalMissValue = 4;
     //[SerializeField] int miss = 2;
@@ -39,6 +35,7 @@ public class PlayerFeedback : MonoBehaviour
 
         // Create internal Components
         myFeedbackLogic     = new FeedbackLogic();
+        myTextGenerator     = new FeedbackTextGenerator();
 
         // Start Functions
         DisplayFeedback(false);
@@ -94,16 +91,12 @@ public class PlayerFeedback : MonoBehaviour
     private void GenerateOutputText(int[] playerInput, int[] clientValue)
     {
         string outputText = "";
-        string[] ingredientNames;
+        
 
-        ingredientNames = GetIngredientNamesFromSOList();
-        outputText = "You added: ";
-        for (int i = 0; i < ingredientNames.Length; i++)
-        {
-            outputText += ingredientNames[i]+", ";
-        }
 
-        outputText += myFeedbackLogic.CalculateFeedback(playerInput,clientValue);
+        outputText += myTextGenerator.GeneratePlayerFeedbackTextOutput(myFeedbackLogic.CalculateFeedback(playerInput,clientValue), GetIngredientNamesFromSOList());
+
+
         playerFeedbackTMP.text = outputText;
     }
 
@@ -129,5 +122,10 @@ public class PlayerFeedback : MonoBehaviour
         }
 
         return ingNames;
+    }
+
+    public string[] GetInsertedIngredientNames()
+    {
+        return GetIngredientNamesFromSOList();
     }
 }

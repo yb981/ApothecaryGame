@@ -2,16 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FeedbackLogic 
+public class FeedbackLogic
 {
-
-    enum PlayerFeedbackStates
-    {
-        hit,
-        totalmiss,
-        miss,
-        close
-    }
 
     int[] diff = new int[3];
 
@@ -20,15 +12,29 @@ public class FeedbackLogic
 
     }
 
-    public string CalculateFeedback(int[] playerInput, int[] clientValue)
+    public (int, PlayerFeedbackStates, int) OnlyOneFeedbackText(int[] playerInput, int[] clientValue)
     {
-        PlayerFeedbackStates[] _tmp = LookThroughInputs(playerInput, clientValue);
-        (int, PlayerFeedbackStates, int) tmp = PlayerFeedbackAlgo(_tmp);
-        string textOutput = PlayerFeedbackTextOutput(tmp);
-        return textOutput;
+        PlayerFeedbackStates[] _tmp             = ReturnFeedbackEnumOfInputs(playerInput, clientValue);
+        (int, PlayerFeedbackStates, int) tmp    = FindOnePositionStateAndDelta(_tmp);
+        return tmp;
     }
 
-    private PlayerFeedbackStates[] LookThroughInputs(int[] playerInput, int[] clientValue)
+    public (int, PlayerFeedbackStates, int)[] CalculateFeedback(int[] playerInput, int[] clientValue)
+    {
+        PlayerFeedbackStates[] feedbackEnums             = ReturnFeedbackEnumOfInputs(playerInput, clientValue);
+
+
+        (int, PlayerFeedbackStates, int)[] allFeedbackStates = new (int, PlayerFeedbackStates, int)[playerInput.Length];
+
+        for (int i = 0; i < playerInput.Length; i++)
+        {
+            allFeedbackStates[i] = (i,feedbackEnums[i], GetInputDeltaOfPosition(i));
+        }
+
+        return allFeedbackStates;
+    }
+
+    private PlayerFeedbackStates[] ReturnFeedbackEnumOfInputs(int[] playerInput, int[] clientValue)
     {
         PlayerFeedbackStates[] inputResultsEnum = new PlayerFeedbackStates[playerInput.Length];
         for (int i = 0; i < playerInput.Length; i++)
@@ -58,7 +64,7 @@ public class FeedbackLogic
         return inputResultsEnum;
     }
 
-    private (int, PlayerFeedbackStates, int) PlayerFeedbackAlgo(PlayerFeedbackStates[] enumResults)
+    private (int, PlayerFeedbackStates, int) FindOnePositionStateAndDelta(PlayerFeedbackStates[] enumResults)
     {
         // Create Array for all States and then fill the number of occurences + position (similar to a hashmap)
         int[] howManyEnums = new int[System.Enum.GetNames(typeof(PlayerFeedbackStates)).Length];
@@ -119,30 +125,4 @@ public class FeedbackLogic
     {
         return diff[position];
     }
-
-    private string PlayerFeedbackTextOutput((int pos, PlayerFeedbackStates state, int difference) posAndState)
-    {
-        string affectedStat = "";
-        string amountStat = "";
-        string[] outputStat = {"cough","blood","fever"};
-        string[] amountText = {"", "less ", "much "};
-        affectedStat = outputStat[posAndState.pos];
-        
-        switch(Mathf.Sign(posAndState.difference))
-        {
-            case 0:  break;
-            case 1: amountStat = amountText[1]; break;
-            case -1: amountStat = amountText[2]; break;
-            default: break;
-        }
-        
-
-
-        if(posAndState.state == PlayerFeedbackStates.hit) return "You cured "+ affectedStat;
-        if(posAndState.state == PlayerFeedbackStates.totalmiss) return "You put way too"+ amountStat + affectedStat;
-        if(posAndState.state == PlayerFeedbackStates.miss) return "You put too "+ amountStat + affectedStat;
-        if(posAndState.state == PlayerFeedbackStates.close) return "You put just a little too "+ amountStat + affectedStat;
-        return "";
-    }
-
 }

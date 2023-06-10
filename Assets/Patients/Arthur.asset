@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72196c43f2509f148a708629c34f1c02, type: 3}
-  m_Name: Valentin
+  m_Name: Arthur
   m_EditorClassIdentifier: 
-  introductionText: I have got a very bad caugh. Can you help me?
-  NPCname: Valentin
+  introductionText: Why is it so cold?
+  NPCname: Enter NPC Name
   looks: {fileID: 0}
-  sickness: 060000000200000003000000
+  sickness: 030000000700000005000000

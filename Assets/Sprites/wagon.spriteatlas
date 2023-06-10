@@ -41,24 +41,34 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 7694af01ffa51e64cb5fec9552786c78, type: 3}
   - {fileID: 21300000, guid: 4a39e7c26b8a0c84d936def79249c969, type: 3}
   - {fileID: 21300000, guid: b7b716f3d90e30742a034a9257d5e5d4, type: 3}
+  - {fileID: 21300000, guid: 707a91a4b705a8e41a6c28425fd19f5f, type: 3}
+  - {fileID: 21300000, guid: 1031d775313e831448484578224794a0, type: 3}
   - {fileID: 21300000, guid: d3213dd5a486b764e9b83a256cc3eb95, type: 3}
   - {fileID: 21300000, guid: 5c9203465e08ac743a832b025562b18b, type: 3}
   - {fileID: 21300000, guid: f425a2760b0fc1240b32076b0c291557, type: 3}
+  - {fileID: 21300000, guid: 3271f95829fcc4347aca49fd0d9996c9, type: 3}
+  - {fileID: 21300000, guid: 358af7195f1d7604b97f807750e027ac, type: 3}
   - {fileID: 21300000, guid: ee629bdbb81e02049aa407126f31cb8f, type: 3}
   - {fileID: 21300000, guid: 2157317c24b24464d8c80ee1275583b5, type: 3}
   - {fileID: 21300000, guid: b08efe6db2ac74947b9bbb7536c94de3, type: 3}
+  - {fileID: 21300000, guid: 1148be7d1869b5b4c9ec33e836484b4c, type: 3}
   - {fileID: 21300000, guid: 177a57ae490202547bc79bedf1152994, type: 3}
   - {fileID: 21300000, guid: 90ea2a4f1d4cbc541abf2192725c91d0, type: 3}
   m_PackedSpriteNamesToIndex:
   - ingredient_2
   - Layer 23
   - Layer 15
+  - thermometer_schanier
+  - thermometer_fuellung
   - Layer 20
   - mixing pot
   - ingredient_1
+  - thermometer_preview
+  - thermometer_highlight
   - ingredient_3
   - ingredient_4
   - Layer 18
+  - thermometer_base
   - Layer 25-2
   - patient
   m_RenderDataMap: {}

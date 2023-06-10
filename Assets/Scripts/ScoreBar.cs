@@ -34,13 +34,11 @@ public class ScoreBar : MonoBehaviour
             currentValue += fillSpeed;
 
             score.value = currentValue;
-            //Debug.Log("Slider: "+ score.value);
-            //Debug.Log("ScoreV: "+ scoreValue);
             if(score.value >= scoreValue)
             {
                 animationComplete = true;
             }
-
+            SetScoreTextTo(currentValue);
         }
 
     }
@@ -55,9 +53,6 @@ public class ScoreBar : MonoBehaviour
         
         // Start Animation
         if(displayScore) animationComplete = false;        
-
-        float wholeNumberPercent = newScore * 100;
-        scoreNumber.text = wholeNumberPercent.ToString("0.0")+"%";
     }
 
     public void toggleScoreDisplay(bool state)
@@ -78,6 +73,12 @@ public class ScoreBar : MonoBehaviour
     {
         animationComplete = false;
         currentValue = 0f;
+    }
+
+    private void SetScoreTextTo(float value)
+    {
+        float wholeNumberPercent = value * 100;
+        scoreNumber.text = wholeNumberPercent.ToString("0.0")+"%";
     }
 
 }

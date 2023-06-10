@@ -7,6 +7,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] UITracker uiTracker;
     static GameManager  instance;
     public static GameManager Instance { get { return instance;} }
     patientPhase gamePhase = patientPhase.Enter;
@@ -17,6 +18,9 @@ public class GameManager : MonoBehaviour
     GameObject helper;
     bool displayHelper = true;
     HandleAdminSliders handleSliders;
+    private int maxVillageHealth = 10;
+    private int villageHealth = -1; 
+    
 
     int[] resultPotion = new int[3];
     int[] valueSickness = new int[3];
@@ -33,6 +37,9 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
+
+        // Set village health
+        villageHealth = maxVillageHealth;
     }
 
     void Start()
@@ -41,6 +48,8 @@ public class GameManager : MonoBehaviour
         displayScoreBar(false);
         helper = GameObject.Find("Helper");
         handleSliders = FindObjectOfType<HandleAdminSliders>();
+        uiTracker.UpdateVillageBar(villageHealth);
+        uiTracker.SetVillageMaxHealthBar(maxVillageHealth);
     }
 
     void setGamePhaseNext()
@@ -48,12 +57,11 @@ public class GameManager : MonoBehaviour
         
         pat = GameObject.FindObjectOfType<Patient>();
         
-
         // Setting next Gamephase for Client
         switch(gamePhase)
         {
             case patientPhase.Enter:
-                displayScoreBar(false);    
+                displayScoreBar(false);   
                 gamePhase = patientPhase.Talk;   
                 pat.setPhase(gamePhase); 
                 break;
@@ -61,6 +69,7 @@ public class GameManager : MonoBehaviour
             case patientPhase.Talk:     
                 gamePhase = patientPhase.Wait;  
                 pat.setPhase(gamePhase);   
+                uiTracker.NewClient(); 
                 break;
 
             case patientPhase.Wait:
@@ -80,7 +89,6 @@ public class GameManager : MonoBehaviour
                 gamePhase = patientPhase.Enter;
                 pat.setPhase(gamePhase);
                 helper.GetComponent<Helper>().HelperActivated(false);
-                    
                 break;
 
             default:                                break;
@@ -125,6 +133,9 @@ public class GameManager : MonoBehaviour
         // Calculate Result
         int result = resultFormula(valueSickness, resultPotion);
 
+        // Handle Village
+        CalculateVillageHealth(result);
+
         // Display Result
         displayResultSuccess(result);
 
@@ -165,6 +176,50 @@ public class GameManager : MonoBehaviour
         }
         return score;
     }
+
+    private void CalculateVillageHealth(int result)
+    {
+        int healthChange = 0;
+        int badResultValue = 20;
+        int veryBadResultValue = 10;
+        int goodResultValue = 27;
+ 
+        if(result > goodResultValue)            //if score is very high increase health
+        {
+            healthChange = 1;
+        }
+        else if(result < veryBadResultValue)    //if score is very low decrease health
+        {
+            healthChange = -2;
+        }
+        else if(result < badResultValue)        // if score is low decrease health
+        {
+            healthChange = -1;
+        }
+        else                                    // dont change health
+        {
+            healthChange = 0;
+        }
+
+        // update village health
+        // check if dead
+        if(villageHealth+healthChange <= 0)
+        {
+            // Game Over
+            villageHealth = 0;
+
+            // Run Game Over
+        }else if( villageHealth+healthChange >= maxVillageHealth)
+        {
+            villageHealth = maxVillageHealth;
+        }
+        else
+        {
+            villageHealth += healthChange;
+        }
+
+        uiTracker.UpdateVillageBar(villageHealth);
+    }
     
     void displayScoreBar(bool state)
     {
@@ -178,7 +233,6 @@ public class GameManager : MonoBehaviour
 
         // make sure scorebar is visible
         if(!score.isScoreBarDisplayed()) displayScoreBar(true);
-
 
         float resultPercent = result/30f;
 

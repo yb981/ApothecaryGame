@@ -35,9 +35,9 @@ public class HandleAdminSliders : MonoBehaviour
         }
 
 
-        TMPv1.text = "caugh";
-        TMPv2.text = "blood";
-        TMPv3.text = "fever";
+        TMPv1.text = GameConstants.VALUE1;
+        TMPv2.text = GameConstants.VALUE2;
+        TMPv3.text = GameConstants.VALUE3;
         SetSliderValues(new int[] {0,0,0});
     }
 

@@ -18,8 +18,6 @@ public class PlayerFeedback : MonoBehaviour
     private GameObject[] ingredients;
     private IngredientSliders[] ingredientSliders;
 
-    
-
     //[SerializeField] int totalMissValue = 4;
     //[SerializeField] int miss = 2;
 
@@ -94,54 +92,11 @@ public class PlayerFeedback : MonoBehaviour
         }
     }
 
-    private bool FindDuplicates(string[] duplicates)
-    {
-        for (int i = 0; i < duplicates.Length; i++)
-        {
-            for (int j = 0; j < duplicates.Length; j++)
-            {
-                if(j==i) continue;
-                if(duplicates[j] == duplicates[i]) return true;
-            }
-        }
-        return false;
-    }
-
-    private string[] OrderDuplicates(string[] duplicates)
-    {
-        string[] newOrder = new string[duplicates.Length];
-        int swapPos = 0;
-        for (int i = 0; i < duplicates.Length; i++)
-        {
-            swapPos++;
-            if(swapPos >= duplicates.Length) break;
-            for (int j = i; j < duplicates.Length; j++)
-            {
-                if(i == j) continue;
-                if(duplicates[i] == duplicates[j])
-                {
-                    // swap values
-                    string tmp = "";
-                    tmp = duplicates[swapPos];
-                    duplicates[swapPos] = duplicates[j];
-                    duplicates[j] = tmp;
-                    swapPos++;
-                    j++;
-                }
-            }
-        }
-
-        return duplicates;
-    }
-
     private void GenerateOutputText(int[] playerInput, int[] clientValue)
     {
         string outputText = "";
         
-
-
         outputText += myTextGenerator.GeneratePlayerFeedbackTextOutput(myFeedbackLogic.CalculateFeedback(playerInput,clientValue), GetIngredientNamesFromSOList());
-
 
         playerFeedbackTMP.text = outputText;
     }
@@ -173,5 +128,46 @@ public class PlayerFeedback : MonoBehaviour
     public string[] GetInsertedIngredientNames()
     {
         return GetIngredientNamesFromSOList();
+    }
+
+     private bool FindDuplicates(string[] duplicates)
+    {
+        for (int i = 0; i < duplicates.Length; i++)
+        {
+            for (int j = 0; j < duplicates.Length; j++)
+            {
+                if(j==i) continue;
+                if(duplicates[j] == duplicates[i]) return true;
+            }
+        }
+        return false;
+    }
+
+    // Helper
+    private string[] OrderDuplicates(string[] duplicates)
+    {
+        string[] newOrder = new string[duplicates.Length];
+        int swapPos = 0;
+        for (int i = 0; i < duplicates.Length; i++)
+        {
+            swapPos++;
+            if(swapPos >= duplicates.Length) break;
+            for (int j = i; j < duplicates.Length; j++)
+            {
+                if(i == j) continue;
+                if(duplicates[i] == duplicates[j])
+                {
+                    // swap values
+                    string tmp = "";
+                    tmp = duplicates[swapPos];
+                    duplicates[swapPos] = duplicates[j];
+                    duplicates[j] = tmp;
+                    swapPos++;
+                    j++;
+                }
+            }
+        }
+
+        return duplicates;
     }
 }

@@ -43,15 +43,15 @@ public class FeedbackTextGenerator
     {
         string affectedStat = "";
         string amountStat = "";
-        string[] outputStat = {"cough","blood","fever"};
+        string[] outputStat = {GameConstants.VALUE1,GameConstants.VALUE2,GameConstants.VALUE3};
         string[] amountText = {"", "less ", "much "};
         affectedStat = outputStat[posAndState.pos];
         
         switch(Mathf.Sign(posAndState.difference))
         {
             case 0:  break;
-            case 1: amountStat = amountText[1]; break;
-            case -1: amountStat = amountText[2]; break;
+            case -1: amountStat = amountText[1]; break;
+            case 1: amountStat = amountText[2]; break;
             default: break;
         }
         

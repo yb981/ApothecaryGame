@@ -21,29 +21,15 @@ public class ContainerCalculation : MonoBehaviour
     // Visual Feedback
     ContainerDisplay myPresentation;
     HandleAdminSliders handleSliders;
-
+    HandleAdminSliders cheatSliders;
 
     private void Start() 
     {
         myPresentation = GetComponentInChildren<ContainerDisplay>(true);
-        handleSliders = GetComponentInChildren<HandleAdminSliders>();
+        handleSliders = GetComponentsInChildren<HandleAdminSliders>(true)[0];
+        cheatSliders = GetComponentsInChildren<HandleAdminSliders>(true)[1];
 
         assumedValuesinContainer = new int[maxIngredients];
-    }
-
-    // Set & Get
-    public void addValues(int c, int b, int f) 
-    {
-        totalCaugh += c;
-        totalBlood += b;
-        totalFever += f;
-    }
-
-    public void setValues(int c, int b, int f) 
-    {
-        totalCaugh = c;
-        totalBlood = b;
-        totalFever = f;
     }
 
     public void AddValuesAssumed(int[] values)
@@ -52,19 +38,6 @@ public class ContainerCalculation : MonoBehaviour
         {
             assumedValuesinContainer[i] += values[i];
         }
-    }
-
-    public void SetValuesAssumed(int[] values)
-    {
-        for (int i = 0; i < assumedValuesinContainer.Length; i++)
-        {
-            assumedValuesinContainer[i] = values[i];
-        }        
-    }
-
-    public int[] getValues()
-    {
-        return new int[] {totalCaugh, totalBlood, totalFever};
     }
 
     public bool addIngredient(IngredientSO ingredient, int[] assumedValues)
@@ -84,9 +57,7 @@ public class ContainerCalculation : MonoBehaviour
             // Visuals
             myPresentation.SuccessfullyAddedIngredient();
             handleSliders.SetSliderValues(assumedValuesinContainer);
-
-            // For Cheat, accurate values
-            //handleSliders.SetSliderValues(new int[] {totalCaugh, totalBlood, totalFever});
+            cheatSliders.SetSliderValues(new int[] {totalCaugh,totalBlood,totalFever});
 
             // Handle Helper
             helper.InformIsFull(filledIngredients.Count == maxIngredients);
@@ -172,6 +143,20 @@ public class ContainerCalculation : MonoBehaviour
         return filledIngredients.Count;
     }
 
+    // Set & Get
+    public void SetValuesAssumed(int[] values)
+    {
+        for (int i = 0; i < assumedValuesinContainer.Length; i++)
+        {
+            assumedValuesinContainer[i] = values[i];
+        }        
+    }
+
+    public int[] getValues()
+    {
+        return new int[] {totalCaugh, totalBlood, totalFever};
+    }
+
     public int GetMaxIngredients()
     {
         return maxIngredients;
@@ -180,5 +165,20 @@ public class ContainerCalculation : MonoBehaviour
     public List<IngredientSO> GetLastContainerIngredients()
     {
         return oldIngredients;
+    }
+    
+
+    public void addValues(int c, int b, int f) 
+    {
+        totalCaugh += c;
+        totalBlood += b;
+        totalFever += f;
+    }
+
+    public void setValues(int c, int b, int f) 
+    {
+        totalCaugh = c;
+        totalBlood = b;
+        totalFever = f;
     }
 }

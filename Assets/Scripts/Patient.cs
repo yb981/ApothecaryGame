@@ -16,13 +16,6 @@ public enum patientPhase
 public class Patient : MonoBehaviour
 {
 
-    patientPhase state = patientPhase.Enter;
-    PatientSO patientDetails;
-    bool gotNewClient = false;
-
-    public string[] sicknessValueNames = {"Caugh","Blood","Fever"};
-
-
     [Header("ClientsUI")]
     [SerializeField] Canvas clientCanvas;
     [SerializeField] List<PatientSO> patientList = new List<PatientSO>();
@@ -32,7 +25,6 @@ public class Patient : MonoBehaviour
 
 
     [Header("SicknessUI")]
-
     [SerializeField] Slider caughBar;
     [SerializeField] Slider bleedBar;
     [SerializeField] Slider feverBar;
@@ -40,6 +32,14 @@ public class Patient : MonoBehaviour
     [SerializeField] TextMeshProUGUI TMPv2;
     [SerializeField] TextMeshProUGUI TMPv3;
 
+    public string[] sicknessValueNames = {GameConstants.VALUE1,GameConstants.VALUE2,GameConstants.VALUE3};
+
+    private patientPhase state = patientPhase.Enter;
+    private PatientSO patientDetails;
+    private bool gotNewClient = false;
+    private int totalNumberOfPatients = -1;
+    private int currentPatientCount = 0;
+    
 
     // Client Stats
     string currentClientName;
@@ -47,26 +47,24 @@ public class Patient : MonoBehaviour
     int[] currentClientSicknessValues = new int[3];
     Sprite currentClientSprite;
     
-    
+    private void Awake() 
+    {
+        // Save total patient numbers
+        totalNumberOfPatients = patientList.Count;
+    }
+
     void Start()
     {
+        
+
         // Name Values
         TMPv1.text = sicknessValueNames[0];
         TMPv2.text = sicknessValueNames[1];
         TMPv3.text = sicknessValueNames[2];
 
-
         // Disable text first
         TMPrequestText.enabled = false;
         displayClientStats(false);
-        
-        // get first client
-        //PatientSO currentClient = patientList[0];
-        //currentClientName = currentClient.getNPCname();
-        //currentClientRequest = currentClient.getRequestText();
-        //currentClientSicknessValues = currentClient.getSicknessValues();
-
-        //TMPrequestText.text = currentClientName + ": "+currentClientRequest;
 
         // disable interaction on sliders
         caughBar.enabled = false;
@@ -193,6 +191,9 @@ public class Patient : MonoBehaviour
         if(patientList.Contains(currentClient)){ patientList.Remove(currentClient);}
         // Maybe add this to a later state. But would need to introduce new state only for delete#
 
+        // Increase count to know how many visited
+        currentPatientCount++;
+
         // Do not Enter again
         gotNewClient = true;
     }
@@ -201,5 +202,15 @@ public class Patient : MonoBehaviour
     public int[] getPatientSicknessValues()
     {
         return currentClientSicknessValues;
+    }
+
+    public int GetTotalNumberOfPatients()
+    {
+        return totalNumberOfPatients;
+    }
+
+    public int GetCurrentPatientNumber()
+    {
+        return currentPatientCount;
     }
 }

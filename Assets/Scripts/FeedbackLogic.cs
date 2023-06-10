@@ -21,9 +21,7 @@ public class FeedbackLogic
 
     public (int, PlayerFeedbackStates, int)[] CalculateFeedback(int[] playerInput, int[] clientValue)
     {
-        PlayerFeedbackStates[] feedbackEnums             = ReturnFeedbackEnumOfInputs(playerInput, clientValue);
-
-
+        PlayerFeedbackStates[] feedbackEnums = ReturnFeedbackEnumOfInputs(playerInput, clientValue);
         (int, PlayerFeedbackStates, int)[] allFeedbackStates = new (int, PlayerFeedbackStates, int)[playerInput.Length];
 
         for (int i = 0; i < playerInput.Length; i++)

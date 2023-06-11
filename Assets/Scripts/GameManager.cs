@@ -7,9 +7,28 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+
+    public static GameManager Instance { get {return instance;} }
+    private static GameManager instance;
+    
+    public event EventHandler<VillageHealthChangedEventArgs> VillageHealthChanged;
+    public class VillageHealthChangedEventArgs : EventArgs 
+    {
+        public int villageHealthChange;
+    }
+
+    public event EventHandler<LevelFinishedEventArgs> LevelFinished;
+    public class LevelFinishedEventArgs : EventArgs
+    {
+        public int eMaxVillageHealth;
+        public int eVillageHealth;
+        public int eMaxClients;
+        public int eSurvivers;
+    }
+
     [SerializeField] UITracker uiTracker;
-    static GameManager  instance;
-    public static GameManager Instance { get { return instance;} }
+    [SerializeField] FinalScreen finalScreen;
+
     patientPhase gamePhase = patientPhase.Enter;
     Patient pat;
     Slider scoreBar;
@@ -20,7 +39,8 @@ public class GameManager : MonoBehaviour
     HandleAdminSliders handleSliders;
     private int maxVillageHealth = 10;
     private int villageHealth = -1; 
-    
+    private int maxClients = -1;
+    private int survivers = 0;
 
     int[] resultPotion = new int[3];
     int[] valueSickness = new int[3];
@@ -50,12 +70,14 @@ public class GameManager : MonoBehaviour
         handleSliders = FindObjectOfType<HandleAdminSliders>();
         uiTracker.UpdateVillageBar(villageHealth);
         uiTracker.SetVillageMaxHealthBar(maxVillageHealth);
+        pat = GameObject.FindObjectOfType<Patient>();
+        maxClients = pat.GetTotalNumberOfPatients();
     }
 
     void setGamePhaseNext()
     {
         
-        pat = GameObject.FindObjectOfType<Patient>();
+        //pat = GameObject.FindObjectOfType<Patient>();
         
         // Setting next Gamephase for Client
         switch(gamePhase)
@@ -181,7 +203,7 @@ public class GameManager : MonoBehaviour
     {
         int healthChange = 0;
         int badResultValue = 20;
-        int veryBadResultValue = 10;
+        int veryBadResultValue = 15;
         int goodResultValue = 27;
  
         if(result > goodResultValue)            //if score is very high increase health
@@ -201,6 +223,9 @@ public class GameManager : MonoBehaviour
             healthChange = 0;
         }
 
+        // Count survivers
+        if(healthChange != -2) survivers++;
+
         // update village health
         // check if dead
         if(villageHealth+healthChange <= 0)
@@ -217,6 +242,10 @@ public class GameManager : MonoBehaviour
         {
             villageHealth += healthChange;
         }
+
+        VillageHealthChanged?.Invoke(this, new VillageHealthChangedEventArgs {
+            villageHealthChange = healthChange
+        });
 
         uiTracker.UpdateVillageBar(villageHealth);
     }
@@ -250,5 +279,15 @@ public class GameManager : MonoBehaviour
     {
         displayHelper = false;
         helper.GetComponent<Helper>().displayHelperText(false);   
+    }
+
+    public void NoMoreClients()
+    {
+        LevelFinished?.Invoke(this, new LevelFinishedEventArgs{
+            eMaxVillageHealth = maxVillageHealth,
+            eVillageHealth = villageHealth,
+            eMaxClients = maxClients,
+            eSurvivers = survivers
+        });
     }
 }

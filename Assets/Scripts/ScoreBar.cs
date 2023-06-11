@@ -6,7 +6,6 @@ using TMPro;
 
 public class ScoreBar : MonoBehaviour
 {
-
     [SerializeField] Slider score;
     [SerializeField] TextMeshProUGUI scoreNumber;
     [SerializeField] float fillSpeed = 0.001f;

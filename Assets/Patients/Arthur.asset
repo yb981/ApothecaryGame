@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Arthur
   m_EditorClassIdentifier: 
   introductionText: Why is it so cold?
-  NPCname: Enter NPC Name
+  NPCname: Arthur
   looks: {fileID: 0}
   sickness: 030000000700000005000000

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public static class GameConstants 
 {
-    public const string VALUE1 = "cough";
-    public const string VALUE2 = "blood";
-    public const string VALUE3 = "fever";
+    public const string VALUE1 = "Cough";
+    public const string VALUE2 = "Blood";
+    public const string VALUE3 = "Fever";
     // Scenes
     public const string SCENE_WAGON = "WagonGameScene";
     public const string SCENE_MENU  = "Menu";

@@ -15,7 +15,6 @@ public enum patientPhase
 
 public class Patient : MonoBehaviour
 {
-
     [Header("ClientsUI")]
     [SerializeField] Canvas clientCanvas;
     [SerializeField] List<PatientSO> patientList = new List<PatientSO>();
@@ -32,14 +31,11 @@ public class Patient : MonoBehaviour
     [SerializeField] TextMeshProUGUI TMPv2;
     [SerializeField] TextMeshProUGUI TMPv3;
 
-    public string[] sicknessValueNames = {GameConstants.VALUE1,GameConstants.VALUE2,GameConstants.VALUE3};
-
     private patientPhase state = patientPhase.Enter;
     private PatientSO patientDetails;
     private bool gotNewClient = false;
     private int totalNumberOfPatients = -1;
     private int currentPatientCount = 0;
-    
 
     // Client Stats
     string currentClientName;
@@ -55,12 +51,10 @@ public class Patient : MonoBehaviour
 
     void Start()
     {
-        
-
         // Name Values
-        TMPv1.text = sicknessValueNames[0];
-        TMPv2.text = sicknessValueNames[1];
-        TMPv3.text = sicknessValueNames[2];
+        TMPv1.text = GameConstants.VALUE1;
+        TMPv2.text = GameConstants.VALUE2;
+        TMPv3.text = GameConstants.VALUE3;
 
         // Disable text first
         TMPrequestText.enabled = false;
@@ -70,6 +64,9 @@ public class Patient : MonoBehaviour
         caughBar.enabled = false;
         bleedBar.enabled = false;
         feverBar.enabled = false;
+
+        // Subscribe to Manager
+        GameManager.Instance.LevelFinished += Patient_LevelFinished;
     }
 
     void Update()
@@ -87,7 +84,9 @@ public class Patient : MonoBehaviour
 
     void enter()
     {
-        getNewClient();
+        // if game over
+        if(!getNewClient()) GameManager.Instance.NoMoreClients();
+
         Transform goal = goalPosition.transform.GetChild(0);
         moveTo(goal.position);
 
@@ -129,8 +128,13 @@ public class Patient : MonoBehaviour
         // Reset Flag for new Cycle
         gotNewClient = false;
     }
+
+    private void Patient_LevelFinished(object sender, GameManager.LevelFinishedEventArgs e)
+    {
+        gameObject.SetActive(false);
+    }
     
-    bool moveTo(Vector3 goal) 
+    private bool moveTo(Vector3 goal) 
     {
         Vector3 currentPosition = transform.position;
         Vector3 deltaPos = new Vector3(0,0,0);
@@ -167,13 +171,13 @@ public class Patient : MonoBehaviour
         feverBar.value = currentClientSicknessValues[2];
     }
 
-    void getNewClient()
+    bool getNewClient()
     {
 
         // Do this method only once per enter
-        if(gotNewClient) return;
+        if(gotNewClient) return true;
 
-        Debug.Log("PATIENT: getting new client");
+        if(patientList.Count == 0) return false;
 
         // get random ID
         int randomId = Random.Range(0,patientList.Count);
@@ -196,6 +200,7 @@ public class Patient : MonoBehaviour
 
         // Do not Enter again
         gotNewClient = true;
+        return true;
     }
 
     // Getter

@@ -96,7 +96,6 @@ public class Patient : MonoBehaviour
         }
     }
 
-
     void talk()
     {
         TMPrequestText.enabled = true;

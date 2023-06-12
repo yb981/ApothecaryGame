@@ -84,7 +84,7 @@ public class PlayerFeedback : MonoBehaviour
 
             for (int j = 0; j < ingredients.Length; j++)
             {
-                if(ingredients[j].GetComponentInChildren<TextMeshPro>().text == ingredientNames[i])
+                if(ingredients[j].GetComponentInChildren<TextMeshProUGUI>().text == ingredientNames[i])
                 {
                     ingredientSliders[i].SetSliderValues(ingredients[j].GetComponent<IngredientContainer>().GetAssumedValues());
                 }

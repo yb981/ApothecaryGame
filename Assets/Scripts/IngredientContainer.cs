@@ -7,14 +7,14 @@ using UnityEngine.UI;
 public class IngredientContainer : MonoBehaviour
 {
     [Header("For Coding")]
-    [SerializeField] GameObject ingredientPiece;
-    
+    [SerializeField] private GameObject ingredientPiece;
+    [SerializeField] private TextMeshProUGUI nameField;
+
     [Header("For Individual Instance")]
     [SerializeField] IngredientSO ingredientSO;
 
     private GameObject ingredientInstace;
     Vector2 mouseOffset;
-    TextMeshPro textName;
 
     // ingredientSO Stats
     private int antiCaugh;
@@ -26,10 +26,8 @@ public class IngredientContainer : MonoBehaviour
 
     private void Start() 
     {
-        textName = GetComponentInChildren<TextMeshPro>();
-
         // Set the heal values from the Scritable Object
-        SliderValues = new int [ingredientSO.getValues().Length];
+        SliderValues = new int[ingredientSO.getValues().Length];
         int[] values = new int[ingredientSO.getValues().Length];
 
         values          = ingredientSO.getValues();
@@ -38,12 +36,9 @@ public class IngredientContainer : MonoBehaviour
         antiFever       = values[2];
         ingredientName  = ingredientSO.getName();
 
-        textName.text = ingredientName;
-
+        nameField.text = ingredientName;
 
         ValueSliders = GetComponentsInChildren<Slider>();
-
-
     }
 
     private void OnMouseDown() 

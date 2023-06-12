@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Sand
   m_EditorClassIdentifier: 
   ingredientName: Sand
-  antiCaugh: 2
+  antiCaugh: 0
   antiBleeding: 1
   antiFever: 0

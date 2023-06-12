@@ -6,6 +6,9 @@ using TMPro;
 
 public class IngredientSliders : MonoBehaviour
 {
+    [Header("Coding")]
+    [SerializeField] TextMeshProUGUI nameField;
+
     private Slider[] mySliders;
     private TextMeshProUGUI[] myTexts;
     private GameObject[] ingredientObjects;
@@ -16,11 +19,15 @@ public class IngredientSliders : MonoBehaviour
         // Get Components
         mySliders           = GetComponentsInChildren<Slider>();
         myTexts             = GetComponentsInChildren<TextMeshProUGUI>();
+        
+    }
+
+    private void Start() 
+    {
         ingredientObjects   = GameObject.FindGameObjectsWithTag("Ingredient");
 
         // Set Text
         UpdateSliderBar();
-
     }
 
     public void UpdateSliderValues()
@@ -61,7 +68,7 @@ public class IngredientSliders : MonoBehaviour
         {
             // If Ingredient Name equals to the name this ingredient copy
             // Basically finding the right original ingredient
-            if(ingredientObjects[i].GetComponent<IngredientContainer>().GetComponentInChildren<TextMeshPro>().text == ingName)
+            if(ingredientObjects[i].GetComponent<IngredientContainer>().GetComponentInChildren<TextMeshProUGUI>().text == ingName)
             {
                 ingredientObjects[i].GetComponentInChildren<HandleAdminSliders>().SetSliderValues(GetSliderValues());
             }

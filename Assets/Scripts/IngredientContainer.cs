@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
+using UnityEngine.EventSystems;
 
 public class IngredientContainer : MonoBehaviour
 {
@@ -25,6 +27,9 @@ public class IngredientContainer : MonoBehaviour
     private string ingredientName = "noNameSet";
     private Slider[] ValueSliders;
     private int[] SliderValues;
+
+    public event EventHandler MouseHovering;
+    public event EventHandler MouseLeaving;
 
     private void Start() 
     {
@@ -73,6 +78,18 @@ public class IngredientContainer : MonoBehaviour
     public void SetSliderValues(int[] values)
     {
         mySliderHandler.SetSliderValues(values);
+    }
+
+    private void OnMouseEnter() 
+    {
+        if(EventSystem.current.IsPointerOverGameObject()) return;
+        MouseHovering?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void OnMouseExit() 
+    {
+        //if(EventSystem.current.IsPointerOverGameObject()) return;
+        MouseLeaving(this, EventArgs.Empty);
     }
 
 }

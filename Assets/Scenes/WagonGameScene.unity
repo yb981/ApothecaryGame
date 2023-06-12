@@ -206,6 +206,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bones
       objectReference: {fileID: 0}
+    - target: {fileID: 321581143723360680, guid: b737662e710d4c240b4ef3c8412be8b4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 572299764403078506, guid: b737662e710d4c240b4ef3c8412be8b4, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -253,6 +257,14 @@ PrefabInstance:
     - target: {fileID: 4846619572891236174, guid: b737662e710d4c240b4ef3c8412be8b4, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5494911585872021268, guid: b737662e710d4c240b4ef3c8412be8b4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673025538926303934, guid: b737662e710d4c240b4ef3c8412be8b4, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6407919565252343188, guid: b737662e710d4c240b4ef3c8412be8b4, type: 3}
       propertyPath: m_AnchorMax.y
@@ -7528,6 +7540,23 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1240584252 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 58562486751027919, guid: b737662e710d4c240b4ef3c8412be8b4, type: 3}
+  m_PrefabInstance: {fileID: 3609602}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1240584255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240584252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b00db48e60242442872a6c3efed030a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1243958857
 GameObject:
   m_ObjectHideFlags: 0

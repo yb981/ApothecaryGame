@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class Helper : MonoBehaviour
 {
+    public static Helper Instance {get {return instance;}}
+    private static Helper instance;
+
     // Components
     [Header("For Coding")]
     [SerializeField] TextMeshPro dropTMP;
@@ -13,11 +17,26 @@ public class Helper : MonoBehaviour
     [SerializeField] TextMeshPro pickTMParrow;
     [SerializeField] TextMeshPro combineTMP;
     [SerializeField] TextMeshPro adjustIngredientsTMP;
+    [SerializeField] FeedbackIngredientsHandler feedbackIngredientsHandler;
     Animator myAnimator;
 
     // Variables
     private bool containerIsFull = false;
     private bool helperEnabled = true;
+    private bool userHasAdjustedValues = false;
+
+    private void Awake() 
+    {
+        if(instance != null) Debug.LogError("There are two Helpers!");
+        instance = this;
+        feedbackIngredientsHandler.SliderValuesChanged += Helper_SliderValuesChanged;
+    }
+
+    private void Helper_SliderValuesChanged(object sender , EventArgs e)
+    {
+        adjustIngredientsTMP.gameObject.SetActive(false);
+        helperEnabled = false;
+    }
 
     void Start()
     {
@@ -85,5 +104,22 @@ public class Helper : MonoBehaviour
     private void DisplayCombineHelp(bool state)
     {
         combineTMP.gameObject.SetActive(state);
+    }
+
+    // Set and Get
+
+    public bool GetUserAdjustedValues()
+    {
+        return userHasAdjustedValues;
+    }
+
+    public void SetUserAdjustedValues(bool value)
+    {
+        userHasAdjustedValues = value;
+    }
+
+    public bool IsHelperEnabled()
+    {
+        return helperEnabled;
     }
 }

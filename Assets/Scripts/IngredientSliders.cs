@@ -3,54 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
-public class IngredientSliders : MonoBehaviour
+public class IngredientSliders : SliderHandler
 {
     [Header("Coding")]
     [SerializeField] TextMeshProUGUI nameField;
 
-    private Slider[] mySliders;
-    private TextMeshProUGUI[] myTexts;
     private GameObject[] ingredientObjects;
     private string ingName = "not set";
+    private Animator[] myAnimator;
 
-    private void Awake() 
-    {
-        // Get Components
-        mySliders           = GetComponentsInChildren<Slider>();
-        myTexts             = GetComponentsInChildren<TextMeshProUGUI>();
-        
-    }
-
-    private void Start() 
-    {
+    private void Awake() {
+        // Has to be called in Awake
+        // Becuase Feedback controller is disabling these instances in Start
+        mySliders           = GetComponentsInChildren<Slider>(true);
+        myTexts             = GetComponentsInChildren<TextMeshProUGUI>(true);
         ingredientObjects   = GameObject.FindGameObjectsWithTag("Ingredient");
-
-        // Set Text
-        UpdateSliderBar();
+        myAnimator          = GetComponentsInChildren<Animator>();
     }
 
-    public void UpdateSliderValues()
+    private void OnSliderChanged(int sliderIndex, float value)
     {
-        UpdateSliderBar();
-        UpdateOriginalIngredientValue();        
+        Helper.Instance.SetUserAdjustedValues(true);
+        UpdateSliderTextValues();
     }
 
-    public void SetSliderValues(int[] values)
+    private void Start()
     {
-        for (int i = 0; i < values.Length; i++)
-        {
-            mySliders[i].value = values[i];
-        }
-        UpdateSliderValues();
-    }
-
-    private void UpdateSliderBar()
-    {
+        // Subscribe to Slider Event
         for (int i = 0; i < mySliders.Length; i++)
         {
-            myTexts[i].text = mySliders[i].value.ToString();
+            int sliderIndex = i;
+            mySliders[i].onValueChanged.AddListener((value) => OnSliderChanged(sliderIndex, value));
         }
+    }
+
+    public override void UpdateSliderTextValues()
+    {
+        base.UpdateSliderTextValues();
+        UpdateOriginalIngredientValue(); 
     }
 
     public void SetIngredientName(string name)
@@ -70,7 +62,7 @@ public class IngredientSliders : MonoBehaviour
             // Basically finding the right original ingredient
             if(ingredientObjects[i].GetComponent<IngredientContainer>().GetComponentInChildren<TextMeshProUGUI>().text == ingName)
             {
-                ingredientObjects[i].GetComponentInChildren<HandleAdminSliders>().SetSliderValues(GetSliderValues());
+                ingredientObjects[i].GetComponentInChildren<SliderHandler>().SetSliderValues(GetSliderValues());
             }
         }
     }
@@ -85,4 +77,6 @@ public class IngredientSliders : MonoBehaviour
 
         return returnValues;
     }
+
+    
 }

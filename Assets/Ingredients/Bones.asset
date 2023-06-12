@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4682ff80ad6d4ca478c9faf852881f65, type: 3}
   m_Name: Bones
   m_EditorClassIdentifier: 
-  ingredientName: Ingredient Name
+  ingredientName: Bones
   antiCaugh: 1
   antiBleeding: 2
   antiFever: 1

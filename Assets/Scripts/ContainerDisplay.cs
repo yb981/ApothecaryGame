@@ -9,14 +9,21 @@ public class ContainerDisplay : MonoBehaviour
     ContainerCalculation myContainer;
     // Visuals
     [SerializeField] ParticleSystem particleSystemAddIng;
-    TextMeshPro textFFilledIngredients;
+    [SerializeField] TextMeshProUGUI[] tmps;
+    private TextMeshProUGUI textFFilledIngredients;
     string inputNumberText = " / ";
 
     // Start is called before the first frame update
     void Start()
     {
         myContainer = GetComponentInParent<ContainerCalculation>();
-        textFFilledIngredients = GetComponentInChildren<TextMeshPro>();
+        tmps = GetComponentsInChildren<TextMeshProUGUI>();
+
+        for (int i = 0; i < tmps.Length; i++)
+        {
+            if(tmps[i].name == "TextFilled" ) textFFilledIngredients = tmps[i];
+        }
+
         updateInputNumberText();
     }
 
@@ -33,7 +40,6 @@ public class ContainerDisplay : MonoBehaviour
 
     public void updateInputNumberText()
     {
-        if(textFFilledIngredients == null) textFFilledIngredients = GetComponentInChildren<TextMeshPro>();
         if(textFFilledIngredients.name == "TextFilled"){
             inputNumberText = myContainer.getListSize() + " / " + myContainer.GetMaxIngredients();
             textFFilledIngredients.text = inputNumberText;

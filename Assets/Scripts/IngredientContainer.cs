@@ -14,7 +14,9 @@ public class IngredientContainer : MonoBehaviour
     [SerializeField] IngredientSO ingredientSO;
 
     private GameObject ingredientInstace;
-    Vector2 mouseOffset;
+    private Vector2 mouseOffset;
+    private Slider[] mySliders;
+    private IngredientSliders mySliderHandler;
 
     // ingredientSO Stats
     private int antiCaugh;
@@ -26,6 +28,16 @@ public class IngredientContainer : MonoBehaviour
 
     private void Start() 
     {
+        // Get Components
+
+        mySliders = GetComponentsInChildren<Slider>();
+
+        // Disable slider activity (only change sliders in feedback screen)
+        for (int i = 0; i < mySliders.Length; i++)
+        {
+            mySliders[i].enabled = false;
+        }
+
         // Set the heal values from the Scritable Object
         SliderValues = new int[ingredientSO.getValues().Length];
         int[] values = new int[ingredientSO.getValues().Length];
@@ -56,6 +68,11 @@ public class IngredientContainer : MonoBehaviour
         }
 
         return SliderValues;
+    }
+
+    public void SetSliderValues(int[] values)
+    {
+        mySliderHandler.SetSliderValues(values);
     }
 
 }

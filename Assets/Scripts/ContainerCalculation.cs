@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class ContainerCalculation : MonoBehaviour
 {
     [Header("For Coding")]
     [SerializeField] Helper helper;
+
+    // Events
+    public event EventHandler OnContainerFull;
+    public event EventHandler OnContainerAdd;
+    public event EventHandler OnContainerEmpty;
 
     // Input Values
     int totalCaugh = 0;
@@ -49,6 +55,9 @@ public class ContainerCalculation : MonoBehaviour
 
         if(filledIngredients.Count < 3)
         {
+            // Trigger Event
+            OnContainerAdd?.Invoke(this, EventArgs.Empty);
+
             // add the SO (copy) of the ingredient into the List
             filledIngredients.Add(createCopyOfSOObject(ingredient));
             CalculateIngredientInContainer();
@@ -59,8 +68,12 @@ public class ContainerCalculation : MonoBehaviour
             handleSliders.SetSliderValues(assumedValuesinContainer);
             cheatSliders.SetSliderValues(new int[] {totalCaugh,totalBlood,totalFever});
 
-            // Handle Helper
-            helper.InformIsFull(filledIngredients.Count == maxIngredients);
+            // If Full handle options
+            if(filledIngredients.Count == maxIngredients)
+            {
+                helper.InformIsFull(true);
+                OnContainerFull?.Invoke(this, EventArgs.Empty);
+            }
 
             return true;
         }else{
@@ -131,6 +144,9 @@ public class ContainerCalculation : MonoBehaviour
         myPresentation.updateInputNumberText();
         SetValuesAssumed(new int[] {0,0,0});
         handleSliders.SetSliderValues(assumedValuesinContainer);
+
+        // Invoke Event
+        OnContainerEmpty?.Invoke(this, EventArgs.Empty);
     }
 
     public void inPutClear()

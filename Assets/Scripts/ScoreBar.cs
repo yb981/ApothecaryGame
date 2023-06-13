@@ -8,7 +8,7 @@ public class ScoreBar : MonoBehaviour
 {
     [SerializeField] Slider score;
     [SerializeField] TextMeshProUGUI scoreNumber;
-    [SerializeField] float fillSpeed = 0.001f;
+    [SerializeField] float fillSpeed = 4f;
     Animator myAnimator;
     float scoreValue = 0;
     bool displayScore = false;
@@ -30,14 +30,16 @@ public class ScoreBar : MonoBehaviour
     {
         if(displayScore && !animationComplete)
         {
-            currentValue += fillSpeed;
+            currentValue += fillSpeed * Time.deltaTime;
 
             score.value = currentValue;
             if(score.value >= scoreValue)
             {
                 animationComplete = true;
+                SetScoreTextTo(score.value);
+            }else{
+                SetScoreTextTo(currentValue);
             }
-            SetScoreTextTo(currentValue);
         }
 
     }

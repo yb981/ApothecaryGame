@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         else
         {
             instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            //DontDestroyOnLoad(this.gameObject);
         }
 
         // Set village health
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
     }
 
     void Start()
-    {
+    { 
         referenceScore();
         displayScoreBar(false);
         helper = GameObject.Find("Helper");

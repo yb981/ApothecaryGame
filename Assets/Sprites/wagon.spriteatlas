@@ -42,8 +42,10 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 4a39e7c26b8a0c84d936def79249c969, type: 3}
   - {fileID: 21300000, guid: b7b716f3d90e30742a034a9257d5e5d4, type: 3}
   - {fileID: 21300000, guid: 707a91a4b705a8e41a6c28425fd19f5f, type: 3}
+  - {fileID: 21300000, guid: 143114f44a7e2d34e8baf63570f5c6de, type: 3}
   - {fileID: 21300000, guid: 1031d775313e831448484578224794a0, type: 3}
   - {fileID: 21300000, guid: d3213dd5a486b764e9b83a256cc3eb95, type: 3}
+  - {fileID: 21300000, guid: 13ce29062475fb841b7370c94a33e210, type: 3}
   - {fileID: 21300000, guid: 5c9203465e08ac743a832b025562b18b, type: 3}
   - {fileID: 21300000, guid: f425a2760b0fc1240b32076b0c291557, type: 3}
   - {fileID: 21300000, guid: 3271f95829fcc4347aca49fd0d9996c9, type: 3}
@@ -59,8 +61,10 @@ SpriteAtlas:
   - Layer 23
   - Layer 15
   - thermometer_schanier
+  - start_screen_sketch_a
   - thermometer_fuellung
   - Layer 20
+  - ground_ingredients
   - mixing pot
   - ingredient_1
   - thermometer_preview

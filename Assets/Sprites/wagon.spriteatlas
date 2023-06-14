@@ -38,6 +38,7 @@ SpriteAtlas:
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: adfdc65015a4ad540998c9ef510d419f, type: 3}
   - {fileID: 21300000, guid: 7694af01ffa51e64cb5fec9552786c78, type: 3}
   - {fileID: 21300000, guid: 4a39e7c26b8a0c84d936def79249c969, type: 3}
   - {fileID: 21300000, guid: b7b716f3d90e30742a034a9257d5e5d4, type: 3}
@@ -50,13 +51,17 @@ SpriteAtlas:
   - {fileID: 21300000, guid: f425a2760b0fc1240b32076b0c291557, type: 3}
   - {fileID: 21300000, guid: 3271f95829fcc4347aca49fd0d9996c9, type: 3}
   - {fileID: 21300000, guid: 358af7195f1d7604b97f807750e027ac, type: 3}
+  - {fileID: 21300000, guid: af340a4bfeba5584380a4a3fc1777f0f, type: 3}
   - {fileID: 21300000, guid: ee629bdbb81e02049aa407126f31cb8f, type: 3}
   - {fileID: 21300000, guid: 2157317c24b24464d8c80ee1275583b5, type: 3}
   - {fileID: 21300000, guid: b08efe6db2ac74947b9bbb7536c94de3, type: 3}
   - {fileID: 21300000, guid: 1148be7d1869b5b4c9ec33e836484b4c, type: 3}
+  - {fileID: 21300000, guid: 31db279d47e5dd74b8eead2977ce140e, type: 3}
   - {fileID: 21300000, guid: 177a57ae490202547bc79bedf1152994, type: 3}
   - {fileID: 21300000, guid: 90ea2a4f1d4cbc541abf2192725c91d0, type: 3}
+  - {fileID: 21300000, guid: 7ac93c8fb98024840b9ac7b2477c2410, type: 3}
   m_PackedSpriteNamesToIndex:
+  - thought_bubble
   - ingredient_2
   - Layer 23
   - Layer 15
@@ -69,12 +74,15 @@ SpriteAtlas:
   - ingredient_1
   - thermometer_preview
   - thermometer_highlight
+  - forvase
   - ingredient_3
   - ingredient_4
   - Layer 18
   - thermometer_base
+  - speech_bubble
   - Layer 25-2
   - patient
+  - woodenboard
   m_RenderDataMap: {}
   m_Tag: wagon
   m_IsVariant: 0

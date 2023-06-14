@@ -39,6 +39,11 @@ public class HandleAdminSliders : MonoBehaviour
         TMPv2.text = GameConstants.VALUE2;
         TMPv3.text = GameConstants.VALUE3;
         SetSliderValues(new int[] {0,0,0});
+
+        // Disable sliders
+        sliderCough.enabled = false;
+        sliderBlood.enabled = false;
+        sliderFever.enabled = false;
     }
 
     // Update is called once per frame

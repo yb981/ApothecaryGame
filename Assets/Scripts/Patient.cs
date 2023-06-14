@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public enum patientPhase
 {
@@ -13,12 +14,18 @@ public enum patientPhase
     Score
 }
 
+public enum PatientTalkPhase
+{
+    Talk,
+    Stats,
+    Nothing,
+}
+
 public class Patient : MonoBehaviour
 {
     [Header("ClientsUI")]
     [SerializeField] Canvas clientCanvas;
     [SerializeField] List<PatientSO> patientList = new List<PatientSO>();
-    [SerializeField] TextMeshProUGUI TMPrequestText;
     [SerializeField] GameObject goalPosition;
     [SerializeField] float moveFactor = 0.01f;
 
@@ -31,9 +38,20 @@ public class Patient : MonoBehaviour
     [SerializeField] TextMeshProUGUI TMPv2;
     [SerializeField] TextMeshProUGUI TMPv3;
 
+    public event EventHandler<OnPatientTalkPhaseChangedEventArgs> OnPatientTalkPhaseChanged;
+    public class OnPatientTalkPhaseChangedEventArgs : EventArgs
+    {
+        public PatientTalkPhase talkPhase;
+        public PatientSO currentPatient;
+    }
+
     private patientPhase state = patientPhase.Enter;
+    private PatientTalkPhase talkState = PatientTalkPhase.Nothing;
     private PatientSO patientDetails;
+    private PatientSO currentClient;
     private bool gotNewClient = false;
+    private bool firstTalk = true;
+    private bool firstLeave = true;
     private int totalNumberOfPatients = -1;
     private int currentPatientCount = 0;
 
@@ -57,8 +75,7 @@ public class Patient : MonoBehaviour
         TMPv3.text = GameConstants.VALUE3;
 
         // Disable text first
-        TMPrequestText.enabled = false;
-        displayClientStats(false);
+        //displayClientStats(false);
 
         // disable interaction on sliders
         caughBar.enabled = false;
@@ -98,9 +115,24 @@ public class Patient : MonoBehaviour
 
     void talk()
     {
-        TMPrequestText.enabled = true;
-        displayClientStats(true);
-        GameManager.Instance.informPhaseCompleted();
+        if(firstTalk)
+        {
+            talkState = PatientTalkPhase.Talk;
+            OnPatientTalkPhaseChanged?.Invoke(this, new OnPatientTalkPhaseChangedEventArgs{ talkPhase = talkState, currentPatient = currentClient });    
+            firstTalk = false;
+        }
+        
+        if(Input.GetMouseButtonDown(0) && talkState == PatientTalkPhase.Talk)
+        {
+            talkState = PatientTalkPhase.Stats;
+            OnPatientTalkPhaseChanged?.Invoke(this, new OnPatientTalkPhaseChangedEventArgs{ talkPhase = talkState, currentPatient = currentClient });
+
+            GameManager.Instance.informPhaseCompleted();
+        }
+
+        //TMPrequestText.enabled = true;
+        //displayClientStats(true);
+        
     }
 
     void wait()
@@ -111,8 +143,12 @@ public class Patient : MonoBehaviour
     void leave()
     {
         // Stop talking
-        TMPrequestText.enabled = false;
-        displayClientStats(false);
+        if(firstLeave)
+        {
+            talkState = PatientTalkPhase.Nothing;
+            OnPatientTalkPhaseChanged?.Invoke(this, new OnPatientTalkPhaseChangedEventArgs{ talkPhase = talkState});
+            firstLeave = false;
+        }
 
         Transform goal = goalPosition.transform.GetChild(1);
         if(moveTo(goal.position))   
@@ -126,6 +162,8 @@ public class Patient : MonoBehaviour
     {
         // Reset Flag for new Cycle
         gotNewClient = false;
+        firstTalk = true;
+        firstLeave = true;
     }
 
     private void Patient_LevelFinished(object sender, GameManager.LevelFinishedEventArgs e)
@@ -179,15 +217,15 @@ public class Patient : MonoBehaviour
         if(patientList.Count == 0) return false;
 
         // get random ID
-        int randomId = Random.Range(0,patientList.Count);
+        int randomId = UnityEngine.Random.Range(0,patientList.Count);
 
 
-        PatientSO currentClient = patientList[randomId];
+        currentClient = patientList[randomId];
         currentClientName = currentClient.getNPCname();
         currentClientRequest = currentClient.getRequestText();
         currentClientSicknessValues = currentClient.getSicknessValues();
 
-        TMPrequestText.text = currentClientName + ": "+currentClientRequest;
+        //TMPrequestText.text = currentClientName + ": "+currentClientRequest;
 
         // Remove current client from list, so he only appears once
         // can later add flag for clients to re-apear

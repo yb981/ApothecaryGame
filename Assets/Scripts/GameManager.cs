@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     private int villageHealth = -1; 
     private int maxClients = -1;
     private int survivers = 0;
+    private int currentResult = 0;
 
     int[] resultPotion = new int[3];
     int[] valueSickness = new int[3];
@@ -102,9 +103,10 @@ public class GameManager : MonoBehaviour
 
             case patientPhase.Leave:    
                 gamePhase = patientPhase.Score;
+                helper.GetComponent<Helper>().InformIsFeedbackScreen();
                 pat.setPhase(gamePhase);
                 TriggerFeedbackController();
-                helper.GetComponent<Helper>().InformIsFeedbackScreen();     
+                CalculateVillageHealth(currentResult);     
                 break;
 
             case patientPhase.Score:    
@@ -153,13 +155,13 @@ public class GameManager : MonoBehaviour
         valueSickness = pat.getPatientSicknessValues();
 
         // Calculate Result
-        int result = resultFormula(valueSickness, resultPotion);
+        currentResult = resultFormula(valueSickness, resultPotion);
 
         // Handle Village
-        CalculateVillageHealth(result);
+        //CalculateVillageHealth(currentResult);
 
         // Display Result
-        displayResultSuccess(result);
+        displayResultSuccess(currentResult);
 
         // Reset Container Values
         containerScript.setValues(0,0,0);

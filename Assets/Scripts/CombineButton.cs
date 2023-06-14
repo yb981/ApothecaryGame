@@ -8,7 +8,6 @@ public class CombineButton : MonoBehaviour
 {
     [SerializeField] ContainerCalculation container;
     private Button myButton;
-    private bool canInteract = false;
 
     private void Start() 
     {

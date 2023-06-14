@@ -153,7 +153,7 @@ public class Patient : MonoBehaviour
         Transform goal = goalPosition.transform.GetChild(1);
         if(moveTo(goal.position))   
         {
-            GameManager.Instance.informPhaseCompleted();
+            //GameManager.Instance.informPhaseCompleted();
         }
 
     }

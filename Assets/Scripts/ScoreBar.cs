@@ -37,6 +37,7 @@ public class ScoreBar : MonoBehaviour
             {
                 animationComplete = true;
                 SetScoreTextTo(score.value);
+                GameManager.Instance.informPhaseCompleted();
             }else{
                 SetScoreTextTo(currentValue);
             }

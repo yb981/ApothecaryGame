@@ -40,6 +40,7 @@ SpriteAtlas:
   m_PackedSprites:
   - {fileID: 21300000, guid: adfdc65015a4ad540998c9ef510d419f, type: 3}
   - {fileID: 21300000, guid: 7694af01ffa51e64cb5fec9552786c78, type: 3}
+  - {fileID: 21300000, guid: 08b809316dc1eba42b972ddfc15bee25, type: 3}
   - {fileID: 21300000, guid: 5bc0c1721618c734aa5eda5bdfe39528, type: 3}
   - {fileID: 21300000, guid: fcbd14b2b0060f2459f2beb05aae1eaf, type: 3}
   - {fileID: 21300000, guid: 4a39e7c26b8a0c84d936def79249c969, type: 3}
@@ -67,6 +68,7 @@ SpriteAtlas:
   m_PackedSpriteNamesToIndex:
   - thought_bubble
   - ingredient_2
+  - Vase_Rahmen_neu
   - scale_pictures_updated
   - speech_bubble_reversed
   - Layer 23

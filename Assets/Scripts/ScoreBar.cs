@@ -6,7 +6,9 @@ using TMPro;
 
 public class ScoreBar : MonoBehaviour
 {
+    [SerializeField] GameObject fullScoreBar;
     [SerializeField] Slider score;
+    [SerializeField] Image scoreFill;
     [SerializeField] TextMeshProUGUI scoreNumber;
     [SerializeField] float fillSpeed = 4f;
     Animator myAnimator;
@@ -22,7 +24,8 @@ public class ScoreBar : MonoBehaviour
 
     private void Start() 
     {
-        score.enabled = false;
+        //score.enabled = false;
+        fullScoreBar.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -32,11 +35,12 @@ public class ScoreBar : MonoBehaviour
         {
             currentValue += fillSpeed * Time.deltaTime;
 
-            score.value = currentValue;
-            if(score.value >= scoreValue)
+            scoreFill.fillAmount = (float) currentValue/1;
+            //score.value = currentValue;
+            if(scoreFill.fillAmount >= scoreValue)
             {
                 animationComplete = true;
-                SetScoreTextTo(score.value);
+                SetScoreTextTo(scoreFill.fillAmount);
                 GameManager.Instance.informPhaseCompleted();
             }else{
                 SetScoreTextTo(currentValue);
@@ -61,7 +65,7 @@ public class ScoreBar : MonoBehaviour
     {
         displayScore = state;
 
-        score.gameObject.SetActive(state);
+        fullScoreBar.gameObject.SetActive(state);
         scoreNumber.gameObject.SetActive(state);
     }
 

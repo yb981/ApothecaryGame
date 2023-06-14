@@ -40,6 +40,8 @@ SpriteAtlas:
   m_PackedSprites:
   - {fileID: 21300000, guid: adfdc65015a4ad540998c9ef510d419f, type: 3}
   - {fileID: 21300000, guid: 7694af01ffa51e64cb5fec9552786c78, type: 3}
+  - {fileID: 21300000, guid: 5bc0c1721618c734aa5eda5bdfe39528, type: 3}
+  - {fileID: 21300000, guid: fcbd14b2b0060f2459f2beb05aae1eaf, type: 3}
   - {fileID: 21300000, guid: 4a39e7c26b8a0c84d936def79249c969, type: 3}
   - {fileID: 21300000, guid: b7b716f3d90e30742a034a9257d5e5d4, type: 3}
   - {fileID: 21300000, guid: 707a91a4b705a8e41a6c28425fd19f5f, type: 3}
@@ -52,7 +54,9 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 3271f95829fcc4347aca49fd0d9996c9, type: 3}
   - {fileID: 21300000, guid: 358af7195f1d7604b97f807750e027ac, type: 3}
   - {fileID: 21300000, guid: af340a4bfeba5584380a4a3fc1777f0f, type: 3}
+  - {fileID: 21300000, guid: 428ac65b63c968247a47f0721ea7861a, type: 3}
   - {fileID: 21300000, guid: ee629bdbb81e02049aa407126f31cb8f, type: 3}
+  - {fileID: 21300000, guid: 659cf92cd084e7a42ae96ae996cdec48, type: 3}
   - {fileID: 21300000, guid: 2157317c24b24464d8c80ee1275583b5, type: 3}
   - {fileID: 21300000, guid: b08efe6db2ac74947b9bbb7536c94de3, type: 3}
   - {fileID: 21300000, guid: 1148be7d1869b5b4c9ec33e836484b4c, type: 3}
@@ -63,6 +67,8 @@ SpriteAtlas:
   m_PackedSpriteNamesToIndex:
   - thought_bubble
   - ingredient_2
+  - scale_pictures_updated
+  - speech_bubble_reversed
   - Layer 23
   - Layer 15
   - thermometer_schanier
@@ -75,7 +81,9 @@ SpriteAtlas:
   - thermometer_preview
   - thermometer_highlight
   - forvase
+  - though_bubble_reversed
   - ingredient_3
+  - thermometer_highlight_only
   - ingredient_4
   - Layer 18
   - thermometer_base

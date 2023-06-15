@@ -27,7 +27,7 @@ public class Patient : MonoBehaviour
     [SerializeField] Canvas clientCanvas;
     [SerializeField] List<PatientSO> patientList = new List<PatientSO>();
     [SerializeField] GameObject goalPosition;
-    [SerializeField] float moveFactor = 0.01f;
+    [SerializeField] float moveFactor = 10f;
 
 
     [Header("SicknessUI")]
@@ -45,6 +45,11 @@ public class Patient : MonoBehaviour
         public PatientSO currentPatient;
     }
 
+    public event EventHandler<OnNewPatientEventArgs> OnNewPatient;
+    public class OnNewPatientEventArgs : EventArgs
+    {
+    }
+
     private patientPhase state = patientPhase.Enter;
     private PatientTalkPhase talkState = PatientTalkPhase.Nothing;
     private PatientSO patientDetails;
@@ -54,6 +59,7 @@ public class Patient : MonoBehaviour
     private bool firstLeave = true;
     private int totalNumberOfPatients = -1;
     private int currentPatientCount = 0;
+    private float timer = 0;
 
     // Client Stats
     string currentClientName;
@@ -173,18 +179,63 @@ public class Patient : MonoBehaviour
     
     private bool moveTo(Vector3 goal) 
     {
+        //float movement = 1f;
+        // get distance
+        float distance = goal.x - transform.position.x;
+        // check if distance is smaller as movement
+        if(Mathf.Abs( distance) < moveFactor* Time.deltaTime )
+        {
+            transform.position = goal;
+            return true;
+        }else{
+            float moveDistance = Mathf.Sign(distance) * moveFactor * Time.deltaTime;
+            transform.position += new Vector3(moveDistance,0,0);
+            return false;
+        }
+            // set goal
+        
+        // add movement
+        // return false
+
+
+        /*
+        // Set positions depending on which directions moving
+        Transform startPoint = goalPosition.transform.GetChild(1);
+        Transform goalPoint = goalPosition.transform.GetChild(0);
+        // Swap if going Out
+        if(goal == startPoint.position)
+        {
+            startPoint = goalPosition.transform.GetChild(0);
+            goalPoint = goalPosition.transform.GetChild(1);
+        }
+        
+        float absoulteDistance = Mathf.Abs( startPoint.position.x - goalPoint.position.x);
         Vector3 currentPosition = transform.position;
+
+        // Set %
+        float amount = Mathf.Abs( (goalPoint.position.x-currentPosition.x) /absoulteDistance);
+        amount += Time.deltaTime * moveFactor;
+        Debug.Log(amount);
+
+        // Lerp
+        currentPosition.x = Mathf.Lerp(startPoint.position.x,goalPoint.position.x,amount);
+
+        if(amount >= 1f) currentPosition = goalPoint.position;
+
+        transform.position = currentPosition;*/
+
+        /*
         Vector3 deltaPos = new Vector3(0,0,0);
         deltaPos = goal-currentPosition;
         if(Mathf.Abs(deltaPos.x) < 0.1){
             currentPosition = goal;
         }else{
-            currentPosition += deltaPos * moveFactor;
+            currentPosition += deltaPos * moveFactor * Time.deltaTime;
         }
 
         transform.position = currentPosition;
 
-        return goal == currentPosition;
+        return goal == currentPosition;*/
     }
 
     public void setPhase(patientPhase newPhase)
@@ -219,13 +270,15 @@ public class Patient : MonoBehaviour
         // get random ID
         int randomId = UnityEngine.Random.Range(0,patientList.Count);
 
-
         currentClient = patientList[randomId];
         currentClientName = currentClient.getNPCname();
         currentClientRequest = currentClient.getRequestText();
         currentClientSicknessValues = currentClient.getSicknessValues();
 
-        //TMPrequestText.text = currentClientName + ": "+currentClientRequest;
+        // Send Event
+        OnNewPatient?.Invoke(this, new OnNewPatientEventArgs{
+
+        });
 
         // Remove current client from list, so he only appears once
         // can later add flag for clients to re-apear

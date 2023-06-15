@@ -30,7 +30,7 @@ public class FinalScreen : MonoBehaviour
 
     public void ContinueButton()
     {
-        SceneManager.LoadScene(GameConstants.SCENE_MENU);
+        RunHandler.Instance.NextLevel();
     }
 
     private void SetVillagerSurvivedText(int max, int survivers)

@@ -48,6 +48,7 @@ public class Patient : MonoBehaviour
     public event EventHandler<OnNewPatientEventArgs> OnNewPatient;
     public class OnNewPatientEventArgs : EventArgs
     {
+        public PatientSO currentPatient;
     }
 
     private patientPhase state = patientPhase.Enter;
@@ -277,7 +278,7 @@ public class Patient : MonoBehaviour
 
         // Send Event
         OnNewPatient?.Invoke(this, new OnNewPatientEventArgs{
-
+            currentPatient = currentClient
         });
 
         // Remove current client from list, so he only appears once

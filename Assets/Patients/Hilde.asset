@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   introductionText: I haven't slept for days because of the pain
   NPCname: Hilde
+  gender: 1
   looks: {fileID: 0}
   sickness: 010000000600000003000000

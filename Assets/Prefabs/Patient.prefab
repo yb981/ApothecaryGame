@@ -1883,6 +1883,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3ddc7e8c3569c6e4ba0587e0c85177c7, type: 3}
   - {fileID: 21300000, guid: 0b002c5ca6d9c2a458245d662241b266, type: 3}
   - {fileID: 21300000, guid: 06fa5ce4b88a62f40b3c300abf6d8e01, type: 3}
+  maleHeads:
+  - {fileID: 21300000, guid: 88f9d52fa3047ac49a162e1c34d56e24, type: 3}
+  - {fileID: 21300000, guid: a28a03f5ab8ee3b48bc0fd6d1eeb8e29, type: 3}
+  maleBodies:
+  - {fileID: 21300000, guid: e712f1af527149b4ebd9ec85affc0d61, type: 3}
+  - {fileID: 21300000, guid: 91b93c4ec20339e4a9d612575326eb1f, type: 3}
+  - {fileID: 21300000, guid: 8d966b044675a20429619ccffffdfb1f, type: 3}
 --- !u!1 &734279278772425136
 GameObject:
   m_ObjectHideFlags: 0

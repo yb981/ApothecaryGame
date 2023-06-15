@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   introductionText: What is happening?
   NPCname: Ingrid
+  gender: 1
   looks: {fileID: 0}
   sickness: 020000000400000001000000

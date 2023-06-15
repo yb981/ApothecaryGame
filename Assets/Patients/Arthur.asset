@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72196c43f2509f148a708629c34f1c02, type: 3}
   m_Name: Arthur
   m_EditorClassIdentifier: 
-  introductionText: Why is it so cold?
+  introductionText: I am plagued by a mysterious fever, draining my strength and
+    clouding my mind.
   NPCname: Arthur
+  gender: 0
   looks: {fileID: 0}
   sickness: 030000000700000005000000

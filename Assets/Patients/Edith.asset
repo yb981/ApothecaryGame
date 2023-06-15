@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   introductionText: I feel very cold
   NPCname: Edith
+  gender: 1
   looks: {fileID: 0}
   sickness: 010000000200000006000000

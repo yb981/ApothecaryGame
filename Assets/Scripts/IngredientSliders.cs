@@ -9,6 +9,7 @@ public class IngredientSliders : SliderHandler
 {
     [Header("Coding")]
     [SerializeField] TextMeshProUGUI nameField;
+    [SerializeField] Image ingredientImage;
 
     private GameObject[] ingredientObjects;
     private string ingName = "not set";
@@ -52,6 +53,24 @@ public class IngredientSliders : SliderHandler
         {
             if(myTexts[i].name == "TMP Name") myTexts[i].text = ingName;
         }
+
+        // ALSO SETTING IMAGE, need refactor
+        SetIngredientImage();
+    }
+
+    private void SetIngredientImage()
+    {
+        foreach (GameObject ingredient in ingredientObjects)
+        {
+            if(ingredient.GetComponent<IngredientContainer>().GetComponentInChildren<TextMeshProUGUI>().text == ingName)
+            {
+                SpriteRenderer originalSpriteRenderer = ingredient.GetComponentInChildren<SpriteRenderer>();
+                ingredientImage.sprite = originalSpriteRenderer.sprite;
+                ingredientImage.color = originalSpriteRenderer.color;
+                return;
+            }
+        }
+        
     }
 
     private void UpdateOriginalIngredientValue()

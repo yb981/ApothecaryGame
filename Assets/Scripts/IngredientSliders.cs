@@ -10,6 +10,9 @@ public class IngredientSliders : SliderHandler
     [Header("Coding")]
     [SerializeField] TextMeshProUGUI nameField;
     [SerializeField] Image ingredientImage;
+    
+    [Header("Adapting: Add all ingredients")]
+    [SerializeField] List<IngredientSliders> otherIngredientSliders;
 
     private GameObject[] ingredientObjects;
     private string ingName = "not set";
@@ -70,7 +73,6 @@ public class IngredientSliders : SliderHandler
                 return;
             }
         }
-        
     }
 
     private void UpdateOriginalIngredientValue()
@@ -84,9 +86,14 @@ public class IngredientSliders : SliderHandler
                 ingredientObjects[i].GetComponentInChildren<SliderHandler>().SetSliderValues(GetSliderValues());
             }
         }
+
+        foreach (IngredientSliders currentSlider in otherIngredientSliders)
+        {
+            if(currentSlider.GetSliderIngredientName() == ingName) currentSlider.SetSliderValues(GetSliderValues());
+        }
     }
 
-    private int[] GetSliderValues()
+    public int[] GetSliderValues()
     {
         int[] returnValues = new int[mySliders.Length];
         for (int i = 0; i < mySliders.Length; i++)
@@ -97,5 +104,16 @@ public class IngredientSliders : SliderHandler
         return returnValues;
     }
 
-    
+    public override void SetSliderValues(int[] values)
+    {
+        for(int i = 0 ; i < values.Length ; i++)
+        {
+            mySliders[i].value = values[i];
+        }
+    }
+
+    public string GetSliderIngredientName()
+    {
+        return ingName;
+    }
 }

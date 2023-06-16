@@ -28,7 +28,7 @@ public class Patient : MonoBehaviour
     [SerializeField] List<PatientSO> patientList = new List<PatientSO>();
     [SerializeField] GameObject goalPosition;
     [SerializeField] float moveFactor = 10f;
-
+    [SerializeField] PatientBodySO patientBodySO;
 
     [Header("SicknessUI")]
     [SerializeField] Slider caughBar;
@@ -308,5 +308,15 @@ public class Patient : MonoBehaviour
     public int GetCurrentPatientNumber()
     {
         return currentPatientCount;
+    }
+
+    public PatientBodySO GetPatientSprite()
+    {
+        return patientBodySO;
+    }
+
+    public void SetPatientSprite(PatientBodySO newPatientBodySO)
+    {
+        patientBodySO = newPatientBodySO;
     }
 }

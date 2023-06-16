@@ -16,6 +16,8 @@ public class PatientLooks : MonoBehaviour
     [SerializeField] List<Sprite> maleHeads; 
     [SerializeField] List<Sprite> maleBodies;
 
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +47,11 @@ public class PatientLooks : MonoBehaviour
             Sprite body = femaleBodies[UnityEngine.Random.Range(0,femaleBodies.Count)];
             bodySprite.sprite = body;
         }
+
+        // set the reference in on object
+        PatientBodySO newLooksSO = new PatientBodySO();
+        newLooksSO.SetNewSprites(headSprite.sprite,bodySprite.sprite);
+        myPatient.SetPatientSprite(newLooksSO);
 
     }
 }

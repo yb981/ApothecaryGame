@@ -17,7 +17,7 @@ public class SliderHandler : MonoBehaviour
         //UpdateSliderTextValues();
     }
 
-    public void SetSliderValues(int[] values)
+    public virtual void SetSliderValues(int[] values)
     {
         for (int i = 0; i < values.Length; i++)
         {

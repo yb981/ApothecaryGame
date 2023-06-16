@@ -249,7 +249,7 @@ public class GameManager : MonoBehaviour
             villageHealthChange = healthChange
         });
 
-        uiTracker.UpdateVillageBar(villageHealth);
+        //uiTracker.UpdateVillageBar(villageHealth);
     }
     
     void displayScoreBar(bool state)

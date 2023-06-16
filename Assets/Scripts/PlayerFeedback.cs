@@ -7,6 +7,9 @@ using System;
 
 public class PlayerFeedback : MonoBehaviour
 {
+
+    public event EventHandler OnStartFeedback;
+
     [Header("Coding")]
     [SerializeField] private ContainerCalculation container;
     private TextMeshProUGUI playerFeedbackTMP;
@@ -43,6 +46,9 @@ public class PlayerFeedback : MonoBehaviour
     public void StartFeedback(int[] playerInput, int[] clientValue)
     {
         DisplayFeedback(true);
+
+        // Invoke Feedback Event
+        OnStartFeedback?.Invoke(this, EventArgs.Empty);
 
         // Update Client Slider Values
         clientSliders.SetSliderValues(clientValue);

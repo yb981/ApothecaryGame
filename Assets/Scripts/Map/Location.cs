@@ -8,6 +8,9 @@ public class Location : MonoBehaviour
 
     public event EventHandler OnGotSelected;
     public event EventHandler OnGotDeselected;
+    public event EventHandler OnReachChanged;
+
+    [SerializeField] private LevelSettingsSO level;
 
     private LocationsHandler locationsHandler;
     private BoxCollider2D myCollider;
@@ -44,8 +47,19 @@ public class Location : MonoBehaviour
         selected = false;
     }
 
+    public void SetReach(bool state)
+    {
+        reachable = state;
+        OnReachChanged?.Invoke(this, EventArgs.Empty);
+    }
+
     public bool IsReachable()
     {
         return reachable;
+    }
+
+    public LevelSettingsSO GetLevel()
+    {
+        return level;
     }
 }

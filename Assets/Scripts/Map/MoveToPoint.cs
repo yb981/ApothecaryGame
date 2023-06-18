@@ -5,13 +5,18 @@ using UnityEngine;
 
 public class MoveToPoint : MonoBehaviour
 {
+    public event EventHandler<OnDestinationReachedEventArgs> OnDestinationReached;
+    public class OnDestinationReachedEventArgs : EventArgs
+    {
+        public Location destionation;
+    }
 
     [SerializeField] float speed;
     [SerializeField] Transform objectToMove;
     [SerializeField] Transform goalObject;
     private Player player;
     private Vector3 startPosition;
-    private bool moving = true;
+    private bool moving = false;
     private float amount = 0f;
 
     private void Start() 
@@ -38,6 +43,9 @@ public class MoveToPoint : MonoBehaviour
                 moving = false;
                 amount = 0f;
                 startPosition = goalObject.transform.position;
+                OnDestinationReached?.Invoke(this, new OnDestinationReachedEventArgs{
+                    destionation = goalObject.GetComponent<Location>()
+                });
             }
             
         }

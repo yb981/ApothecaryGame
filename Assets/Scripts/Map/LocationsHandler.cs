@@ -15,6 +15,18 @@ public class LocationsHandler : MonoBehaviour
     [SerializeField] List<Location> locationsList;
     private Location selectedLocation;
 
+    public void SetLocationsReach(int levelCount)
+    {
+        for (int i = 0; i < locationsList.Count; i++)
+        {
+            if(i <= levelCount){
+                locationsList[i].SetReach(true);
+            }else{
+                locationsList[i].SetReach(false);
+            }
+        }
+    }
+
     public void SetNewActiveLocation(Location newLocation)
     {
         foreach (Location location in locationsList)

@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class LocationSelection : MonoBehaviour
 {
-    private SpriteRenderer mySpriteRenderer;
+
+    [SerializeField] private SpriteRenderer selectionSpriteRenderer;
     private Location location;
     
     private void Start() 
     {
-        mySpriteRenderer = GetComponent<SpriteRenderer>();
-        mySpriteRenderer.enabled = false;
+        selectionSpriteRenderer = GetComponent<SpriteRenderer>();
+        selectionSpriteRenderer.enabled = false;
 
         location = GetComponentInParent<Location>();
         location.OnGotSelected += Location_OnGotSelected;
@@ -20,13 +21,14 @@ public class LocationSelection : MonoBehaviour
 
     private void Location_OnGotSelected(object sender, EventArgs e)
     {
-        mySpriteRenderer.enabled = true;
+        selectionSpriteRenderer.enabled = true;
     }
 
     private void Location_OnGotDeselected(object sender, EventArgs e)
     {
-        mySpriteRenderer.enabled = false;
+        selectionSpriteRenderer.enabled = false;
     }
+
 
 
 }

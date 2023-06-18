@@ -29,7 +29,7 @@ public class RunHandler : MonoBehaviour
         // Loading Screen if starting game
         if(SceneManager.GetActiveScene().name == GameConstants.SCENE_MENU)
         {
-            Loader.LoadNextScene(GameConstants.SCENE_LOADING);
+            Loader.LoadNextScene(GameConstants.SCENE_MAP);
             return;
         }
 
@@ -47,12 +47,23 @@ public class RunHandler : MonoBehaviour
         }
 
         levelCount++;
-        SceneManager.LoadScene(GameConstants.SCENE_WAGON);
+        Loader.LoadNextScene(GameConstants.Scenes.Map.ToString());
     }
+
+    public void LoadLevel(LevelSettingsSO level)
+    {
+        Loader.LoadNextScene(level.GetLevelScene());
+        Debug.Log(this +" telling loader to start");
+    }   
 
     public void ExitGame()
     {
         Debug.Log("Exit Game");
         Application.Quit();
+    }
+
+    public int GetLevelCount()
+    {
+        return levelCount;
     }
 }

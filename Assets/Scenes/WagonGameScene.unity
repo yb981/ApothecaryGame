@@ -636,7 +636,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -5
+  m_SortingOrder: -10
   m_Sprite: {fileID: 21300000, guid: b08efe6db2ac74947b9bbb7536c94de3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6126,7 +6126,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -10
+  m_SortingOrder: -20
   m_Sprite: {fileID: 21300000, guid: d3213dd5a486b764e9b83a256cc3eb95, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6224,7 +6224,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -10
+  m_SortingOrder: -50
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
   m_FlipX: 0
@@ -9508,7 +9508,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -7
+  m_SortingOrder: -15
   m_RenderMode: 1
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -16562,7 +16562,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -2
+  m_SortingOrder: -5
   m_Sprite: {fileID: 21300000, guid: b7b716f3d90e30742a034a9257d5e5d4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -18484,6 +18484,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2988293852685559889, guid: cc9a48280605208429aa4c34dfced7ff, type: 3}
+      propertyPath: m_SortingOrder
+      value: -12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3985184000409956067, guid: cc9a48280605208429aa4c34dfced7ff, type: 3}
+      propertyPath: m_SortingOrder
+      value: -11
+      objectReference: {fileID: 0}
     - target: {fileID: 4411027710752910328, guid: cc9a48280605208429aa4c34dfced7ff, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -18544,6 +18552,54 @@ PrefabInstance:
       propertyPath: m_Name
       value: Patient1
       objectReference: {fileID: 0}
+    - target: {fileID: 7543419192100106763, guid: cc9a48280605208429aa4c34dfced7ff, type: 3}
+      propertyPath: femaleHeads.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7543419192100106763, guid: cc9a48280605208429aa4c34dfced7ff, type: 3}
+      propertyPath: femaleBodies.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7543419192100106763, guid: cc9a48280605208429aa4c34dfced7ff, type: 3}
+      propertyPath: femaleHeads.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 845bca1eee2eae143b4c73c828b1546b, type: 3}
+    - target: {fileID: 7543419192100106763, guid: cc9a48280605208429aa4c34dfced7ff, type: 3}
+      propertyPath: femaleHeads.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 45db341ec2ac97b4cae36c91534cf448, type: 3}
+    - target: {fileID: 7543419192100106763, guid: cc9a48280605208429aa4c34dfced7ff, type: 3}
+      propertyPath: femaleHeads.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 845bca1eee2eae143b4c73c828b1546b, type: 3}
+    - target: {fileID: 7543419192100106763, guid: cc9a48280605208429aa4c34dfced7ff, type: 3}
+      propertyPath: femaleHeads.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 45db341ec2ac97b4cae36c91534cf448, type: 3}
+    - target: {fileID: 7543419192100106763, guid: cc9a48280605208429aa4c34dfced7ff, type: 3}
+      propertyPath: femaleBodies.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: f7af6f353df0739419d795409cbfe506, type: 3}
+    - target: {fileID: 7543419192100106763, guid: cc9a48280605208429aa4c34dfced7ff, type: 3}
+      propertyPath: femaleBodies.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 5d4a2fc2c80f8b847b8b66a03271051a, type: 3}
+    - target: {fileID: 7543419192100106763, guid: cc9a48280605208429aa4c34dfced7ff, type: 3}
+      propertyPath: femaleBodies.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 3a1f79c11ad939849a6899fac6c1ecf3, type: 3}
+    - target: {fileID: 7543419192100106763, guid: cc9a48280605208429aa4c34dfced7ff, type: 3}
+      propertyPath: femaleBodies.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: f7af6f353df0739419d795409cbfe506, type: 3}
+    - target: {fileID: 7543419192100106763, guid: cc9a48280605208429aa4c34dfced7ff, type: 3}
+      propertyPath: femaleBodies.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300000, guid: 5d4a2fc2c80f8b847b8b66a03271051a, type: 3}
+    - target: {fileID: 7543419192100106763, guid: cc9a48280605208429aa4c34dfced7ff, type: 3}
+      propertyPath: femaleBodies.Array.data[5]
+      value: 
+      objectReference: {fileID: 21300000, guid: 3a1f79c11ad939849a6899fac6c1ecf3, type: 3}
     - target: {fileID: 9082139234755028811, guid: cc9a48280605208429aa4c34dfced7ff, type: 3}
       propertyPath: m_Sprite
       value: 

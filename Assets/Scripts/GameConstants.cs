@@ -10,6 +10,8 @@ public static class GameConstants
     // Scenes
     public const string SCENE_WAGON = "WagonGameScene";
     public const string SCENE_MENU  = "Menu";
+    public const string SCENE_LOADING = "LoadingScene";
+    public const string SCENE_MAP = "Map";
 }
 
 public enum PlayerFeedbackStates

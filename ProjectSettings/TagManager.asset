@@ -43,3 +43,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: MapBackground
+    uniqueID: 1899260649
+    locked: 0
+  - name: Path
+    uniqueID: 3521477751
+    locked: 0
+  - name: Locations
+    uniqueID: 1340003411
+    locked: 0
+  - name: Player
+    uniqueID: 29570697
+    locked: 0
+  - name: LocationsUI
+    uniqueID: 2189998885
+    locked: 0

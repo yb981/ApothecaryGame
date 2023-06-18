@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WagonGameScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Map.unity
+    guid: 73196160588fea2498a253bd6b8f7c6e
+  - enabled: 1
+    path: Assets/Scenes/LoadingScene.unity
+    guid: 97f01490fab8a9b46877414e7627f30e
   m_configObjects: {}

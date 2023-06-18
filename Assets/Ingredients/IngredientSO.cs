@@ -15,8 +15,20 @@ public class IngredientSO : ScriptableObject
         return new int[] {antiCaugh, antiBleeding, antiFever};
     }
 
+    public void SetValues(int[] values)
+    {
+        antiCaugh = values[0];
+        antiBleeding = values[1];
+        antiFever = values[2];
+    }
+
     public string getName()
     {
         return ingredientName;
+    }
+
+    public void SetIngredientName(string newName)
+    {
+        ingredientName = newName;
     }
 }

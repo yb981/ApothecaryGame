@@ -33,29 +33,17 @@ public class IngredientContainer : MonoBehaviour
 
     private void Start() 
     {
-        // Get Components
-
-        mySliders = GetComponentsInChildren<Slider>();
 
         // Disable slider activity (only change sliders in feedback screen)
+        mySliders = GetComponentsInChildren<Slider>();
         for (int i = 0; i < mySliders.Length; i++)
         {
             mySliders[i].enabled = false;
         }
 
-        // Set the heal values from the Scritable Object
-        SliderValues = new int[ingredientSO.getValues().Length];
-        int[] values = new int[ingredientSO.getValues().Length];
-
-        values          = ingredientSO.getValues();
-        antiCaugh       = values[0];
-        antiBleeding    = values[1];
-        antiFever       = values[2];
-        ingredientName  = ingredientSO.getName();
-
-        nameField.text = ingredientName;
-
         ValueSliders = GetComponentsInChildren<Slider>();
+
+        InitializeIngridient();
     }
 
     private void OnMouseDown() 
@@ -80,6 +68,21 @@ public class IngredientContainer : MonoBehaviour
         mySliderHandler.SetSliderValues(values);
     }
 
+    private void InitializeIngridient()
+    {
+        // Set the heal values from the Scritable Object
+        SliderValues = new int[ingredientSO.getValues().Length];
+        int[] values = new int[ingredientSO.getValues().Length];
+
+        values          = ingredientSO.getValues();
+        antiCaugh       = values[0];
+        antiBleeding    = values[1];
+        antiFever       = values[2];
+        ingredientName  = ingredientSO.getName();
+
+        nameField.text = ingredientName;
+    }
+
     private void OnMouseEnter() 
     {
         if(EventSystem.current.IsPointerOverGameObject()) return;
@@ -90,6 +93,13 @@ public class IngredientContainer : MonoBehaviour
     {
         //if(EventSystem.current.IsPointerOverGameObject()) return;
         MouseLeaving(this, EventArgs.Empty);
+    }
+
+    // Set/Get
+    public void SetIngredientSO(IngredientSO newIngredientSO)
+    {
+        ingredientSO = newIngredientSO;
+        InitializeIngridient();
     }
 
 }

@@ -9,6 +9,7 @@ public class Location : MonoBehaviour
     public event EventHandler OnGotSelected;
     public event EventHandler OnGotDeselected;
     public event EventHandler OnReachChanged;
+    
 
     [SerializeField] private LevelSettingsSO level;
 

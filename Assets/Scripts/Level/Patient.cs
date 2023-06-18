@@ -81,9 +81,6 @@ public class Patient : MonoBehaviour
         TMPv2.text = GameConstants.VALUE2;
         TMPv3.text = GameConstants.VALUE3;
 
-        // Disable text first
-        //displayClientStats(false);
-
         // disable interaction on sliders
         caughBar.enabled = false;
         bleedBar.enabled = false;
@@ -193,50 +190,6 @@ public class Patient : MonoBehaviour
             transform.position += new Vector3(moveDistance,0,0);
             return false;
         }
-            // set goal
-        
-        // add movement
-        // return false
-
-
-        /*
-        // Set positions depending on which directions moving
-        Transform startPoint = goalPosition.transform.GetChild(1);
-        Transform goalPoint = goalPosition.transform.GetChild(0);
-        // Swap if going Out
-        if(goal == startPoint.position)
-        {
-            startPoint = goalPosition.transform.GetChild(0);
-            goalPoint = goalPosition.transform.GetChild(1);
-        }
-        
-        float absoulteDistance = Mathf.Abs( startPoint.position.x - goalPoint.position.x);
-        Vector3 currentPosition = transform.position;
-
-        // Set %
-        float amount = Mathf.Abs( (goalPoint.position.x-currentPosition.x) /absoulteDistance);
-        amount += Time.deltaTime * moveFactor;
-        Debug.Log(amount);
-
-        // Lerp
-        currentPosition.x = Mathf.Lerp(startPoint.position.x,goalPoint.position.x,amount);
-
-        if(amount >= 1f) currentPosition = goalPoint.position;
-
-        transform.position = currentPosition;*/
-
-        /*
-        Vector3 deltaPos = new Vector3(0,0,0);
-        deltaPos = goal-currentPosition;
-        if(Mathf.Abs(deltaPos.x) < 0.1){
-            currentPosition = goal;
-        }else{
-            currentPosition += deltaPos * moveFactor * Time.deltaTime;
-        }
-
-        transform.position = currentPosition;
-
-        return goal == currentPosition;*/
     }
 
     public void setPhase(patientPhase newPhase)

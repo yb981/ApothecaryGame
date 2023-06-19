@@ -9,18 +9,25 @@ public class Location : MonoBehaviour
     public event EventHandler OnGotSelected;
     public event EventHandler OnGotDeselected;
     public event EventHandler OnReachChanged;
-    
+    public event EventHandler LocationNumberChanged;
+
 
     [SerializeField] private LevelSettingsSO level;
 
     private LocationsHandler locationsHandler;
     private BoxCollider2D myCollider;
     private bool selected = false;
+    private int locationNumber = -1;
     [SerializeField] private bool reachable = false;
+
+    private void Awake() 
+    {
+        reachable = false;
+        myCollider = GetComponent<BoxCollider2D>();
+    }
 
     void Start()
     {
-        myCollider = GetComponent<BoxCollider2D>();
         locationsHandler = GetComponentInParent<LocationsHandler>();
     }
 
@@ -63,4 +70,22 @@ public class Location : MonoBehaviour
     {
         return level;
     }
+
+    public int GetVillagerNumber()
+    {
+        return level.AmountOfPatients;
+    }
+
+    public void SetLocationsNumber(int number)
+    {
+        locationNumber = number;
+        LocationNumberChanged?.Invoke(this, EventArgs.Empty);
+
+    }
+
+    public int GetLocationsNumber()
+    {
+        return locationNumber;
+    }
+
 }

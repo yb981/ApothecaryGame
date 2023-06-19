@@ -9,7 +9,7 @@ public class RunHandler : MonoBehaviour
     public static RunHandler Instance { get {return instance;}}
     private static RunHandler instance;
 
-    [SerializeField] int levelAmount = 2;
+    private int levelAmount = -1;
     private int levelCount = 0;
     private LevelSettingsSO currentLevel;
 
@@ -34,7 +34,7 @@ public class RunHandler : MonoBehaviour
             return;
         }
 
-        if(levelCount >= levelAmount)
+        if(levelCount == levelAmount)
         {
             // go To Final Screen
 
@@ -72,5 +72,10 @@ public class RunHandler : MonoBehaviour
     public LevelSettingsSO GetCurrentLevel()
     {
         return currentLevel;
+    }
+
+    public void SetLevelAmount(int numberOfLevels)
+    {
+        levelAmount = numberOfLevels;
     }
 }

@@ -26,6 +26,7 @@ public class MapHandler : MonoBehaviour
             player.SetLocation(locationsHandler.GetLocations()[currentLevelCount-1]);
         }
         
+        RunHandler.Instance.SetLevelAmount(locationsHandler.GetNumberOfLocations());
     }
 
     public void StartLevel(LevelSettingsSO level)

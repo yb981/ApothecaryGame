@@ -15,6 +15,15 @@ public class LocationsHandler : MonoBehaviour
     [SerializeField] List<Location> locationsList;
     private Location selectedLocation;
 
+    private void Start() 
+    {
+        // Set Locations Count
+        for (int i = 0; i < locationsList.Count; i++)
+        {
+            locationsList[i].SetLocationsNumber(i+1);
+        }    
+    }
+
     public void SetLocationsReach(int levelCount)
     {
         for (int i = 0; i < locationsList.Count; i++)
@@ -59,5 +68,10 @@ public class LocationsHandler : MonoBehaviour
     public List<Location> GetLocations()
     {
         return locationsList;
+    }
+
+    public int GetNumberOfLocations()
+    {
+        return locationsList.Count;
     }
 }

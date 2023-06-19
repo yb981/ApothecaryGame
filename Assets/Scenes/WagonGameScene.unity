@@ -437,6 +437,7 @@ GameObject:
   - component: {fileID: 16717355}
   - component: {fileID: 16717354}
   - component: {fileID: 16717356}
+  - component: {fileID: 16717357}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -486,6 +487,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ingredientNamesSO: {fileID: 11400000, guid: 557e0b06d3cf3184c8ffe052d4ef0984, type: 2}
+  initializeClients: {fileID: 16717357}
+--- !u!114 &16717357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16717353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69f57df55566e404c8520a242a7e817e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  patient: {fileID: 2097141153}
+  initializeIngredients: {fileID: 16717356}
+  patientDataSO: {fileID: 11400000, guid: 9a9c491c96aa5ea47b27baca66a7302b, type: 2}
 --- !u!1 &19461260
 GameObject:
   m_ObjectHideFlags: 0

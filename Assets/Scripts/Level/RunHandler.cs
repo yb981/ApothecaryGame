@@ -11,6 +11,7 @@ public class RunHandler : MonoBehaviour
 
     [SerializeField] int levelAmount = 2;
     private int levelCount = 0;
+    private LevelSettingsSO currentLevel;
 
     void Awake()
     {
@@ -52,6 +53,7 @@ public class RunHandler : MonoBehaviour
 
     public void LoadLevel(LevelSettingsSO level)
     {
+        currentLevel = level;
         Loader.LoadNextScene(level.GetLevelScene());
         Debug.Log(this +" telling loader to start");
     }   
@@ -65,5 +67,10 @@ public class RunHandler : MonoBehaviour
     public int GetLevelCount()
     {
         return levelCount;
+    }
+
+    public LevelSettingsSO GetCurrentLevel()
+    {
+        return currentLevel;
     }
 }

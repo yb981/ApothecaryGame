@@ -19,7 +19,7 @@ public class PatientSO : ScriptableObject
     [SerializeField] Sprite looks;
     [SerializeField] int[] sickness = new int[3];
 
-    // Getters
+    // Get/Set
     public string getRequestText()
     {
         return introductionText;
@@ -33,5 +33,25 @@ public class PatientSO : ScriptableObject
     public int[] getSicknessValues()
     {
         return sickness;
+    }
+
+    public void SetName(string newName)
+    {
+        NPCname = newName;
+    }
+
+    public void SetIntroductionText(string newText)
+    {
+        introductionText = newText;
+    }
+
+    public void SetGender(Gender newGender)
+    {
+        gender = newGender;
+    }
+
+    public void SetSicknessValues(int[] newValues)
+    {
+        sickness = newValues;
     }
 }

@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acfea5cd7c397ad499df7396d623bdd5, type: 3}
+  m_Name: PatientDatas
+  m_EditorClassIdentifier: 
+  indtroductionTexts:
+  - I don't feel good
+  - Somethings seems off
+  - ...
+  - I heard you can offer help
+  - Please relieve my pain
+  - Did you hear?
+  - ... ...
+  - ... ... ...
+  - Help
+  maleNames:
+  - Arthur
+  - George
+  - Valentine
+  - William
+  - Henry
+  - Richard
+  - Peter
+  - Albert
+  - Conrad
+  - John
+  - Robert
+  femaleNames:
+  - Edith
+  - Agnes
+  - Isabella
+  - Margaret
+  - Matilda
+  - Hilde
+  - Ingrid
+  - Alice
+  - Emma
+  - Gertrud
+  - Olive

@@ -43,8 +43,8 @@ public class GameManager : MonoBehaviour
     private int survivers = 0;
     private int currentResult = 0;
 
-    int[] resultPotion = new int[3];
-    int[] valueSickness = new int[3];
+    private int[] resultPotion = new int[3];
+    private int[] valueSickness = new int[3];
 
     // Start is called before the first frame update
     void Awake()

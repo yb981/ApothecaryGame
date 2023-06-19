@@ -14,18 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredientNames:
   - Wheat
-  - Rye
   - Barley
-  - Cloves
-  - Mint
-  - Dill
-  - Parsley
-  - Thyme
-  - Chives
-  - Onions
+  - Rye
   - Garlic
-  - Poppies
-  - Lillies
+  - Onions
+  - Parsley
+  - Cloves
   - Bones
   - Sand
   - Leeches

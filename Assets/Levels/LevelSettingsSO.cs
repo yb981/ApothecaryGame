@@ -6,7 +6,8 @@ using UnityEngine;
 public class LevelSettingsSO : ScriptableObject
 {
     // Add all the settings for the specific level 
-    [SerializeField] private GameConstants.Scenes level;
+    public GameConstants.Scenes level;
+    public int AmountOfPatients;
 
     public string GetLevelScene()
     {

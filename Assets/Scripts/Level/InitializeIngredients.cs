@@ -6,6 +6,7 @@ public class InitializeIngredients : MonoBehaviour
 {
     [SerializeField] private IngredientNamesSO ingredientNamesSO;
     private int numberOfIngredientContainer;
+    [SerializeField] private InitializeClients initializeClients;
     IngredientContainer[] ingredientContainers;
     List<IngredientSO> ingredients;
 
@@ -25,6 +26,7 @@ public class InitializeIngredients : MonoBehaviour
             ingredientContainer.SetIngredientSO(ingredients[count++]);
         }
         
+        //initializeClients.StartInitilizing();
     }
 
     private List<IngredientSO> CreateRandomIngredientSOs()
@@ -32,12 +34,13 @@ public class InitializeIngredients : MonoBehaviour
         List<IngredientSO> newIngredients = new List<IngredientSO>();
 
         // Take optional names
-        List<string> namesLeft = ingredientNamesSO.GetIngredientNames();
+        List<string> namesLeft = new List<string>( ingredientNamesSO.GetIngredientNames());
 
         for (int i = 0; i < numberOfIngredientContainer; i++)
         {
             // Set Name
             int random = Random.Range(0,namesLeft.Count);
+            Debug.Log(random);
             string newName = namesLeft[random];
             namesLeft.RemoveAt(random);
 
@@ -60,7 +63,17 @@ public class InitializeIngredients : MonoBehaviour
                 {
                     
                     int maxValue = 4;
-                    values[j] = Random.Range(0,maxValue+1);
+                    // decrease likeliness of 4
+                    // 0 = 0,5
+                    // 1 = 1,6
+                    // 2 = 2,7
+                    // 3 = 3,8
+                    // 4 = 4,
+                    int numbers = (maxValue*2);
+                    int newValue = Random.Range(0,numbers);
+                    newValue = newValue % (maxValue+1);
+
+                    values[j] = newValue;
                 }
                 newIngredientSO.SetValues(values);
 
@@ -75,7 +88,6 @@ public class InitializeIngredients : MonoBehaviour
                         uniqueIngredientValues = false;
                         break;
                     }
-                    Debug.Log("looping");
                     if(loop++ > maxLoops) {
                         
                         Debug.Log("stopping infinite loop");
@@ -84,12 +96,17 @@ public class InitializeIngredients : MonoBehaviour
                 }
             }while(!uniqueIngredientValues);
             
-             Debug.Log("created 1 ing");
+             Debug.Log("created 1 ing after " + loop + " loops");
              
             // Add ingredient to List
             newIngredients.Add(newIngredientSO);
         }
 
         return newIngredients;
+    }
+
+    public List<IngredientSO> GetIngredientSOs()
+    {
+        return ingredients;
     }
 }

@@ -53,21 +53,6 @@ public class IngredientContainer : MonoBehaviour
         ingredientInstace.GetComponent<IngredientPiece>().setAssumedValues(GetAssumedValues());
     }
 
-    public int[] GetAssumedValues()
-    {
-        for (int i = 0; i < SliderValues.Length; i++)
-        {   
-            SliderValues[i] = (int) ValueSliders[i].value;          
-        }
-
-        return SliderValues;
-    }
-
-    public void SetSliderValues(int[] values)
-    {
-        mySliderHandler.SetSliderValues(values);
-    }
-
     private void InitializeIngridient()
     {
         // Set the heal values from the Scritable Object
@@ -101,5 +86,19 @@ public class IngredientContainer : MonoBehaviour
         ingredientSO = newIngredientSO;
         InitializeIngridient();
     }
+    
+    public int[] GetAssumedValues()
+    {
+        for (int i = 0; i < SliderValues.Length; i++)
+        {   
+            SliderValues[i] = (int) ValueSliders[i].value;          
+        }
 
+        return SliderValues;
+    }
+
+    public void SetSliderValues(int[] values)
+    {
+        mySliderHandler.SetSliderValues(values);
+    }
 }

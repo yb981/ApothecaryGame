@@ -7,6 +7,7 @@ using System;
 
 public enum patientPhase
 {
+    Initiaize,
     Enter,
     Talk,
     Wait,
@@ -51,7 +52,7 @@ public class Patient : MonoBehaviour
         public PatientSO currentPatient;
     }
 
-    private patientPhase state = patientPhase.Enter;
+    private patientPhase state;
     private PatientTalkPhase talkState = PatientTalkPhase.Nothing;
     private PatientSO patientDetails;
     private PatientSO currentClient;
@@ -88,23 +89,26 @@ public class Patient : MonoBehaviour
 
         // Subscribe to Manager
         GameManager.Instance.LevelFinished += Patient_LevelFinished;
+
+        state = patientPhase.Enter;
     }
 
     void Update()
     {
         switch(state)
         {
-            case patientPhase.Enter:    enter();    break;
-            case patientPhase.Talk:     talk();     break;
-            case patientPhase.Wait:     wait();     break;
-            case patientPhase.Leave:    leave();    break;
+            case patientPhase.Enter:    Enter();    break;
+            case patientPhase.Talk:     Talk();     break;
+            case patientPhase.Wait:     Wait();     break;
+            case patientPhase.Leave:    Leave();    break;
             case patientPhase.Score:    Score();    break;
             default:                                break;
         }
     }
 
-    void enter()
+    void Enter()
     {
+        Debug.Log("Enter");
         // if game over
         if(!getNewClient()) GameManager.Instance.NoMoreClients();
 
@@ -117,7 +121,7 @@ public class Patient : MonoBehaviour
         }
     }
 
-    void talk()
+    void Talk()
     {
         if(firstTalk)
         {
@@ -139,12 +143,12 @@ public class Patient : MonoBehaviour
         
     }
 
-    void wait()
+    void Wait()
     {
         // Wait for Player Input
     }
 
-    void leave()
+    void Leave()
     {
         // Stop talking
         if(firstLeave)
@@ -253,6 +257,11 @@ public class Patient : MonoBehaviour
         return currentClientSicknessValues;
     }
 
+    public void SetTotalNumberOfPatients(int value)
+    {
+        totalNumberOfPatients = value;
+    }
+
     public int GetTotalNumberOfPatients()
     {
         return totalNumberOfPatients;
@@ -271,5 +280,10 @@ public class Patient : MonoBehaviour
     public void SetPatientSprite(PatientBodySO newPatientBodySO)
     {
         patientBodySO = newPatientBodySO;
+    }
+
+    public void SetPatientsList(List<PatientSO> newPatients)
+    {
+        patientList = newPatients;
     }
 }

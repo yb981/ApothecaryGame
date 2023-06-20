@@ -13,6 +13,10 @@ public class RunHandler : MonoBehaviour
     private int levelCount = 0;
     private LevelSettingsSO currentLevel;
 
+    // Endless Run
+    private List<IngredientSO> currentEndlessRunIngredients;
+    private List<CompleteIngredient> currentEndlessRunCompleteIngredients;
+
     void Awake()
     {
         if(instance != null)
@@ -77,5 +81,15 @@ public class RunHandler : MonoBehaviour
     public void SetLevelAmount(int numberOfLevels)
     {
         levelAmount = numberOfLevels;
+    }
+
+    public List<CompleteIngredient> GetCurrentEndlessRunCompleteIngredients()
+    {
+        return currentEndlessRunCompleteIngredients;
+    }
+
+    public void SetCurrentEndlessRunCompleteIngredients(List<CompleteIngredient> currentIngredients)
+    {
+        currentEndlessRunCompleteIngredients = currentIngredients;
     }
 }

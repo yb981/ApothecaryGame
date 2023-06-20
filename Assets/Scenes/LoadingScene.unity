@@ -606,7 +606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15e39714ae6bf044eafe570283a5ec6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationSpeed: 0.7
+  animationSpeed: 1.5
   sceneHandler: {fileID: 1131987147}
 --- !u!1 &1722342188
 GameObject:

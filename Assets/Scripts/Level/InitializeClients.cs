@@ -6,7 +6,7 @@ using UnityEngine;
 public class InitializeClients : MonoBehaviour
 {
     [SerializeField] private Patient patient;
-    [SerializeField] private InitializeIngredients initializeIngredients;
+    //[SerializeField] private InitializeIngredients initializeIngredients;
     [SerializeField] private PatientDataSO patientDataSO;
 
     [Header("Direct Testing in Scene Number")]
@@ -34,7 +34,14 @@ public class InitializeClients : MonoBehaviour
     private List<PatientSO> InitializePatients()
     {
         List<PatientSO> newPatients = new List<PatientSO>();
-        List<IngredientSO> ingredients = initializeIngredients.GetIngredientSOs();
+
+        // Get All Ingredients
+        List<CompleteIngredient> completeIngredients = RunHandler.Instance.GetCurrentEndlessRunCompleteIngredients();
+        List<IngredientSO> ingredients = new List<IngredientSO>();
+        for (int i = 0; i < completeIngredients.Count; i++)
+        {
+            ingredients.Add(completeIngredients[i].GetIngridientSO());
+        }
 
         // Create all patients
         for (int z = 0; z < maxClients; z++)

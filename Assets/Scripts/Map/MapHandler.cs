@@ -9,7 +9,10 @@ public class MapHandler : MonoBehaviour
 
     [SerializeField] LocationsHandler locationsHandler;
     [SerializeField] Player player;
+    [SerializeField] CreateIngredientSOs createIngredientSOs;
     private int currentLevelCount;
+    //private List<IngredientSO> currentIngredientsEndlessRun;
+    private List<CompleteIngredient> currentEndlessRunCompleteIngredients;
 
     private void Awake() 
     {
@@ -31,6 +34,23 @@ public class MapHandler : MonoBehaviour
 
     public void StartLevel(LevelSettingsSO level)
     {
+        // Check if Ingredients exist
+        if(currentEndlessRunCompleteIngredients == null){
+           currentEndlessRunCompleteIngredients = RunHandler.Instance.GetCurrentEndlessRunCompleteIngredients();
+        }
+
+
+        if(currentEndlessRunCompleteIngredients == null){
+            // Create ingredients
+            currentEndlessRunCompleteIngredients = new List<CompleteIngredient>();
+            List<IngredientSO> newIng = createIngredientSOs.CreateRandomIngredientSOs();
+            for (int i = 0; i < newIng.Count; i++)
+            {
+                currentEndlessRunCompleteIngredients.Add(new CompleteIngredient(newIng[i]));
+            }
+             
+            RunHandler.Instance.SetCurrentEndlessRunCompleteIngredients(currentEndlessRunCompleteIngredients);
+        }
         RunHandler.Instance.LoadLevel(level);
         Debug.Log(this +" telling to start");
     }

@@ -503,6 +503,7 @@ MonoBehaviour:
   patient: {fileID: 2097141153}
   initializeIngredients: {fileID: 16717356}
   patientDataSO: {fileID: 11400000, guid: 9a9c491c96aa5ea47b27baca66a7302b, type: 2}
+  TestnumberOfClients: 4
 --- !u!1 &19461260
 GameObject:
   m_ObjectHideFlags: 0

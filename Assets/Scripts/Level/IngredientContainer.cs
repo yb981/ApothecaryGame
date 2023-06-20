@@ -18,7 +18,8 @@ public class IngredientContainer : MonoBehaviour
     private GameObject ingredientInstace;
     private Vector2 mouseOffset;
     private Slider[] mySliders;
-    private IngredientSliders mySliderHandler;
+    //private IngredientSliders mySliderHandler;
+    private SliderHandler mySliderHandler;
 
     // ingredientSO Stats
     private int antiCaugh;
@@ -33,6 +34,7 @@ public class IngredientContainer : MonoBehaviour
 
     private void Start() 
     {
+        mySliderHandler = GetComponentInChildren<SliderHandler>();
 
         // Disable slider activity (only change sliders in feedback screen)
         mySliders = GetComponentsInChildren<Slider>();

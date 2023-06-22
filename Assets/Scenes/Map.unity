@@ -558,6 +558,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myStartButton: {fileID: 2022059426}
   mapSettingsSO: {fileID: 0}
+  canvas: {fileID: 660128252}
 --- !u!114 &660128250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1402,8 +1403,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   locationsList: []
   villageMap: {fileID: 8551677376877366765}
-  regionCanvas: {fileID: 660128252}
-  mapSprite: {fileID: 2123593963}
 --- !u!4 &2111747685
 Transform:
   m_ObjectHideFlags: 0
@@ -1431,6 +1430,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2123593964}
   - component: {fileID: 2123593965}
+  - component: {fileID: 2123593966}
   m_Layer: 0
   m_Name: MapSprite (1)
   m_TagString: Untagged
@@ -1505,6 +1505,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2123593966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2123593963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26c4a8df657032044ab5d34c331a49e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapSprite: {fileID: 2123593965}
 --- !u!1001 &1394630813369500703
 PrefabInstance:
   m_ObjectHideFlags: 0

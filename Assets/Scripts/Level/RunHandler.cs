@@ -13,6 +13,9 @@ public class RunHandler : MonoBehaviour
     private int levelCount = 0;
     private LevelSettingsSO currentLevel;
 
+    // 
+    private bool regionActive = false;
+
     // Endless Run
     private List<IngredientSO> currentEndlessRunIngredients;
     private List<CompleteIngredient> currentEndlessRunCompleteIngredients;
@@ -91,5 +94,15 @@ public class RunHandler : MonoBehaviour
     public void SetCurrentEndlessRunCompleteIngredients(List<CompleteIngredient> currentIngredients)
     {
         currentEndlessRunCompleteIngredients = currentIngredients;
+    }
+
+    public void SetRegionActive(bool value)
+    {
+        regionActive = value;
+    }
+
+    public bool GetRegionActive()
+    {
+        return regionActive;
     }
 }

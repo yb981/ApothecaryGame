@@ -54,6 +54,7 @@ public class MoveToPoint : MonoBehaviour
     private void Player_OnMovementChanged(object sender, Player.OnMovementChangedEventArgs e)
     {
         goalObject = e.destination;
+        startPosition = objectToMove.position;
         if(e.movementState == Player.MovementState.moving)
         {
             moving = true;

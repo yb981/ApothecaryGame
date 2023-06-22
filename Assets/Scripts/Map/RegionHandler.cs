@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,17 +6,27 @@ using UnityEngine;
 public class RegionHandler : MonoBehaviour
 {
 
-    [SerializeField] List<LocationRegion> locationsList;
-    [SerializeField] GameObject villageMap;
+    public event EventHandler OnGoingToMap;
 
-    [Header("All Visuals")]
-    [SerializeField] Canvas regionCanvas;
-    [SerializeField] GameObject mapSprite;
+    [SerializeField] private List<LocationRegion> locationsList;
+    [SerializeField] private GameObject villageMap;
+    private int currentRegion;
+    private bool inRegion = false;
+
+    private void Start() 
+    {
+        if(RunHandler.Instance.GetRegionActive())
+        {
+            inRegion = true;
+            OnGoingToMap?.Invoke(this, EventArgs.Empty);
+        }
+    }
 
     public void PlayerPressedStart()
     {
         // Disable Region Map
-        HideRegion();
+        OnGoingToMap?.Invoke(this, EventArgs.Empty);
+        RunHandler.Instance.SetRegionActive(true);
 
         // Load Map of Location
         // Initialize Map of Location
@@ -26,17 +37,5 @@ public class RegionHandler : MonoBehaviour
     private void InsitantiateNewMap()
     {
 
-    }
-
-    private void HideRegion()
-    {
-        regionCanvas.enabled = false;
-        mapSprite.SetActive(false);
-    }
-
-    private void ShowRegion()
-    {
-        regionCanvas.enabled = true;
-        mapSprite.SetActive(true);
     }
 }

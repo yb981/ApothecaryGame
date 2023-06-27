@@ -13,6 +13,12 @@ public class MapRegionVisual : MonoBehaviour
     {
         regionHandler = GetComponentInParent<RegionHandler>();
         regionHandler.OnGoingToMap += RegionHandler_OnGoingToMap;
+
+        // Set initial State
+        if(regionHandler.GetInRegionState())
+        {
+            mapSprite.enabled = false;
+        }
     }
 
     private void RegionHandler_OnGoingToMap(object sender, EventArgs e)

@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     [SerializeField] private LocationsHandler locationsHandler;
     private MovementState movementState = MovementState.waiting;
     private Location currentLocation;
+    private Location nextLocation;
     private MoveToPoint moveToPoint;
 
     void Start()
@@ -36,24 +37,31 @@ public class Player : MonoBehaviour
     public void SetLocation(Location newLocation)
     {
         currentLocation = newLocation;
-        transform.position = currentLocation.GetComponent<Transform>().position;
+        transform.position = currentLocation.GetWagonPoint().position;
     }
 
-    private void MoveToPoint_OnDestinationReached(object sender, MoveToPoint.OnDestinationReachedEventArgs e)
+    private void MoveToPoint_OnDestinationReached()
     {
-        currentLocation = e.destionation;
+        UpdatePositionAndMovementOnArrival();
         MapHandler.Instance.StartLevel(currentLocation.GetLevel());
-        Debug.Log(this +" telling maphandler to start");
     }
 
     private void LocationsHandler_OnPressedStart(object sender, LocationsHandler.OnPressedStartEventArgs e)
     {
         movementState = MovementState.moving;
+        nextLocation = e.location;
         OnMovementChanged?.Invoke(this, new OnMovementChangedEventArgs
         {
-            destination = e.location.GetComponent<Transform>(),
+            destination = nextLocation.GetWagonPoint(),
             movementState = this.movementState
         });
+    }
+
+    private void UpdatePositionAndMovementOnArrival()
+    {
+        currentLocation = nextLocation;
+        nextLocation = null;
+        movementState = MovementState.stopped;
     }
 
     private void OnDestroy() 

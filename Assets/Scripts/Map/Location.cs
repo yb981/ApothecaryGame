@@ -19,6 +19,7 @@ public class Location : MonoBehaviour
     private bool selected = false;
     private int locationNumber = -1;
     [SerializeField] private bool reachable = false;
+    [SerializeField] private Transform wagonPoint;
 
     private void Awake() 
     {
@@ -88,4 +89,8 @@ public class Location : MonoBehaviour
         return locationNumber;
     }
 
+    public Transform GetWagonPoint()
+    {
+        return wagonPoint;
+    }
 }

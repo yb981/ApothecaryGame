@@ -6,12 +6,19 @@ using UnityEngine;
 public class RegionHandler : MonoBehaviour
 {
 
+    public static RegionHandler Instance { get; private set; }
+
     public event EventHandler OnGoingToMap;
 
     [SerializeField] private List<LocationRegion> locationsList;
     [SerializeField] private GameObject villageMap;
     private int currentRegion;
     private bool inRegion = false;
+
+    private void Awake() 
+    {
+        Instance = this;    
+    }
 
     private void Start() 
     {
@@ -37,5 +44,10 @@ public class RegionHandler : MonoBehaviour
     private void InsitantiateNewMap()
     {
 
+    }
+
+    public bool GetInRegionState()
+    {
+        return inRegion;
     }
 }

@@ -33,7 +33,6 @@ public class RunHandler : MonoBehaviour
 
     public void NextLevel()
     {
-
         // Loading Screen if starting game
         if(SceneManager.GetActiveScene().name == GameConstants.SCENE_MENU)
         {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class MapHandler : MonoBehaviour
     [SerializeField] LocationsHandler locationsHandler;
     [SerializeField] Player player;
     [SerializeField] CreateIngredientSOs createIngredientSOs;
+    [SerializeField] GameObject AllChildren;
     private int currentLevelCount;
     //private List<IngredientSO> currentIngredientsEndlessRun;
     private List<CompleteIngredient> currentEndlessRunCompleteIngredients;
@@ -21,6 +23,26 @@ public class MapHandler : MonoBehaviour
 
     private void Start() 
     {
+        RegionHandler.Instance.OnGoingToMap += MapHandler_OnGoingToMap;
+        
+        // Set initial state
+        if(RegionHandler.Instance.GetInRegionState())
+        {
+            Initialize();
+        }else{
+            AllChildren.SetActive(false);
+        }
+    }
+
+    private void MapHandler_OnGoingToMap(object sender, EventArgs e)
+    {
+        
+        Initialize();
+    }
+
+    private void Initialize()
+    {
+        AllChildren.SetActive(true);
         currentLevelCount = RunHandler.Instance.GetLevelCount();
         locationsHandler.SetLocationsReach(currentLevelCount);
         if(currentLevelCount == 0){

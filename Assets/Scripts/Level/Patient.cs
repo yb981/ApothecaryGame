@@ -108,7 +108,6 @@ public class Patient : MonoBehaviour
 
     void Enter()
     {
-        Debug.Log("Enter");
         // if game over
         if(!getNewClient()) GameManager.Instance.NoMoreClients();
 

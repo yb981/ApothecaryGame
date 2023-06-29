@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class ContainerDisplay : MonoBehaviour
 {
 
     ContainerCalculation myContainer;
-    // Visuals
     [SerializeField] ParticleSystem particleSystemAddIng;
     [SerializeField] TextMeshProUGUI[] tmps;
+    [SerializeField] AudioClipsSO audioClipsSO;
     private TextMeshProUGUI textFFilledIngredients;
     string inputNumberText = " / ";
 
-    // Start is called before the first frame update
     void Start()
     {
         myContainer = GetComponentInParent<ContainerCalculation>();
@@ -50,5 +50,11 @@ public class ContainerDisplay : MonoBehaviour
     {
         playParticleEffect();
         updateInputNumberText();
+        PlaySoundEffect();
+    }
+
+    private void PlaySoundEffect()
+    {
+        AudioHandler.Instance.PlaySoundClipAutoVolume(audioClipsSO.dropItem,transform.position);
     }
 }

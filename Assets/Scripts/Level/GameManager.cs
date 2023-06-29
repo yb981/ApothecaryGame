@@ -77,9 +77,6 @@ public class GameManager : MonoBehaviour
 
     void setGamePhaseNext()
     {
-        
-        //pat = GameObject.FindObjectOfType<Patient>();
-        
         // Setting next Gamephase for Client
         switch(gamePhase)
         {
@@ -248,8 +245,6 @@ public class GameManager : MonoBehaviour
         VillageHealthChanged?.Invoke(this, new VillageHealthChangedEventArgs {
             villageHealthChange = healthChange
         });
-
-        //uiTracker.UpdateVillageBar(villageHealth);
     }
     
     void displayScoreBar(bool state)
@@ -273,8 +268,6 @@ public class GameManager : MonoBehaviour
     private void referenceScore()
     {
         score = FindAnyObjectByType<ScoreBar>();
-        //scoreBar = score.GetComponentInChildren<Slider>();
-        //scoreText = score.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     private void disableHelper()

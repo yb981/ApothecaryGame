@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class WagonVisual : MonoBehaviour
 {
+    [SerializeField] private Sprite standingWagon;
+    [SerializeField] private Sprite movingWagon;
+
     private Player player;
     private SpriteRenderer spriteRenderer;
 
@@ -17,17 +20,25 @@ public class WagonVisual : MonoBehaviour
     private void Start()
     {
         player.OnMovementChanged += WagonVisual_OnMovementChanged;
+        spriteRenderer.sprite = standingWagon;
     }
 
     private void WagonVisual_OnMovementChanged(object sender, Player.OnMovementChangedEventArgs e)
     {
-        if (e.movementState == Player.MovementState.moving)
+        UpdateSprite(e.movementState, e.destination);
+    }
+
+    private void UpdateSprite(Player.MovementState movementState, Transform destination)
+    {
+        if (movementState == Player.MovementState.moving)
         {
-            TurnIntoMovingDirection(e.destination);
+            TurnIntoMovingDirection(destination);
+            SetSprite(movingWagon);
         }
         else
         {
-            ResetSprite();
+            ResetSpriteDirection();
+            SetSprite(standingWagon);
         }
     }
 
@@ -39,19 +50,23 @@ public class WagonVisual : MonoBehaviour
         }
     }
 
-    private void ResetSprite()
+    private void ResetSpriteDirection()
     {
         Vector3 currentScale = spriteRenderer.transform.localScale;
         currentScale.x = Mathf.Abs(currentScale.x);
         spriteRenderer.transform.localScale = currentScale;
+        
     }
 
     private void TurnSpriteLeft()
     {
-        // Turn Left
         Vector3 currentScale = spriteRenderer.transform.localScale;
         currentScale.x *= -1;
         spriteRenderer.transform.localScale = currentScale;
+    }
 
+    private void SetSprite(Sprite sprite)
+    {
+        spriteRenderer.sprite = sprite;
     }
 }

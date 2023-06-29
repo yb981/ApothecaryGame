@@ -14,6 +14,11 @@ public static class Loader
         SceneManager.LoadScene(GameConstants.SCENE_LOADING);
     }
 
+    public static void NextSceneWithoutLoadingScreen(string scene)
+    {
+        SceneManager.LoadScene(scene);
+    }
+
     public static string GetNextScene()
     {
         return nextScene;

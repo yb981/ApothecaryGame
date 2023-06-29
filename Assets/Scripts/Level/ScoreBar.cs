@@ -11,54 +11,47 @@ public class ScoreBar : MonoBehaviour
     [SerializeField] Image scoreFill;
     [SerializeField] TextMeshProUGUI scoreNumber;
     [SerializeField] float fillSpeed = 4f;
-    Animator myAnimator;
-    float scoreValue = 0;
-    bool displayScore = false;
-    float currentValue = 0;
-    bool animationComplete = false;
+    [SerializeField] AudioClipsSO audioClipsSO;
+    private AudioSource audioSource;
+    private Animator myAnimator;
+    private bool soundIsPlaying = false;
+    private float scoreValue = 0;
+    private bool displayScore = false;
+    private float currentValue = 0;
+    private bool animationComplete = false;
 
     void Awake()
     {
         myAnimator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
-    private void Start() 
+    private void Start()
     {
-        //score.enabled = false;
+        audioSource.clip = audioClipsSO.bubbling;
         fullScoreBar.gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(displayScore && !animationComplete)
+        if (displayScore && !animationComplete)
         {
+            StartFillingSoundEffect();
             currentValue += fillSpeed * Time.deltaTime;
 
-            scoreFill.fillAmount = (float) currentValue/1;
-            //score.value = currentValue;
-            if(scoreFill.fillAmount >= scoreValue)
+            scoreFill.fillAmount = (float)currentValue / 1;
+            if (scoreFill.fillAmount >= scoreValue)
             {
                 animationComplete = true;
                 SetScoreTextTo(scoreFill.fillAmount);
                 GameManager.Instance.informPhaseCompleted();
-            }else{
+                StopFillingSoundEffect();
+            }
+            else
+            {
                 SetScoreTextTo(currentValue);
             }
         }
-
-    }
-
-    // Set and Get
-
-    public void setScore(float newScore)
-    {
-        ResetSlider();
-
-        scoreValue = newScore;
-        
-        // Start Animation
-        if(displayScore) animationComplete = false;        
     }
 
     public void toggleScoreDisplay(bool state)
@@ -74,7 +67,6 @@ public class ScoreBar : MonoBehaviour
         return displayScore;
     }
 
-    // methods
     private void ResetSlider()
     {
         animationComplete = false;
@@ -84,7 +76,35 @@ public class ScoreBar : MonoBehaviour
     private void SetScoreTextTo(float value)
     {
         float wholeNumberPercent = value * 100;
-        scoreNumber.text = wholeNumberPercent.ToString("0.0")+"%";
+        scoreNumber.text = wholeNumberPercent.ToString("0.0") + "%";
     }
 
+    private void StartFillingSoundEffect()
+    {
+        if(soundIsPlaying) return;
+
+        PlaySoundEffect();
+        soundIsPlaying = true;
+    }
+
+    private void PlaySoundEffect()
+    {
+        audioSource.Play();
+    }
+
+    private void StopFillingSoundEffect()
+    {
+        soundIsPlaying = false;
+        audioSource.Stop();
+    }
+
+    public void setScore(float newScore)
+    {
+        ResetSlider();
+
+        scoreValue = newScore;
+
+        // Start Animation
+        if (displayScore) animationComplete = false;
+    }
 }

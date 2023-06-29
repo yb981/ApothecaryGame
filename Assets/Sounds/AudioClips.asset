@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2a93196e2cbccf43a4b3f6db77d7bbc, type: 3}
+  m_Name: AudioClips
+  m_EditorClassIdentifier: 
+  hoverUI: {fileID: 8300000, guid: ff0c1b05b5c791547a71b671d9d1b68c, type: 3}
+  clickUI: {fileID: 8300000, guid: 9965b50c918b93044a64cbefa0e12236, type: 3}
+  bubbling: {fileID: 8300000, guid: f8a54fd330595ee42a9afa4138f7e934, type: 3}
+  raven: {fileID: 8300000, guid: 7612ea99b63cfd74a976a1d884e59f26, type: 3}
+  thunder: {fileID: 8300000, guid: 513a956ab0443d847abbd8e2b1233859, type: 3}
+  cart: {fileID: 8300000, guid: bf8ab062b1c803746b69c7bc0d917938, type: 3}
+  dropItem: {fileID: 8300000, guid: 8f4ad9714b07c2943932785de310844d, type: 3}

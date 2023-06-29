@@ -10,4 +10,5 @@ public class SceneHandler : MonoBehaviour
     {
         SceneManager.LoadScene(Loader.GetNextScene());
     }
+
 }

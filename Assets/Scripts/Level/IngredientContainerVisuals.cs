@@ -6,15 +6,13 @@ using UnityEngine;
 public class IngredientContainerVisuals : MonoBehaviour
 {
 
-    [SerializeField] IngredientContainer ingredientContainer;
+    [SerializeField] ContainerHover containerHover;
     [SerializeField] GameObject highlight;
 
-
-    // Start is called before the first frame update
     void Start()
     {
-        ingredientContainer.MouseHovering += Visuals_MouseHovering;
-        ingredientContainer.MouseLeaving += Visuals_MouseLeaving;
+        containerHover.MouseHovering += Visuals_MouseHovering;
+        containerHover.MouseLeaving += Visuals_MouseLeaving;
     }
 
     private void Visuals_MouseLeaving(object sender, EventArgs e)

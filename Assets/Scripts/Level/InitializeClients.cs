@@ -14,10 +14,10 @@ public class InitializeClients : MonoBehaviour
 
     private List<PatientSO> patientList;
     private int maxClients;
+    private int maxSicknessValue;
 
     void Start()
     {
-        //maxClients = patient.GetTotalNumberOfPatients();
         if(RunHandler.Instance != null)
         {
             LevelSettingsSO currentLevel = RunHandler.Instance.GetCurrentLevel();
@@ -89,8 +89,11 @@ public class InitializeClients : MonoBehaviour
                     
                     newSicknessValues[j] += ingValues[j];
                 }    
+                
+                Mathf.Clamp(newSicknessValues[i],0,maxSicknessValue);
             }
             // TODO: make sure stats are unique
+
             newPatient.SetSicknessValues(newSicknessValues);
 
             newPatients.Add(newPatient);
@@ -101,16 +104,7 @@ public class InitializeClients : MonoBehaviour
 
     public void StartInitilizing()
     {
-
-        Debug.Log("Init patientsList");
         patientList = InitializePatients();
-
-        foreach (PatientSO patient in patientList)
-        {
-            Debug.Log(patient.getNPCname());
-        }
-
-        Debug.Log("Setting patientsList");
         patient.SetPatientsList(patientList);
         patient.setPhase(patientPhase.Enter);
         patient.SetTotalNumberOfPatients(patientList.Count);

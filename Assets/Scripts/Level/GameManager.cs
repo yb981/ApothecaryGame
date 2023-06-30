@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
         public int eSurvivers;
     }
 
+    public event Action OnGamePhaseChanged;
+
     [SerializeField] UITracker uiTracker;
     [SerializeField] FinalScreen finalScreen;
 
@@ -77,7 +79,6 @@ public class GameManager : MonoBehaviour
 
     void setGamePhaseNext()
     {
-        // Setting next Gamephase for Client
         switch(gamePhase)
         {
             case patientPhase.Enter:
@@ -114,6 +115,8 @@ public class GameManager : MonoBehaviour
 
             default:                                break;
         }
+
+        OnGamePhaseChanged?.Invoke();
     }
 
     private void TriggerFeedbackController()

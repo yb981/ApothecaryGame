@@ -16,21 +16,26 @@ public class PatientLooks : MonoBehaviour
     [SerializeField] List<Sprite> maleHeads; 
     [SerializeField] List<Sprite> maleBodies;
 
-    
+    private bool entering = false;
+    private bool leaving = false;
+    private float alpha = 1;
+    private float alphaAmount = 0f;
+    private float fadeOutFactor = 1.5f;
 
     // Start is called before the first frame update
     void Start()
     {
         myPatient.OnNewPatient += Patient_OnNewPatient;
+        myPatient.OnEnter += Patient_OnEnter;
+        myPatient.OnLeave += Patient_OnLeave;
     }
 
-
-    // Update is called once per frame
-    void Update()
+    private void Update() 
     {
-        
+        InAndOutFade();
     }
-    
+
+
     private void Patient_OnNewPatient(object sender, Patient.OnNewPatientEventArgs e)
     {
         // check gender
@@ -53,5 +58,40 @@ public class PatientLooks : MonoBehaviour
         newLooksSO.SetNewSprites(headSprite.sprite,bodySprite.sprite);
         myPatient.SetPatientSprite(newLooksSO);
 
+    }
+    
+    private void Patient_OnEnter()
+    {
+        entering = true;
+        alphaAmount = 0;
+    }
+    
+    private void Patient_OnLeave()
+    {
+        alphaAmount = 0;
+        leaving = true;
+    }
+
+    private void InAndOutFade()
+    {
+        if(entering)
+        {
+            if(FadeSpriteFromTo(0,1)) entering = false;
+        }
+        else if(leaving)
+        {
+            if(FadeSpriteFromTo(1,0)) leaving = false;
+        }
+    }
+
+    private bool FadeSpriteFromTo(float from, float to)
+    {
+        alphaAmount += Time.deltaTime;
+        alpha = Mathf.Lerp(from,to,alphaAmount/fadeOutFactor);
+        headSprite.color = new Color(1,1,1,alpha);
+        bodySprite.color = new Color(1,1,1,alpha);
+
+        if(alpha == to) return true;
+        return false;
     }
 }

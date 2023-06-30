@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 58562486751027918}
   - component: {fileID: 58562486751028531}
   - component: {fileID: 4221645035260582010}
+  - component: {fileID: 6112174647186932637}
   m_Layer: 0
   m_Name: IngredientContainer
   m_TagString: Ingredient
@@ -179,6 +180,18 @@ MonoBehaviour:
   ingredientPiece: {fileID: 2721448463733314717, guid: 8e8a117f604631e4b81b75366f96d5d4, type: 3}
   nameField: {fileID: 4000634469840184931}
   ingredientSO: {fileID: 0}
+--- !u!114 &6112174647186932637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58562486751027919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24e99a4432ae0484ab0c24037917c919, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &321581143723360680
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,7 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9e9512e3f5f98d4c992878723a29f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ingredientContainer: {fileID: 4221645035260582010}
+  containerHover: {fileID: 6112174647186932637}
   highlight: {fileID: 6777208611510215859}
 --- !u!1 &5980173410887989271
 GameObject:

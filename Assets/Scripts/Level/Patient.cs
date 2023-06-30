@@ -26,10 +26,9 @@ public class Patient : MonoBehaviour
 {
     [Header("ClientsUI")]
     [SerializeField] Canvas clientCanvas;
-    [SerializeField] List<PatientSO> patientList = new List<PatientSO>();
     [SerializeField] GameObject goalPosition;
     [SerializeField] float moveFactor = 10f;
-    [SerializeField] PatientBodySO patientBodySO;
+    
 
     [Header("SicknessUI")]
     [SerializeField] Slider caughBar;
@@ -52,6 +51,12 @@ public class Patient : MonoBehaviour
         public PatientSO currentPatient;
     }
 
+    public event Action OnEnter;
+    public event Action OnLeave;
+
+    private List<PatientSO> patientList = new List<PatientSO>();
+    private PatientBodySO patientBodySO;
+
     private patientPhase state;
     private PatientTalkPhase talkState = PatientTalkPhase.Nothing;
     private PatientSO patientDetails;
@@ -59,10 +64,11 @@ public class Patient : MonoBehaviour
     private bool gotNewClient = false;
     private bool firstTalk = true;
     private bool firstLeave = true;
+    private bool firstEnter = true;
     private int totalNumberOfPatients = -1;
     private int currentPatientCount = 0;
     private float timer = 0;
-
+    
     // Client Stats
     string currentClientName;
     string currentClientRequest;
@@ -111,6 +117,8 @@ public class Patient : MonoBehaviour
         // if game over
         if(!getNewClient()) GameManager.Instance.NoMoreClients();
 
+        ResetOnceToStartPosition();
+
         Transform goal = goalPosition.transform.GetChild(0);
         moveTo(goal.position);
 
@@ -135,11 +143,7 @@ public class Patient : MonoBehaviour
             OnPatientTalkPhaseChanged?.Invoke(this, new OnPatientTalkPhaseChangedEventArgs{ talkPhase = talkState, currentPatient = currentClient });
 
             GameManager.Instance.informPhaseCompleted();
-        }
-
-        //TMPrequestText.enabled = true;
-        //displayClientStats(true);
-        
+        }       
     }
 
     void Wait()
@@ -152,35 +156,38 @@ public class Patient : MonoBehaviour
         // Stop talking
         if(firstLeave)
         {
+            OnLeave?.Invoke();
             talkState = PatientTalkPhase.Nothing;
             OnPatientTalkPhaseChanged?.Invoke(this, new OnPatientTalkPhaseChangedEventArgs{ talkPhase = talkState});
             firstLeave = false;
         }
-
-        Transform goal = goalPosition.transform.GetChild(1);
-        if(moveTo(goal.position))   
-        {
-            //GameManager.Instance.informPhaseCompleted();
-        }
-
+        LeaveCart();
     }
 
     void Score()
     {
+        LeaveCart();
         // Reset Flag for new Cycle
         gotNewClient = false;
         firstTalk = true;
         firstLeave = true;
+        firstEnter = true;
     }
 
     private void Patient_LevelFinished(object sender, GameManager.LevelFinishedEventArgs e)
     {
         gameObject.SetActive(false);
     }
+
+    private void LeaveCart()
+    {
+        Transform goal = goalPosition.transform.GetChild(1);
+        if(goal.position == transform.position) return;
+        moveTo(goal.position); 
+    }
     
     private bool moveTo(Vector3 goal) 
     {
-        //float movement = 1f;
         // get distance
         float distance = goal.x - transform.position.x;
         // check if distance is smaller as movement
@@ -192,6 +199,16 @@ public class Patient : MonoBehaviour
             float moveDistance = Mathf.Sign(distance) * moveFactor * Time.deltaTime;
             transform.position += new Vector3(moveDistance,0,0);
             return false;
+        }
+    }
+
+    private void ResetOnceToStartPosition()
+    {
+        if(firstEnter)
+        {
+            transform.position = goalPosition.transform.GetChild(1).position;
+            OnEnter?.Invoke();
+            firstEnter = false;
         }
     }
 

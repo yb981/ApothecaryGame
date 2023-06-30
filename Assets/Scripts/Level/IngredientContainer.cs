@@ -18,8 +18,9 @@ public class IngredientContainer : MonoBehaviour
     private GameObject ingredientInstace;
     private Vector2 mouseOffset;
     private Slider[] mySliders;
-    //private IngredientSliders mySliderHandler;
     private SliderHandler mySliderHandler;
+
+    private bool canInteract;
 
     // ingredientSO Stats
     private int antiCaugh;
@@ -28,9 +29,6 @@ public class IngredientContainer : MonoBehaviour
     private string ingredientName = "noNameSet";
     private Slider[] ValueSliders;
     private int[] SliderValues;
-
-    public event EventHandler MouseHovering;
-    public event EventHandler MouseLeaving;
 
     private void Start() 
     {
@@ -46,13 +44,20 @@ public class IngredientContainer : MonoBehaviour
         ValueSliders = GetComponentsInChildren<Slider>();
 
         InitializeIngridient();
+
+        GameManager.Instance.OnGamePhaseChanged += GameManager_OnGamePhaseChanged;
     }
 
     private void OnMouseDown() 
     {
-        ingredientInstace = Instantiate(ingredientPiece, Camera.main.ScreenToWorldPoint(Input.mousePosition),Quaternion.identity);
-        ingredientInstace.GetComponent<IngredientPiece>().setIngredientSO(ingredientSO);
-        ingredientInstace.GetComponent<IngredientPiece>().setAssumedValues(GetAssumedValues());
+        if(canInteract){
+            CreateIngredient();
+        }
+    }
+
+    private void GameManager_OnGamePhaseChanged()
+    {
+        SetInteractionBasedOnGamePhase();
     }
 
     private void InitializeIngridient()
@@ -70,16 +75,21 @@ public class IngredientContainer : MonoBehaviour
         nameField.text = ingredientName;
     }
 
-    private void OnMouseEnter() 
+    private void SetInteractionBasedOnGamePhase()
     {
-        if(EventSystem.current.IsPointerOverGameObject()) return;
-        MouseHovering?.Invoke(this, EventArgs.Empty);
+        if(GameManager.Instance.getGamePhase() == patientPhase.Score)
+        {
+            canInteract = false;
+        }else{
+            canInteract = true;
+        }
     }
 
-    private void OnMouseExit() 
+    private void CreateIngredient()
     {
-        //if(EventSystem.current.IsPointerOverGameObject()) return;
-        MouseLeaving(this, EventArgs.Empty);
+        ingredientInstace = Instantiate(ingredientPiece, Camera.main.ScreenToWorldPoint(Input.mousePosition),Quaternion.identity);
+        ingredientInstace.GetComponent<IngredientPiece>().setIngredientSO(ingredientSO);
+        ingredientInstace.GetComponent<IngredientPiece>().setAssumedValues(GetAssumedValues());
     }
 
     // Set/Get

@@ -51,10 +51,12 @@ public class FeedbackIngredient : MonoBehaviour
 
         foreach (FeedbackIngredient feedbackIng in otherIngredientSliders)
         {
-            if(feedbackIng.GetIngredientName() == ingredientSO.getName())
-            {   
-                feedbackIng.SetIngredientSO(ingredientSO);
-            } 
+            if(feedbackIng.GetIngredientSO() != null){
+                if(feedbackIng.GetIngredientName() == ingredientSO.getName())
+                {   
+                    feedbackIng.SetIngredientSO(ingredientSO);
+                } 
+            }
         }
     }
 

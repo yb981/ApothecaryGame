@@ -18,7 +18,6 @@ public class RunHandler : MonoBehaviour
 
     // Endless Run
     private List<IngredientSO> currentEndlessRunIngredients;
-    private List<CompleteIngredient> currentEndlessRunCompleteIngredients;
 
     void Awake()
     {
@@ -40,16 +39,10 @@ public class RunHandler : MonoBehaviour
             return;
         }
 
-        if(levelCount == levelAmount)
+        if(levelCount == levelAmount-1)
         {
             // go To Final Screen
-
-            // no final screen also:
-            // Re-initialize
-            levelCount = 0;
-
-            // Go back to Menu
-            SceneManager.LoadScene(GameConstants.SCENE_MENU);
+            SceneManager.LoadScene(GameConstants.SCENE_RUNOVER);
             return;
         }
 
@@ -70,6 +63,15 @@ public class RunHandler : MonoBehaviour
         Application.Quit();
     }
 
+    public void ResetRun()
+    {
+        levelAmount = -1;
+        levelCount = 0;
+        currentLevel = null; 
+        regionActive = false;
+        currentEndlessRunIngredients = null;
+    }
+
     public int GetLevelCount()
     {
         return levelCount;
@@ -85,14 +87,14 @@ public class RunHandler : MonoBehaviour
         levelAmount = numberOfLevels;
     }
 
-    public List<CompleteIngredient> GetCurrentEndlessRunCompleteIngredients()
+    public List<IngredientSO> GetCurrentEndlessIngredients()
     {
-        return currentEndlessRunCompleteIngredients;
+        return currentEndlessRunIngredients;
     }
 
-    public void SetCurrentEndlessRunCompleteIngredients(List<CompleteIngredient> currentIngredients)
+    public void SetCurrentEndlessRunIngredients(List<IngredientSO> currentIngredients)
     {
-        currentEndlessRunCompleteIngredients = currentIngredients;
+        currentEndlessRunIngredients = currentIngredients;
     }
 
     public void SetRegionActive(bool value)

@@ -22,6 +22,7 @@ public static class GameConstants
     public const string SCENE_LOADING = "LoadingScene";
     public const string SCENE_MAP = "Map";
     public const string SCENE_CREDITS = "Credits";
+    public const string SCENE_RUNOVER = "FinishedRun";
 }
 
 public enum PlayerFeedbackStates

@@ -156,5 +156,8 @@ public class IngredientSliders : MonoBehaviour
             lockButtons[i].onClick.RemoveListener(() => ToggleSliderLock(sliderIndex));
         }
 
+        feedbackIngredient.OnAssumedValueChanged -= FeedbackIngredient_OnAssumedValueChanged;
+        feedbackIngredient.OnIngredientSOChanged -= FeedbackIngredient_OnIngredientSOChanged;
+
     }
 }

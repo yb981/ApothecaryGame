@@ -36,12 +36,7 @@ public class InitializeClients : MonoBehaviour
         List<PatientSO> newPatients = new List<PatientSO>();
 
         // Get All Ingredients
-        List<CompleteIngredient> completeIngredients = RunHandler.Instance.GetCurrentEndlessRunCompleteIngredients();
-        List<IngredientSO> ingredients = new List<IngredientSO>();
-        for (int i = 0; i < completeIngredients.Count; i++)
-        {
-            ingredients.Add(completeIngredients[i].GetIngridientSO());
-        }
+        List<IngredientSO> ingredients = new List<IngredientSO>(RunHandler.Instance.GetCurrentEndlessIngredients());
 
         // Create all patients
         for (int z = 0; z < maxClients; z++)

@@ -14,7 +14,7 @@ public class MapHandler : MonoBehaviour
     [SerializeField] GameObject AllChildren;
     private int currentLevelCount;
     //private List<IngredientSO> currentIngredientsEndlessRun;
-    private List<CompleteIngredient> currentEndlessRunCompleteIngredients;
+    private List<IngredientSO> currentEndlessRunIngredients;
 
     private void Awake() 
     {
@@ -57,21 +57,16 @@ public class MapHandler : MonoBehaviour
     public void StartLevel(LevelSettingsSO level)
     {
         // Check if Ingredients exist
-        if(currentEndlessRunCompleteIngredients == null){
-           currentEndlessRunCompleteIngredients = RunHandler.Instance.GetCurrentEndlessRunCompleteIngredients();
+        if(currentEndlessRunIngredients == null){
+           currentEndlessRunIngredients = RunHandler.Instance.GetCurrentEndlessIngredients();
         }
 
 
-        if(currentEndlessRunCompleteIngredients == null){
+        if(currentEndlessRunIngredients == null){
             // Create ingredients
-            currentEndlessRunCompleteIngredients = new List<CompleteIngredient>();
-            List<IngredientSO> newIng = createIngredientSOs.CreateRandomIngredientSOs();
-            for (int i = 0; i < newIng.Count; i++)
-            {
-                currentEndlessRunCompleteIngredients.Add(new CompleteIngredient(newIng[i]));
-            }
-             
-            RunHandler.Instance.SetCurrentEndlessRunCompleteIngredients(currentEndlessRunCompleteIngredients);
+            currentEndlessRunIngredients = createIngredientSOs.CreateRandomIngredientSOs();
+
+            RunHandler.Instance.SetCurrentEndlessRunIngredients(currentEndlessRunIngredients);
         }
         RunHandler.Instance.LoadLevel(level);
         Debug.Log(this +" telling to start");

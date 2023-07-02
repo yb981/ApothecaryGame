@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Level3
   m_EditorClassIdentifier: 
   level: 0
-  AmountOfPatients: 8
+  AmountOfPatients: 6

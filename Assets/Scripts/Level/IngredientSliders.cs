@@ -5,32 +5,28 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
-public class IngredientSliders : SliderHandler
+public class IngredientSliders : MonoBehaviour
 {
     [Header("Coding")]
     [SerializeField] TextMeshProUGUI nameField;
-    [SerializeField] Image ingredientImage;
-    
-    [Header("Adapting: Add all ingredients")]
-    [SerializeField] List<IngredientSliders> otherIngredientSliders;
+    [SerializeField] Button[] lockButtons;
 
-    private GameObject[] ingredientObjects;
-    private string ingName = "not set";
-    private Animator[] myAnimator;
+    [Header("Coloring")]
+    [SerializeField] private Color sliderColorLocked;
+    [SerializeField] private Color sliderColorNormal;
+
+    private FeedbackIngredient feedbackIngredient;
+    private IngredientSO ingredientSO;
+
+    private Slider[] mySliders;
+    private TextMeshProUGUI[] myTexts;
 
     private void Awake() {
         // Has to be called in Awake
-        // Becuase Feedback controller is disabling these instances in Start
-        mySliders           = GetComponentsInChildren<Slider>(true);
-        myTexts             = GetComponentsInChildren<TextMeshProUGUI>(true);
-        ingredientObjects   = GameObject.FindGameObjectsWithTag("Ingredient");
-        myAnimator          = GetComponentsInChildren<Animator>();
-    }
-
-    private void OnSliderChanged(int sliderIndex, float value)
-    {
-        Helper.Instance.SetUserAdjustedValues(true);
-        UpdateSliderTextValues();
+        // Because Feedback controller is disabling these instances in Start
+        mySliders                   = GetComponentsInChildren<Slider>(true);
+        myTexts                     = GetComponentsInChildren<TextMeshProUGUI>(true);
+        feedbackIngredient          = GetComponentInParent<FeedbackIngredient>(true);
     }
 
     private void Start()
@@ -40,57 +36,95 @@ public class IngredientSliders : SliderHandler
         {
             int sliderIndex = i;
             mySliders[i].onValueChanged.AddListener((value) => OnSliderChanged(sliderIndex, value));
-        }
-    }
-
-    public override void UpdateSliderTextValues()
-    {
-        base.UpdateSliderTextValues();
-        UpdateOriginalIngredientValue(); 
-    }
-
-    public void SetIngredientName(string name)
-    {
-        ingName = name;
-        for (int i = 0; i < myTexts.Length; i++)
-        {
-            if(myTexts[i].name == "TMP Name") myTexts[i].text = ingName;
+            lockButtons[i].onClick.AddListener(() => ToggleSliderLock(sliderIndex));
         }
 
-        // ALSO SETTING IMAGE, need refactor
-        SetIngredientImage();
+        feedbackIngredient.OnAssumedValueChanged += FeedbackIngredient_OnAssumedValueChanged;
+        feedbackIngredient.OnIngredientSOChanged += FeedbackIngredient_OnIngredientSOChanged;
     }
 
-    private void SetIngredientImage()
+    private void FeedbackIngredient_OnIngredientSOChanged()
     {
-        foreach (GameObject ingredient in ingredientObjects)
+        UpdateIngredientSO(feedbackIngredient.GetIngredientSO());
+    }
+
+    private void FeedbackIngredient_OnAssumedValueChanged()
+    {
+        UpdateIngredientSO(feedbackIngredient.GetIngredientSO());
+    }
+
+    private void OnSliderChanged(int sliderIndex, float value)
+    {
+        Helper.Instance.SetUserAdjustedValues(true);
+        
+        int[] newValues = ingredientSO.GetAssumedValues();
+        newValues[sliderIndex] = (int) value;
+
+        // Update SO 
+        ingredientSO.SetAssumedValues(newValues);
+
+        // Update Text Value
+        UpdateSliderTextValues();
+
+        // update feedback.SO
+        feedbackIngredient.UpdateIngredientSOForSliderChanged(ingredientSO);
+    }
+
+
+    private void ToggleSliderLock(int clickedButtonId)
+    {
+        // Update So
+        bool[] newValues = ingredientSO.GetLockValues();
+        newValues[clickedButtonId] = !newValues[clickedButtonId];
+        ingredientSO.SetLockValues(newValues);
+
+        // Update Color
+        UpdateSliderLockAndColors();
+        
+        // Update feedback.SO
+        feedbackIngredient.UpdateIngredientSOForSliderChanged(ingredientSO);
+    }
+
+    private void UpdateIngredientSO(IngredientSO newIngredientSO)
+    {
+        ingredientSO = newIngredientSO;
+        // Update Name
+        SetIngredientName();
+
+        // Update Sliders
+        SetSliderValues(ingredientSO.GetAssumedValues());
+
+        // Update Lock
+        UpdateSliderLockAndColors();
+    }
+
+    private void SetIngredientName()
+    {
+        nameField.text = ingredientSO.getName();
+    }
+
+    public virtual void UpdateSliderTextValues()
+    {
+        for (int i = 0; i < mySliders.Length; i++)
         {
-            if(ingredient.GetComponent<IngredientContainer>().GetComponentInChildren<TextMeshProUGUI>().text == ingName)
+            myTexts[i].text = mySliders[i].value.ToString();
+        }       
+    }
+
+    public void UpdateSliderLockAndColors()
+    {
+        for (int i = 0; i < mySliders.Length; i++)
+        {
+            if(ingredientSO.GetLockValues()[i] == true)
             {
-                SpriteRenderer originalSpriteRenderer = ingredient.GetComponentInChildren<SpriteRenderer>();
-                ingredientImage.sprite = originalSpriteRenderer.sprite;
-                ingredientImage.color = originalSpriteRenderer.color;
-                return;
+                mySliders[i].fillRect.GetComponent<Image>().color = sliderColorLocked;
+                mySliders[i].enabled = false;
+            }else{
+                mySliders[i].fillRect.GetComponent<Image>().color = sliderColorNormal;
+                mySliders[i].enabled = true;
             }
-        }
-    }
-
-    private void UpdateOriginalIngredientValue()
-    {
-        for (int i = 0; i < ingredientObjects.Length; i++)
-        {
-            // If Ingredient Name equals to the name this ingredient copy
-            // Basically finding the right original ingredient
-            if(ingredientObjects[i].GetComponent<IngredientContainer>().GetComponentInChildren<TextMeshProUGUI>().text == ingName)
-            {
-                ingredientObjects[i].GetComponentInChildren<SliderHandler>().SetSliderValues(GetSliderValues());
-            }
-        }
-
-        foreach (IngredientSliders currentSlider in otherIngredientSliders)
-        {
-            if(currentSlider.GetSliderIngredientName() == ingName) currentSlider.SetSliderValues(GetSliderValues());
-        }
+            
+        } 
     }
 
     public int[] GetSliderValues()
@@ -104,16 +138,23 @@ public class IngredientSliders : SliderHandler
         return returnValues;
     }
 
-    public override void SetSliderValues(int[] values)
+    public void SetSliderValues(int[] values)
     {
         for(int i = 0 ; i < values.Length ; i++)
         {
             mySliders[i].value = values[i];
         }
+        UpdateSliderTextValues();
     }
 
-    public string GetSliderIngredientName()
+    private void OnDestroy() 
     {
-        return ingName;
+        for (int i = 0; i < mySliders.Length; i++)
+        {
+            int sliderIndex = i;
+            mySliders[i].onValueChanged.RemoveListener((value) => OnSliderChanged(sliderIndex, value));
+            lockButtons[i].onClick.RemoveListener(() => ToggleSliderLock(sliderIndex));
+        }
+
     }
 }

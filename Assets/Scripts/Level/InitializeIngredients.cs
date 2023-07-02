@@ -20,7 +20,6 @@ public class InitializeIngredients : MonoBehaviour
         numberOfIngredientContainer = ingredientContainers.Length;
         
         // Get Ingredients From Run Handler
-
         ingredients = RunHandler.Instance.GetCurrentEndlessRunCompleteIngredients();
 
         // Set SOs
@@ -32,22 +31,20 @@ public class InitializeIngredients : MonoBehaviour
         
         // Add to each container one ingredient
         if(ingredients.Count != ingredientContainers.Length) Debug.LogError("Amount of ingredients and containers are not the same");
-        int count = 0;
-        foreach (IngredientContainer ingredientContainer in ingredientContainers)
+        for(int i = 0; i < ingredientContainers.Length; i++)
         {
-            ingredientContainer.SetIngredientSO(ingredients[count].GetIngridientSO());
-            // Update Stats
-            ingredientContainer.SetSliderValues(ingredients[count].GetIngredientPlayerValues());
-            count++;
+            ingredientContainers[i].SetIngredientSO(ingredients[i].GetIngridientSO());
         }
     }
 
     private void GameManager_OnLevelFinished(object sender, GameManager.LevelFinishedEventArgs e)
     {
+        Debug.Log("saving SOs");
         // Save into RunHandler
         for (int i = 0; i < ingredientContainers.Length; i++)
         {   
-            ingredients[i].SetIngredientPlayerValues( ingredientContainers[i].GetAssumedValues());
+            ingredients[i].SetIngredientSO( ingredientContainers[i].GetIngredientSO());
+            Debug.Log("-"+ingredients[i].GetIngridientSO().getName());
         }
 
         RunHandler.Instance.SetCurrentEndlessRunCompleteIngredients(ingredients);

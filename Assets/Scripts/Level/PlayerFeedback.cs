@@ -20,6 +20,7 @@ public class PlayerFeedback : MonoBehaviour
     private HandleAdminSliders clientSliders;
     private GameObject[] ingredients;
     private IngredientSliders[] ingredientSliders;
+    private FeedbackIngredient[] feedbackIngredients;
 
     //[SerializeField] int totalMissValue = 4;
     //[SerializeField] int miss = 2;
@@ -33,6 +34,7 @@ public class PlayerFeedback : MonoBehaviour
         manager             = GameManager.Instance;
         ingredients         = GameObject.FindGameObjectsWithTag("Ingredient");
         ingredientSliders   = GetComponentsInChildren<IngredientSliders>();
+        feedbackIngredients = GetComponentsInChildren<FeedbackIngredient>();
 
         // Create internal Components
         myFeedbackLogic     = new FeedbackLogic();
@@ -76,14 +78,19 @@ public class PlayerFeedback : MonoBehaviour
         string[] ingredientNames;
         ingredientNames = GetIngredientNamesFromSOList();
 
-        // Check for Duplicates
+        /* // Check for Duplicates
         if(FindDuplicates(ingredientNames)){
             // Order Duplicates
             ingredientNames = OrderDuplicates(ingredientNames);
-        }
+        } */
         
+        List<IngredientSO> ingList = container.GetLatestContainerIngredients();
+        for(int i = 0; i < ingList.Count ; i++)
+        {
+            feedbackIngredients[i].SetIngredientSO(ingList[i]);
+        }
 
-        // Handle Ingredient Sliders
+       /*  // Handle Ingredient Sliders
         for (int i = 0; i < ingredientSliders.Length; i++)
         {
             ingredientSliders[i].SetIngredientName(ingredientNames[i]);
@@ -93,9 +100,12 @@ public class PlayerFeedback : MonoBehaviour
                 if(ingredients[j].GetComponentInChildren<TextMeshProUGUI>().text == ingredientNames[i])
                 {
                     ingredientSliders[i].SetSliderValues(ingredients[j].GetComponent<IngredientContainer>().GetAssumedValues());
+                    ingredientSliders[i].SetLockValues(ingredients[j].GetComponent<IngredientContainer>().GetLockValues());
+
+
                 }
             }
-        }
+        } */
     }
 
     private void GenerateOutputText(int[] playerInput, int[] clientValue)
@@ -120,7 +130,7 @@ public class PlayerFeedback : MonoBehaviour
     {
         string[] ingNames;
 
-        List<IngredientSO> ingList = container.GetLastContainerIngredients();
+        List<IngredientSO> ingList = container.GetLatestContainerIngredients();
         ingNames = new string[ingList.Count];
 
         for (int i = 0; i < ingList.Count; i++)
@@ -131,19 +141,19 @@ public class PlayerFeedback : MonoBehaviour
         return ingNames;
     }
 
-    public string[] GetInsertedIngredientNames()
+    /* public string[] GetInsertedIngredientNames()
     {
         return GetIngredientNamesFromSOList();
     }
 
-     private bool FindDuplicates(string[] duplicates)
+     private bool FindDuplicates(IngredientSO[] duplicates)
     {
         for (int i = 0; i < duplicates.Length; i++)
         {
             for (int j = 0; j < duplicates.Length; j++)
             {
                 if(j==i) continue;
-                if(duplicates[j] == duplicates[i]) return true;
+                if(duplicates[j].getName() == duplicates[i].getName()) return true;
             }
         }
         return false;
@@ -175,5 +185,5 @@ public class PlayerFeedback : MonoBehaviour
         }
 
         return duplicates;
-    }
+    } */
 }

@@ -16,10 +16,10 @@ public class FinalScreen : MonoBehaviour
     private void Start() 
     {
         gameManager = GameManager.Instance;
-        gameManager.LevelFinished += FinalScreen_LevelFinished;
+        gameManager.LevelFinished += GameManager_LevelFinished;
     }
 
-    private void FinalScreen_LevelFinished(object sender, GameManager.LevelFinishedEventArgs e)
+    private void GameManager_LevelFinished(object sender, GameManager.LevelFinishedEventArgs e)
     {
         visual.gameObject.SetActive(true);
 

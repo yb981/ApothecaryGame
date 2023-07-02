@@ -8,6 +8,8 @@ using UnityEngine.EventSystems;
 
 public class IngredientContainer : MonoBehaviour
 {
+    public event Action OnAssumedValueChanged;
+
     [Header("For Coding")]
     [SerializeField] private GameObject ingredientPiece;
     [SerializeField] private TextMeshProUGUI nameField;
@@ -17,33 +19,16 @@ public class IngredientContainer : MonoBehaviour
 
     private GameObject ingredientInstace;
     private Vector2 mouseOffset;
-    private Slider[] mySliders;
-    private SliderHandler mySliderHandler;
+
+    
 
     private bool canInteract;
 
-    // ingredientSO Stats
-    private int antiCaugh;
-    private int antiBleeding;
-    private int antiFever;
     private string ingredientName = "noNameSet";
-    private Slider[] ValueSliders;
-    private int[] SliderValues;
 
     private void Start() 
     {
-        mySliderHandler = GetComponentInChildren<SliderHandler>();
-
-        // Disable slider activity (only change sliders in feedback screen)
-        mySliders = GetComponentsInChildren<Slider>();
-        for (int i = 0; i < mySliders.Length; i++)
-        {
-            mySliders[i].enabled = false;
-        }
-
-        ValueSliders = GetComponentsInChildren<Slider>();
-
-        InitializeIngridient();
+        InitializeIngridientContainer();
 
         GameManager.Instance.OnGamePhaseChanged += GameManager_OnGamePhaseChanged;
     }
@@ -60,16 +45,8 @@ public class IngredientContainer : MonoBehaviour
         SetInteractionBasedOnGamePhase();
     }
 
-    private void InitializeIngridient()
+    private void InitializeIngridientContainer()
     {
-        // Set the heal values from the Scritable Object
-        SliderValues = new int[ingredientSO.getValues().Length];
-        int[] values = new int[ingredientSO.getValues().Length];
-
-        values          = ingredientSO.getValues();
-        antiCaugh       = values[0];
-        antiBleeding    = values[1];
-        antiFever       = values[2];
         ingredientName  = ingredientSO.getName();
 
         nameField.text = ingredientName;
@@ -96,21 +73,40 @@ public class IngredientContainer : MonoBehaviour
     public void SetIngredientSO(IngredientSO newIngredientSO)
     {
         ingredientSO = newIngredientSO;
-        InitializeIngridient();
+        InitializeIngridientContainer();
+        SetAssumedValues(ingredientSO.GetAssumedValues());
+        SetLockValues(ingredientSO.GetLockValues());
     }
     
     public int[] GetAssumedValues()
     {
-        for (int i = 0; i < SliderValues.Length; i++)
-        {   
-            SliderValues[i] = (int) ValueSliders[i].value;          
-        }
-
-        return SliderValues;
+        return ingredientSO.GetAssumedValues();
     }
 
-    public void SetSliderValues(int[] values)
+    public void SetAssumedValues(int[] values)
     {
-        mySliderHandler.SetSliderValues(values);
+        ingredientSO.SetAssumedValues(values);
+        OnAssumedValueChanged?.Invoke();
+    }
+
+    public bool[] GetLockValues()
+    {
+        return ingredientSO.GetLockValues();
+    }
+
+    public void SetLockValues(bool[] values)
+    {
+        ingredientSO.SetLockValues(values);
+        OnAssumedValueChanged?.Invoke();
+    }
+
+    public string GetIngredientName()
+    {
+        return ingredientName;
+    }
+
+    public IngredientSO GetIngredientSO()
+    {
+        return ingredientSO;
     }
 }

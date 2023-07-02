@@ -5,13 +5,11 @@ using UnityEngine;
 public class CompleteIngredient
 {
     private IngredientSO ingredientSO;
-    private int[] ingredientPlayerSettings;
     private int amountOfSliders = 3; 
 
-    public CompleteIngredient(IngredientSO ingredientSO)
+    public CompleteIngredient(IngredientSO newIngredientSO)
     {
-        ingredientPlayerSettings = new int[amountOfSliders];
-        this.ingredientSO = ingredientSO;
+        ingredientSO = newIngredientSO;
     }
 
     public IngredientSO GetIngridientSO()
@@ -22,18 +20,5 @@ public class CompleteIngredient
     public void SetIngredientSO(IngredientSO newIngredientSO)
     {
         ingredientSO = newIngredientSO;
-    }
-
-    public void SetIngredientPlayerValues(int[] newValues)
-    {
-        for (int i = 0; i < ingredientPlayerSettings.Length; i++)
-        {
-            ingredientPlayerSettings[i] = newValues[i];
-        }
-    }
-
-    public int[] GetIngredientPlayerValues()
-    {
-        return ingredientPlayerSettings;
     }
 }

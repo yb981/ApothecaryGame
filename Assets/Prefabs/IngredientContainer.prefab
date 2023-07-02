@@ -179,7 +179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredientPiece: {fileID: 2721448463733314717, guid: 8e8a117f604631e4b81b75366f96d5d4, type: 3}
   nameField: {fileID: 4000634469840184931}
-  ingredientSO: {fileID: 0}
+  ingredientSO: {fileID: 11400000, guid: a450447760d34d44299beae8f95d83de, type: 2}
 --- !u!114 &6112174647186932637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,7 +267,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7694af01ffa51e64cb5fec9552786c78, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7411765, g: 0.7411765, b: 0.69803923, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -641,3 +641,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26dcb3b8d40d3f84cbfda4470daa585a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sliderColorLocked: {r: 0.2509804, g: 0.38431376, b: 0.54901963, a: 1}
+  sliderColorNormal: {r: 0.57254905, g: 0.52156866, b: 0.2509804, a: 1}

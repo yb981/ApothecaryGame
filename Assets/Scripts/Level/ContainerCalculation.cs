@@ -178,7 +178,7 @@ public class ContainerCalculation : MonoBehaviour
         return maxIngredients;
     }
 
-    public List<IngredientSO> GetLastContainerIngredients()
+    public List<IngredientSO> GetLatestContainerIngredients()
     {
         return oldIngredients;
     }

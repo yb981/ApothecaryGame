@@ -25,6 +25,11 @@ public class PlayerFeedback : MonoBehaviour
     //[SerializeField] int totalMissValue = 4;
     //[SerializeField] int miss = 2;
 
+    private void Awake() 
+    {
+        feedbackIngredients = GetComponentsInChildren<FeedbackIngredient>(true);
+    }
+
     void Start()
     {
         // Get Components
@@ -34,7 +39,6 @@ public class PlayerFeedback : MonoBehaviour
         manager             = GameManager.Instance;
         ingredients         = GameObject.FindGameObjectsWithTag("Ingredient");
         ingredientSliders   = GetComponentsInChildren<IngredientSliders>();
-        feedbackIngredients = GetComponentsInChildren<FeedbackIngredient>();
 
         // Create internal Components
         myFeedbackLogic     = new FeedbackLogic();
@@ -59,7 +63,8 @@ public class PlayerFeedback : MonoBehaviour
         GenerateOutputText(playerInput, clientValue);
 
         // Set the correct starting Values
-        UpdateIngredientSliders();
+        //UpdateIngredientSliders();
+        StartCoroutine(LateIngUpdate());
     }
 
     public void DisplayFeedback(bool state)
@@ -72,13 +77,20 @@ public class PlayerFeedback : MonoBehaviour
         taskCompleted();
     }
 
+    private IEnumerator LateIngUpdate()
+    {
+        yield return new WaitForEndOfFrame();
+        UpdateIngredientSliders();
+    }
+
     // private Methods
     private void UpdateIngredientSliders()
     {
+        /* 
         string[] ingredientNames;
         ingredientNames = GetIngredientNamesFromSOList();
 
-        /* // Check for Duplicates
+        // Check for Duplicates
         if(FindDuplicates(ingredientNames)){
             // Order Duplicates
             ingredientNames = OrderDuplicates(ingredientNames);

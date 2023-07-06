@@ -28,13 +28,7 @@ public class IngredientSliders : MonoBehaviour
         myTexts                     = GetComponentsInChildren<TextMeshProUGUI>(true);
         feedbackIngredient          = GetComponentInParent<FeedbackIngredient>(true);
 
-        // Subscribe to Slider Event
-        for (int i = 0; i < mySliders.Length; i++)
-        {
-            int sliderIndex = i;
-            mySliders[i].onValueChanged.AddListener((value) => OnSliderChanged(sliderIndex, value));
-            lockButtons[i].onClick.AddListener(() => ToggleSliderLock(sliderIndex));
-        }
+        
     }
 
     private void Start()
